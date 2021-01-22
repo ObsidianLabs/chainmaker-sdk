@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chainMaker-js-sdk demo</title>
+</head>
+<body>
+  <button id="btn">click</button>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+  <script src="../../dist/chainMaker-js-sdk.js"></script>
+  <script>
+    $(function(){ 
+      console.log('ready')
+      console.log(chainMaker)
+      // let aa = chainMaker.numToWord()
+      // console.log(aa)
+      let bb = new chainMaker('789')
+      console.log(bb.getUrl())
+
+
+
+
+      // let chainMaker2 = new chainMaker('http://192.168.1.74:8080')
+      // console.log(chainMaker2)
+      // console.log('weiqinl')
+      // console.log(numberWord.version)
+      // console.log(numberWord.numToWord(6))
+      // console.log(numberWord.wordToNum('Five'))
+      // document.querySelector('#root').innerHTML = `6的英文为：${numberWord.numToWord(6)}`
+    }) 
+    
+  </script>
+</body>
+</html>
