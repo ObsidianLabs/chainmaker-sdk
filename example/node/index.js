@@ -1,4 +1,7 @@
-var chainMaker = require('../../dist/chainMaker-js-sdk')
-console.log(chainMaker, 33)
-let bb = new chainMaker('789')
-console.log(bb.getUrl())
+// var chainMaker = require('../../dist/chainMaker-js-sdk')
+// console.log(chainMaker, 33)
+// let bb = new chainMaker('789')
+// console.log(bb, 66)
+
+let chainMaker = require('../../dist/chainMaker-js-sdk') 
+console.log(chainMaker)
