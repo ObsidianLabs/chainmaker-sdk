@@ -1,0 +1,67 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add @grpc/grpc-js@1.24.10
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/go/bin:/Users/chengliang/.chainMaker:/usr/local/protoc/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.17.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: %22http://mirrors.tencent.com/npm/%22%22/as-base64: Invalid URI "%22http://mirrors.tencent.com/npm/%22%22/as-base64"
+      at Request.module.exports.Request.init (/usr/local/lib/node_modules/yarn/lib/cli.js:140750:31)
+      at new Request (/usr/local/lib/node_modules/yarn/lib/cli.js:140604:8)
+      at request (/usr/local/lib/node_modules/yarn/lib/cli.js:136804:10)
+      at RequestManager.execute (/usr/local/lib/node_modules/yarn/lib/cli.js:67040:15)
+      at RequestManager.shiftQueue (/usr/local/lib/node_modules/yarn/lib/cli.js:67078:10)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:66747:13
+      at new Promise (<anonymous>)
+      at new F (/usr/local/lib/node_modules/yarn/lib/cli.js:5301:28)
+      at RequestManager.request (/usr/local/lib/node_modules/yarn/lib/cli.js:66745:19)
+      at NpmRegistry.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:31704:42)
+
+npm manifest: 
+  {
+    "name": "js-sdk",
+    "version": "1.0.0",
+    "descripion": "",
+    "main": "payload_contract.js",
+    "scripts": {
+      "test": ""
+    },
+    "dependencies": {
+      "@grpc/grpc-js": "^1.24.10",
+      "as-base64": "^0.2.0",
+      "crypto": "^1.0.1",
+      "fs": "0.0.1-security",
+      "google-protobuf": "^3.6.1",
+      "loadsh": "^0.0.4",
+      "miniprogram-sm-crypto": "^0.2.7",
+      "mysql": "^2.18.1",
+      "node-forge": "^0.10.0",
+      "node-gyp": "^8.0.0",
+      "protobufjs": "^6.11.2",
+      "uuid": "^8.3.2",
+      "winston": "^3.3.3",
+      "yarn": "^1.22.10"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "@tencent/eslint-config-tencent": "^0.13.3",
+      "babel-eslint": "^10.1.0",
+      "eslint": "^7.28.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

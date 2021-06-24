@@ -1,0 +1,22 @@
+chain_client:
+  # 链ID
+  chain_id: "chain1"
+  # 组织ID
+  org_id: "wx-org1.chainmaker.org"
+  # 客户端用户私钥路径
+  user_key_file_path: "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.key"
+  # 客户端用户证书路径
+  user_crt_file_path: "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.crt"
+
+  nodes:
+    - # 节点地址，格式为：IP:端口:连接数
+      node_addr: "127.0.0.1:12301"
+      # 节点连接数
+      conn_cnt: 10
+      # RPC连接是否启用双向TLS认证
+      enable_tls: true
+      # 信任证书池路径
+      trust_root_paths:
+        - "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/ca/wx-org1.chainmaker.org"
+      # TLS hostname
+      tls_host_name: "chainmaker.org"

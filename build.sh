@@ -3,16 +3,21 @@
 
 src_path=proto
 # import_style= # import_style=commonjs,binary
-#import_style=import_style=commonjs,binary:
+import_style=import_style=commonjs,binary:
 out_path=chainmaker
-# /d/workSpace/chainMaker-js-sdk
+
 grpc_if=${src_path}/api/rpc_node.proto
 
+function test() {
+    try to fix `import clvs.serialize` issue
+    sudo pip3 install git+https://github.com/greedo/python-xbrl.git
+    
+}
 function gen_grpc_js() {
     node_modules/.bin/grpc_tools_node_protoc \
         -I=${src_path} \
         --js_out=${import_style}${out_path} \
-        --grpc_out=${out_path} \
+        --grpc_out=generate_package_definition:${out_path} \
         ${grpc_if}
 
     # /Users/leo/weixin/chainmaker/js-sdk/node_modules/grpc-tools/bin/protoc \
@@ -23,9 +28,13 @@ function gen_grpc_js() {
 }
 
 function gen_protoc_js() {
+#   out_file=${@/$src_path/$out_path}
+#   out_file=${out_file/"proto"/"js"}
+#   out_file=`dirname $out_file`
+  echo ${out_file}
     protoc \
         --proto_path=${src_path} \
-        --js_out=${import_style}${out_path} $@
+        --js_out=import_style=commonjs,binary:${out_path} $@
 }
 
 function gen_proto_js_all() {
@@ -34,5 +43,5 @@ function gen_proto_js_all() {
     done
 }
 
-gen_grpc_js ${grpc_file}
-
+gen_proto_js_all
+gen_grpc_js

@@ -1,0 +1,169 @@
+{
+  "txId": "baf46704e7534624ac34bd19c800160037e6aeac03534583b0ab4941e4c12cf1",
+  "result": {
+    "chainId": "chain1",
+    "version": "v1.2.0",
+    "authType": "identity",
+    "sequence": 24,
+    "crypto": {
+      "hash": "SHA256"
+    },
+    "block": {
+      "txTimestampVerify": true,
+      "txTimeout": 600,
+      "blockTxCapacity": 100,
+      "blockSize": 10,
+      "blockInterval": 2000
+    },
+    "core": {
+      "txSchedulerTimeout": 10,
+      "txSchedulerValidateTimeout": 10
+    },
+    "consensus": {
+      "type": 1,
+      "nodesList": [
+        {
+          "orgId": "wx-org1.chainmaker.org",
+          "addressList": [],
+          "nodeIdList": [
+            "QmcarkA9qy3NusfzmEKANAtEzUjMqXKnPEhV2FUXWhvup1"
+          ]
+        },
+        {
+          "orgId": "wx-org2.chainmaker.org",
+          "addressList": [],
+          "nodeIdList": [
+            "QmebUAgmLSQtQR5tfefE7Zir4AMubseton3te3mGAtCCbn"
+          ]
+        },
+        {
+          "orgId": "wx-org3.chainmaker.org",
+          "addressList": [],
+          "nodeIdList": [
+            "QmT9P6E1rTaXFJaW28hdnp1dQxppp5JQNFheTnCwJ44NLJ"
+          ]
+        },
+        {
+          "orgId": "wx-org4.chainmaker.org",
+          "addressList": [],
+          "nodeIdList": [
+            "QmUH3cQrd3Mi7rLRG3eC8jtyg4NnsLrwWh9ZJT94A9Tc5G"
+          ]
+        }
+      ],
+      "extConfigList": [
+        {
+          "key": "aa",
+          "value": "chain01_ext11"
+        }
+      ]
+    },
+    "trustRootsList": [
+      {
+        "orgId": "wx-org1.chainmaker.org",
+        "root": "-----BEGIN CERTIFICATE-----\nMIICrjCCAlSgAwIBAgICNUQwCgYIKoZIzj0EAwIwgYoxCzAJBgNVBAYTAkNOMRAw\nDgYDVQQIEwdCZWlqaW5nMRAwDgYDVQQHEwdCZWlqaW5nMR8wHQYDVQQKExZ3eC1v\ncmcxLmNoYWlubWFrZXIub3JnMRIwEAYDVQQLEwlyb290LWNlcnQxIjAgBgNVBAMT\nGWNhLnd4LW9yZzEuY2hhaW5tYWtlci5vcmcwHhcNMjEwNjExMDY0MTQyWhcNMzEw\nNjA5MDY0MTQyWjCBijELMAkGA1UEBhMCQ04xEDAOBgNVBAgTB0JlaWppbmcxEDAO\nBgNVBAcTB0JlaWppbmcxHzAdBgNVBAoTFnd4LW9yZzEuY2hhaW5tYWtlci5vcmcx\nEjAQBgNVBAsTCXJvb3QtY2VydDEiMCAGA1UEAxMZY2Eud3gtb3JnMS5jaGFpbm1h\na2VyLm9yZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABETINWCZeRYpBV7WyYg8\n2n67WsgxS8Zfw2QiItcbulq3zUC5/AWur7txB7xMJVsu3zQUOtIhG2XMLveoiq4d\n/BKjgacwgaQwDgYDVR0PAQH/BAQDAgGmMA8GA1UdJQQIMAYGBFUdJQAwDwYDVR0T\nAQH/BAUwAwEB/zApBgNVHQ4EIgQg4XbyosVBi0YdiHLsz7SZiUD10Z3h2Uxrto5/\ng9+A2d0wRQYDVR0RBD4wPIIOY2hhaW5tYWtlci5vcmeCCWxvY2FsaG9zdIIZY2Eu\nd3gtb3JnMS5jaGFpbm1ha2VyLm9yZ4cEfwAAATAKBggqhkjOPQQDAgNIADBFAiBJ\ncnBdAdt/5gLFbpNUaN1O8a/vp82RM0q4cZJDtSWOJQIhANsbryuuZwEFZWuvjGeT\nnA7xUqwpZ91wmkMzsyzrDyx7\n-----END CERTIFICATE-----\n"
+      },
+      {
+        "orgId": "wx-org2.chainmaker.org",
+        "root": "-----BEGIN CERTIFICATE-----\nMIICrjCCAlWgAwIBAgIDAt2FMAoGCCqGSM49BAMCMIGKMQswCQYDVQQGEwJDTjEQ\nMA4GA1UECBMHQmVpamluZzEQMA4GA1UEBxMHQmVpamluZzEfMB0GA1UEChMWd3gt\nb3JnMi5jaGFpbm1ha2VyLm9yZzESMBAGA1UECxMJcm9vdC1jZXJ0MSIwIAYDVQQD\nExljYS53eC1vcmcyLmNoYWlubWFrZXIub3JnMB4XDTIxMDYxMTA2NDE0MloXDTMx\nMDYwOTA2NDE0MlowgYoxCzAJBgNVBAYTAkNOMRAwDgYDVQQIEwdCZWlqaW5nMRAw\nDgYDVQQHEwdCZWlqaW5nMR8wHQYDVQQKExZ3eC1vcmcyLmNoYWlubWFrZXIub3Jn\nMRIwEAYDVQQLEwlyb290LWNlcnQxIjAgBgNVBAMTGWNhLnd4LW9yZzIuY2hhaW5t\nYWtlci5vcmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATWXTbLe+qC2dTD8MjF\nRiUBlVNn+3gVAvZ/c/W1RBy3j8RWIZggG7t8G6k9vRGTv4Ur1PFqn/N+OEMQyS0z\nyBRwo4GnMIGkMA4GA1UdDwEB/wQEAwIBpjAPBgNVHSUECDAGBgRVHSUAMA8GA1Ud\nEwEB/wQFMAMBAf8wKQYDVR0OBCIEIEODr2JgjXIpfSeQGKCzOpHLk01qjJBX4nAK\nG+6zh6eQMEUGA1UdEQQ+MDyCDmNoYWlubWFrZXIub3Jngglsb2NhbGhvc3SCGWNh\nLnd4LW9yZzIuY2hhaW5tYWtlci5vcmeHBH8AAAEwCgYIKoZIzj0EAwIDRwAwRAIg\nIh9++YKm6+qM4z5dy+IO130nTmnAvEMw0CY8b9/gqCcCIFIyKaH/9yt2ijq1lWdS\nHQECCCTN5oCFwp2F8QBclGe/\n-----END CERTIFICATE-----\n"
+      },
+      {
+        "orgId": "wx-org3.chainmaker.org",
+        "root": "-----BEGIN CERTIFICATE-----\nMIICrzCCAlWgAwIBAgIDC1ICMAoGCCqGSM49BAMCMIGKMQswCQYDVQQGEwJDTjEQ\nMA4GA1UECBMHQmVpamluZzEQMA4GA1UEBxMHQmVpamluZzEfMB0GA1UEChMWd3gt\nb3JnMy5jaGFpbm1ha2VyLm9yZzESMBAGA1UECxMJcm9vdC1jZXJ0MSIwIAYDVQQD\nExljYS53eC1vcmczLmNoYWlubWFrZXIub3JnMB4XDTIxMDYxMTA2NDE0MloXDTMx\nMDYwOTA2NDE0MlowgYoxCzAJBgNVBAYTAkNOMRAwDgYDVQQIEwdCZWlqaW5nMRAw\nDgYDVQQHEwdCZWlqaW5nMR8wHQYDVQQKExZ3eC1vcmczLmNoYWlubWFrZXIub3Jn\nMRIwEAYDVQQLEwlyb290LWNlcnQxIjAgBgNVBAMTGWNhLnd4LW9yZzMuY2hhaW5t\nYWtlci5vcmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATnJXi6R6FP0tv8IJIm\nz6RE11G8b59+vZHN7B0MKSASzvzHidokbtTOo21IAlBjXcVSOqPwDCGQBcETgfFh\n5m7Vo4GnMIGkMA4GA1UdDwEB/wQEAwIBpjAPBgNVHSUECDAGBgRVHSUAMA8GA1Ud\nEwEB/wQFMAMBAf8wKQYDVR0OBCIEIDM3PWgLpep9aDlelQG8qNLnazrCPS9hurua\nxshxmHg1MEUGA1UdEQQ+MDyCDmNoYWlubWFrZXIub3Jngglsb2NhbGhvc3SCGWNh\nLnd4LW9yZzMuY2hhaW5tYWtlci5vcmeHBH8AAAEwCgYIKoZIzj0EAwIDSAAwRQIh\nALP0kbJXN2zaFBqFTlj2nM0SJ1Zuaqfsn6yvf1Yk5WZuAiBzUEmFYf87hazNdwIN\nbNVwll/zKjwH3kr0AMC5OvnOqw==\n-----END CERTIFICATE-----\n"
+      },
+      {
+        "orgId": "wx-org4.chainmaker.org",
+        "root": "-----BEGIN CERTIFICATE-----\nMIICrzCCAlWgAwIBAgIDAQKQMAoGCCqGSM49BAMCMIGKMQswCQYDVQQGEwJDTjEQ\nMA4GA1UECBMHQmVpamluZzEQMA4GA1UEBxMHQmVpamluZzEfMB0GA1UEChMWd3gt\nb3JnNC5jaGFpbm1ha2VyLm9yZzESMBAGA1UECxMJcm9vdC1jZXJ0MSIwIAYDVQQD\nExljYS53eC1vcmc0LmNoYWlubWFrZXIub3JnMB4XDTIxMDYxMTA2NDE0MloXDTMx\nMDYwOTA2NDE0MlowgYoxCzAJBgNVBAYTAkNOMRAwDgYDVQQIEwdCZWlqaW5nMRAw\nDgYDVQQHEwdCZWlqaW5nMR8wHQYDVQQKExZ3eC1vcmc0LmNoYWlubWFrZXIub3Jn\nMRIwEAYDVQQLEwlyb290LWNlcnQxIjAgBgNVBAMTGWNhLnd4LW9yZzQuY2hhaW5t\nYWtlci5vcmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQOXy9nt8YOVkn/VdFK\nHMJbKaUIDRIzFPYkUY8XJ1GQPfAYeKoGX4QWwLX/Illw/rwO/Gv4+81mBHuvNcLZ\nFNgKo4GnMIGkMA4GA1UdDwEB/wQEAwIBpjAPBgNVHSUECDAGBgRVHSUAMA8GA1Ud\nEwEB/wQFMAMBAf8wKQYDVR0OBCIEIMCFRHJjGrvA089kKFRz02D7PEnNjk4k+Nns\nnFXB0xM2MEUGA1UdEQQ+MDyCDmNoYWlubWFrZXIub3Jngglsb2NhbGhvc3SCGWNh\nLnd4LW9yZzQuY2hhaW5tYWtlci5vcmeHBH8AAAEwCgYIKoZIzj0EAwIDSAAwRQIh\nAMQDcxgpRvHL6fjNppi9/Fmf+oow8B0pC1lHF18EabtOAiAsrCaA1so4+uHqJmv0\nF4Wp9mTRDjkKHodWX0dvHvPSgQ==\n-----END CERTIFICATE-----\n"
+      }
+    ],
+    "resourcePoliciesList": [
+      {
+        "resourceName": "NODE_ID_UPDATE",
+        "policy": {
+          "rule": "SELF",
+          "orgListList": [],
+          "roleListList": [
+            "ADMIN"
+          ]
+        }
+      },
+      {
+        "resourceName": "TRUST_ROOT_UPDATE",
+        "policy": {
+          "rule": "SELF",
+          "orgListList": [],
+          "roleListList": [
+            "ADMIN"
+          ]
+        }
+      },
+      {
+        "resourceName": "CONSENSUS_EXT_DELETE",
+        "policy": {
+          "rule": "MAJORITY",
+          "orgListList": [],
+          "roleListList": [
+            "ADMIN"
+          ]
+        }
+      },
+      {
+        "resourceName": "BLOCK_UPDATE",
+        "policy": {
+          "rule": "ANY",
+          "orgListList": [],
+          "roleListList": [
+            "ADMIN",
+            "CLIENT"
+          ]
+        }
+      },
+      {
+        "resourceName": "INIT_CONTRACT",
+        "policy": {
+          "rule": "ANY",
+          "orgListList": [],
+          "roleListList": []
+        }
+      },
+      {
+        "resourceName": "UPGRADE_CONTRACT",
+        "policy": {
+          "rule": "ANY",
+          "orgListList": [],
+          "roleListList": []
+        }
+      },
+      {
+        "resourceName": "FREEZE_CONTRACT",
+        "policy": {
+          "rule": "ANY",
+          "orgListList": [],
+          "roleListList": []
+        }
+      },
+      {
+        "resourceName": "UNFREEZE_CONTRACT",
+        "policy": {
+          "rule": "ANY",
+          "orgListList": [],
+          "roleListList": []
+        }
+      },
+      {
+        "resourceName": "REVOKE_CONTRACT",
+        "policy": {
+          "rule": "ANY",
+          "orgListList": [],
+          "roleListList": []
+        }
+      }
+    ],
+    "contract": {
+      "enableSqlSupport": false
+    },
+    "snapshot": {
+      "enableEvidence": false
+    }
+  }
+}
