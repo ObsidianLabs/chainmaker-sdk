@@ -12,7 +12,7 @@
   - runtimeType: 合约运行环境(number)
   - contractFilePath: 合约二进制文件路径(string)
   - params: 合约初始化参数，(k-v Object对象)
-```node
+```javascript
 	createContractCreatePayload({ contractName, contractVersion, runtimeType, contractFilePath, params })
 ```
 
@@ -28,7 +28,7 @@
   - runtimeType: 合约运行环境(number)
   - contractFilePath: 合约二进制文件路径(string)
   - params: 合约升级参数，(k-v Object对象)
-```node
+```javascript
 	createContractUpgradePayload({ contractName, contractVersion, runtimeType, contractFilePath, params })
 ```
 
@@ -40,7 +40,7 @@
 
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - contractName: 合约名(string)
-```node
+```javascript
 	createContractFreezePayload({ contractName })
 ```
 
@@ -52,7 +52,7 @@
 
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - contractName: 合约名(string)
-```node
+```javascript
 	createContractUnfreezePayload({ contractName })
 ```
 
@@ -64,7 +64,7 @@
 
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - contractName: 合约名(string)
-```node
+```javascript
 	createContractRevokePayload({ contractName })
 ```
 
@@ -75,7 +75,7 @@
 **参数说明**
   - payload: 待签名payload
   - userInfoList: 需要签名的用户列表（array[class UserInfo]）
-```node
+```javascript
 	signContractManagePayload(payload, userInfoList)
 ```
 
@@ -85,7 +85,7 @@
 
 **参数说明**
   - signedPayloadBytesArray: 已签名payload列表(array[payloadBytes])
-```node
+```javascript
 	mergeContractManageSignedPayload(signedPayloadBytesArray)
 ```
 
@@ -95,7 +95,7 @@
 
 **参数说明**
   - mergedPayload: 多签结果
-```node
+```javascript
 	async sendContractManageRequest(mergedPayload)
 ```
 
@@ -109,7 +109,7 @@
   - contractName: 合约名称(string)
   - method: 合约方法(string)
   - params: 合约参数(k-v Object对象)
-```node
+```javascript
 	async invokeUserContract({ contractName, method, params })
 ```
 
@@ -123,7 +123,7 @@
   - contractName: 合约名称(string)
   - method: 合约方法(string)
   - params: 合约参数(k-v Object对象)
-```node
+```javascript
 	async queryContract({ contractName, method, params })
 ```
 
@@ -135,7 +135,7 @@
   - contractName: 合约名称(string)
   - method: 合约方法(string)
   - params: 合约参数(k-v Object对象)
-```node
+```javascript
 	getTxRequest(contractName, method, params)
 ```
 
@@ -146,7 +146,7 @@
 **参数说明**
   - request: 已构造好的交易体
   - txId: getTxRequest方法的返回值
-```node
+```javascript
 	async sendTxRequest(request, txId)
 ```
 
@@ -157,7 +157,7 @@
 
 **参数说明**
   - txId: 交易ID(string)
-```node
+```javascript
   async getTxByTxId(txId)
 ```
 
@@ -168,7 +168,7 @@
 **参数说明**
   - blockHeight: 区块高度,若为-1，将返回最新区块(number)
   - withRWSet: 是否返回读写集(boolean)
-```node
+```javascript
   async getBlockByHeight(blockHeight, withRWSet)
 ```
 
@@ -179,7 +179,7 @@
 **参数说明**
   - blockHash: 区块哈希(string)
   - withRWSet: 是否返回读写集(boolean)
-```node
+```javascript
   async getBlockByHash(blockHash, withRWSet)
 ```
 
@@ -190,7 +190,7 @@
 **参数说明**
   - txId: 交易ID(string)
   - withRWSet: 是否返回读写集(boolean)
-```node
+```javascript
   async getBlockByTxId(txId, withRWSet)
 ```
 
@@ -200,7 +200,7 @@
 
 **参数说明**
   - withRWSet: 是否返回读写集(boolean)
-```node
+```javascript
   async getLastConfigBlock(withRWSet)
 ```
 
@@ -210,7 +210,7 @@
 
 **参数说明**
   - nodeAddr: 节点地址,如127.0.0.1(string)
-```node
+```javascript
   async getNodeChainList(nodeAddr)
 ```
 
@@ -220,7 +220,7 @@
 
 **参数说明**
   - 包括：当前链最新高度，链节点信息
-```node
+```javascript
   async getChainInfo()
 ```
 
@@ -230,7 +230,7 @@
 
 **参数说明**
   - txId: 交易ID(string)
-```node
+```javascript
   async getBlockHeightByTxId(txId)
 ```
 
@@ -240,7 +240,7 @@
 
 **参数说明**
   - blockHash: 区块哈希(string)
-```node
+```javascript
   async getBlockHeightByHash(blockHash)
 ```
 
@@ -250,7 +250,7 @@
 
 **参数说明**
   - 返回当前最新区块高度
-```node
+```javascript
   async getCurrentBlockHeight()
 ```
 
@@ -260,7 +260,7 @@
 
 **参数说明**
   - blockHeight: 区块高度(number)
-```node
+```javascript
   async getBlockHeaderByHeight(blockHeight)
 ```
 
@@ -270,7 +270,7 @@
 
 **参数说明**
   - withRWSet: 是否返回读写集(boolean)
-```node
+```javascript
   async getLastBlock(withRWSet)
 ```
 
@@ -280,7 +280,7 @@
 
 **参数说明**
   - blockHeight: 区块高度(number)
-```node
+```javascript
   async getFullBlockByHeight(blockHeight)
 ```
 
@@ -289,7 +289,7 @@
 **类名**
   - chainConfig
 
-```node
+```javascript
   async getChainConfig()
 ```
 
@@ -299,7 +299,7 @@
 
 **参数说明**
   - blockHeight: 区块高度(number)
-```node
+```javascript
   async getChainConfigByBlockHeight(blockHeight)
 ```
 
@@ -307,7 +307,7 @@
 **类名**
   - chainConfig
 
-```node
+```javascript
   async getChainConfigSequence()
 ```
 
@@ -320,7 +320,7 @@
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - payload: 待签名payload
   - userInfo: 需要签名的用户（class UserInfo）
-```node
+```javascript
   signChainConfigPayload(payload, userInfo)
 ```
 
@@ -330,7 +330,7 @@
 
 **参数说明**
   - signedPayloadBytesArray: 签名之后的payload bytes数组(Array[payloadBytes])
-```node
+```javascript
   mergeChainConfigSignedPayload(signedPayloadBytesArray)
 ```
 
@@ -340,7 +340,7 @@
 
 **参数说明**
   - signPayloadBytes: 签名之后的payload bytes
-```node
+```javascript
   async sendChainConfigUpdateRequest(signPayloadBytes)
 ```
 
@@ -357,7 +357,7 @@
   - blockTxCapacity: 区块中最大交易数，其值范围为(0, +∞](number)
   - blockSize: 区块最大限制，单位MB，其值范围为(0, +∞](number)
   - blockInterval: 出块间隔，单位:ms，其值范围为[10, +∞](number)
-```node
+```javascript
   async createChainConfigBlockUpdatePayload({txTimestampVerify, txTimeout = -1, blockTxCapacity = -1, blockSize = -1, blockInterval = -1, userInfoList})
 ```
 
@@ -370,7 +370,7 @@
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - txSchedulerTimeout: 交易调度器从交易池拿到交易后, 进行调度的时间，其值范围为[0, 60]，若无需修改，请置为-1(number)
   - txSchedulerValidateTimeout: 交易调度器从区块中拿到交易后, 进行验证的超时时间，其值范围为[0, 60]，若无需修改，请置为-1(number)
-```node
+```javascript
   async ceateChainConfigCoreUpdatePayload({txSchedulerTimeout = -1, txSchedulerValidateTimeout = -1,  userInfoList,})
 ```
 
@@ -383,7 +383,7 @@
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - orgId: 组织Id(string)
   - root: 根证书(string)
-```node
+```javascript
   async createChainConfigTrustRootAddPayload({ orgId, root })
 ```
 
@@ -396,7 +396,7 @@
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - orgId: 组织Id(string)
   - root: 根证书(string)
-```node
+```javascript
   async createChainConfigTrustRootUpdatePayload({ orgId, root })
 ```
 
@@ -408,7 +408,7 @@
 
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - orgId: 组织Id(string)
-```node
+```javascript
   async createChainConfigTrustRootDeletePayload({ orgId })
 ```
 
@@ -423,7 +423,7 @@
   - rule: 权限内容(string)
   - orgList: 组织列表(Array[string])
   - roleList: 权限列表(Array[string])
-```node
+```javascript
   async createChainConfigPermissionAddPayload({ permissionResourceName, rule,  orgList = [], roleList = [] })
 ```
 
@@ -438,7 +438,7 @@
   - rule: 权限内容(string)
   - orgList: 组织列表(Array[string])
   - roleList: 权限列表(Array[string])
-```node
+```javascript
   async createChainConfigPermissionUpdatePayload({ permissionResourceName, rule,  orgList, roleList })
 ```
 
@@ -450,7 +450,7 @@
 
   &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
   - permissionResourceName: 权限名(string)
-```node
+```javascript
   async createChainConfigPermissionDeletePayload({ permissionResourceName })
 ```
 
@@ -461,7 +461,7 @@
 **参数说明**
   - orgId: 节点组织Id(string)
   - nodeIds: 节点Id数组(Array[string])
-```node
+```javascript
   async createChainConfigConsensusNodeIdAddPayload(orgId, nodeIds)
 ```
 
@@ -473,7 +473,7 @@
   - orgId: 节点组织Id(string)
   - nodeId: 旧节点Id(string)
   - newNodeId: 新节点Id(string)
-```node
+```javascript
   async createChainConfigConsensusNodeIdUpdatePayload(orgId, nodeId, newNodeId)
 ```
 
@@ -484,7 +484,7 @@
 **参数说明**
   - orgId: 节点组织Id(string)
   - nodeId: 节点Id(string)
-```node
+```javascript
   async createChainConfigConsensusNodeIdDeletePayload(orgId, nodeId)
 ```
 
@@ -495,7 +495,7 @@
 **参数说明**
   - orgId: 节点组织Id(string)
   - nodeIds: 节点Id数组(Array[string])
-```node
+```javascript
   async createChainConfigConsensusNodeOrgAddPayload(orgId, nodeIds)
 ```
 
@@ -506,7 +506,7 @@
 **参数说明**
   - orgId: 节点组织Id(string)
   - nodeIds: 节点Id数组(Array[string])
-```node
+```javascript
   async createChainConfigConsensusNodeOrgUpdatePayload(orgId, nodeIds)
 ```
 
@@ -516,7 +516,7 @@
 
 **参数说明**
   - orgId: 节点组织Id(string)
-```node
+```javascript
   async createChainConfigConsensusNodeOrgDeletePayload(orgId)
 ```
 
@@ -526,7 +526,7 @@
 
 **参数说明**
   - kvs: 字段key、value对(k-v Object对象)
-```node
+```javascript
   async createChainConfigConsensusExtAddPayload(kvs)
 ```
 
@@ -536,7 +536,7 @@
 
 **参数说明**
   - kvs: 字段key、value对(k-v Object对象)
-```node
+```javascript
   async createChainConfigConsensusExtUpdatePayload(kvs)
 ```
 
@@ -546,7 +546,7 @@
 
 **参数说明**
   - keys: 字段key数组(Array[string])
-```node
+```javascript
   async createChainConfigConsensusExtDeletePayload(keys)
 ```
 
@@ -557,7 +557,7 @@
 
 **参数说明**
   - 在response.ContractResult.Result字段中返回成功添加的certHash
-```node
+```javascript
   async addCert()
 ```
 
@@ -567,7 +567,7 @@
 
 **参数说明**
   - certHashes: 证书Hash列表(Array[string])
-```node
+```javascript
   async deleteCert(certHashes)
 ```
 
@@ -577,7 +577,7 @@
 
 **参数说明**
   - certHashes: 证书Hash列表(Array[string])
-```node
+```javascript
   async queryCert(certHashes)
 ```
 
@@ -586,7 +586,7 @@
   - certMgr
 
 **参数说明**
-```node
+```javascript
   async getCertHash()
 ```
 
@@ -597,7 +597,7 @@
 **参数说明**
   - method: CERTS_FROZEN(证书冻结)/CERTS_UNFROZEN(证书解冻)/CERTS_REVOCATION(证书吊销)
   - params: 证书管理操作参数
-```node
+```javascript
   async createCertManagePayload(method, params)
 ```
 
@@ -607,7 +607,7 @@
 
 **参数说明**
   - certs: 证书列表(Array[string])
-```node
+```javascript
   async createCertManageFrozenPayload(certs)
 ```
 
@@ -617,7 +617,7 @@
 
 **参数说明**
   - certs: 证书列表(Array[string])
-```node
+```javascript
   async createCertManageUnfrozenPayload(certs)
 ```
 
@@ -627,7 +627,7 @@
 
 **参数说明**
   - certCrl: 吊销证书的crl(string)
-```node
+```javascript
   async createCertManageRevocationPayload(certCrl)
 ```
 
@@ -637,7 +637,7 @@
 
 **参数说明**
   - payload: 待签名payload
-```node
+```javascript
   signCertManagePayload(payload)
 ```
 
@@ -647,7 +647,7 @@
 
 **参数说明**
   - signedPayloadBytesArray: 签名之后的payload bytes数组(Array[payloadBytes])
-```node
+```javascript
   mergeCertManageSignedPayload(signedPayloadBytesArray)
 ```
 
@@ -657,7 +657,7 @@
 
 **参数说明**
   - payloadBytes: 签名之后的payload bytes
-```node
+```javascript
   async sendCertManageRequest(payloadBytes)
 ```
 
@@ -671,7 +671,7 @@
   - endBlock: 订阅结束区块高度，若为-1，表示订阅实时最新区块(number)
   - withRwSet: 是否返回读写集(boolean)
   - callBack: 回调函数，第一个参数是监听到的的block区块，第二个参数是错误信息
-```node
+```javascript
   subscribeBlock(startBlock, endBlock, withRwSet, callBack)
 ```
 
@@ -685,7 +685,7 @@
   - txType: 订阅交易类型,若为common.TxType(-1)，表示订阅所有交易类型(number)
   - txIds: 订阅txId列表，若为空(null)，表示订阅所有txId(Array[string])
   - callBack: 回调函数，第一个参数是监听到的交易，第二个参数是错误信息
-```node
+```javascript
   subscribeTx(startBlock, endBlock, txType, txIds, callBack)
 ```
 
@@ -697,7 +697,7 @@
   - topic: 订阅的主题(string)
   - contractName: 智能合约名称(string)
   - callBack: 回调函数，第一个参数是监听到的合约事件，第二个参数是错误信息
-```node
+```javascript
   subscribeContractEvent(topic, contractName, callBack)
 ```
 
@@ -709,7 +709,7 @@
   - txType: 订阅交易类型，目前已支持：区块消息订阅(common.TxType_SUBSCRIBE_BLOCK_INFO)、交易消息订阅(common.TxType_SUBSCRIBE_TX_INFO)、合约事件订阅(common.TxType.CONTRACT_EVENT_INFO)
   - payloadBytes: 消息订阅参数payload
   - callBack: 回调函数，第一个参数是监听到的事件返回，第二个参数是错误信息
-```node
+```javascript
   subscribe(payloadBytes, txType, callBack)
 ```
 
@@ -720,7 +720,7 @@
   - certCompression
 
 **参数说明**
-```node
+```javascript
   async enableCertHash()
 ```
 
@@ -729,7 +729,7 @@
   - certCompression
 
 **参数说明**
-```node
+```javascript
   async disableCertHash()
 ```
 
@@ -738,7 +738,7 @@
 **类名**
   - easyCodec
 
-```node
+```javascript
 	easyCodecItemToParamsMap(easyCodecObj)
 ```
 
@@ -748,7 +748,7 @@
   - callSystemContruct
 
 **参数说明**
-```node
+```javascript
   async getArchivedBlockHeight()
 ```
 
@@ -758,7 +758,7 @@
 
 **参数说明**
   - targetBlockHeight: 目标区块高度(number)
-```node
+```javascript
   createArchiveBlockPayload(targetBlockHeight)
 ```
 
@@ -768,7 +768,7 @@
 
 **参数说明**
   - fullBlock: 完整区块的bytes
-```node
+```javascript
   createRestoreBlockPayload(fullBlock)
 ```
 
@@ -778,7 +778,7 @@
 
 **参数说明**
   - payloadBytes: 待签名payloadBytes
-```node
+```javascript
   signArchivePayload(payloadBytes)
 ```
 
@@ -788,7 +788,7 @@
 
 **参数说明**
   - mergeSignedPayloadBytes: 签名之后的payloadBytes
-```node
+```javascript
   async sendArchiveBlockRequest(mergeSignedPayloadBytes)
 ```
 
@@ -798,7 +798,7 @@
 
 **参数说明**
   - fullBlock: 完整区块的bytes
-```node
+```javascript
   async restoreBlock(fullBlock)
 ```
 
@@ -808,7 +808,7 @@
 
 **参数说明**
   - txId: 交易Id(string)
-```node
+```javascript
   async getArchivedTxByTxId(txId)
 ```
 
@@ -819,7 +819,7 @@
 **参数说明**
   - blockHeight: 区块高度(number)
   - withRWSet: 是否返回读写集(boolean)
-```node
+```javascript
   async getArchivedBlockByHeight(blockHeight, withRWSet)
 ```
 
@@ -829,7 +829,7 @@
 
 **参数说明**
   - blockHeight: 区块高度(number)
-```node
+```javascript
   async getArchivedFullBlockByHeight(blockHeight)
 ```
 
@@ -840,7 +840,7 @@
 **参数说明**
   - hash: 区块哈希(string)
   - withRWSet: 是否返回读写集(boolean)
-```node
+```javascript
   async getArchivedBlockByHash(hash, withRWSet)
 ```
 
@@ -851,14 +851,14 @@
 **参数说明**
   - txId: 交易Id(string)
   - withRWSet: 是否返回读写集(boolean)
-```node
+```javascript
   async getArchivedBlockByTxId(txId, withRWSet)
 ```
 
 ## 9 系统类接口
 ### 9.1 SDK停止接口
 *关闭连接池连接，释放资源*
-```node
+```javascript
 	stop()
 ```
 
@@ -871,7 +871,7 @@
   - userInfo: 用户类(calss UserInfo)
   - node: 节点类(class node)
 
-```node
+```javascript
 	constructor(chainID, userInfo, node)
 ```
 
@@ -882,7 +882,7 @@
   - userInfo: 用户类(calss UserInfo)
   - node: 节点类(class node)
 
-```node
+```javascript
 	constructor(chainID, userInfo, node)
 ```
 
@@ -893,7 +893,7 @@
   - userInfo: 用户类(calss UserInfo)
   - node: 节点类(class node)
 
-```node
+```javascript
 	constructor(chainID, userInfo, node)
 ```
 
@@ -904,7 +904,7 @@
   - userInfo: 用户类(calss UserInfo)
   - node: 节点类(class node)
 
-```node
+```javascript
 	constructor(chainID, userInfo, node)
 ```
 
@@ -916,7 +916,7 @@
   - userInfo: 用户类(calss UserInfo)
   - node: 节点类(class node)
 
-```node
+```javascript
 	constructor(chainConfig, chainID, userInfo, node)
 ```
 
@@ -927,12 +927,12 @@
   - userInfo: 用户类(calss UserInfo)
   - node: 节点类(class node)
 
-```node
+```javascript
 	constructor(chainID, userInfo, node)
 ```
 
 ### 10.7 EasyCodec
-```node
+```javascript
 	constructor()
 ```
 
@@ -950,7 +950,7 @@
   - dbPort: 数据库端口
   - dbUsername: 数据库用户名
   - dbPassword: 数据库密码
-```node
+```javascript
 	constructor(chainID, userInfo, node, callSystemContract, { type = 'mysql', dbHost, dbPort, dbUsername, dbPassword })
 ```
 
@@ -961,7 +961,7 @@
   - userSignKeyPath: 用户私钥路径
   - userSignCertPath: 用户证书路径
 
-```node
+```javascript
 	constructor(orgID, userSignKeyPath, userSignCertPath)
 ```
 
@@ -975,7 +975,7 @@
   - tlsEnable: 是否开启tls(boolean)
   - options: 类型k-v Object(pem: 根ca证书Buffer, clientKey: 客户端私钥Buffer, clientCert: 客户端证书Buffer, ssl-target-name-override: 节点域名，对应证书中的sans字段)
 
-```node
+```javascript
 	constructor(nodeConfigArray, requestTimeout)
 ```
 
@@ -990,7 +990,7 @@
   - timeout: 延时，单位ms
   - archiveConfig: 参考10.8数据库参数
 
-```node
+```javascript
 	constructor(chainID, orgID, userSignKeyPath, userSignCertPath, nodeConfigArray, timeout, archiveConfig = {},
   )
 ```
