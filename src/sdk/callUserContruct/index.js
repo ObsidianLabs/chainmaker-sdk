@@ -71,12 +71,13 @@ class CallUserContruct {
     return { txId, result };
   }
 
-  getTxRequest(payloadBytes, txType) {
+  getTxRequest(contractName, method, params) {
+    const payloadBytes = this.createTransactPayload({ contractName, method, params });
     const txId = utils.newTxID();
     const request = utils.newRequest(
       txId,
       this.chainID,
-      txType,
+      utils.common.TxType.INVOKE_USER_CONTRACT,
       this.userInfo.orgID,
       this.userInfo.userSignCertBytes,
       this.userInfo.isFullCert,

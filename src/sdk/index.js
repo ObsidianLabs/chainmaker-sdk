@@ -52,6 +52,10 @@ class Sdk {
     this.archive = new Archive(chainID, this.userInfo, this.node, this.callSystemContruct, archiveConfig);
   }
 
+  getChainMakerServerVersion() {
+    return this.node.getChainMakerServerVersion();
+  }
+
   stop() {
     this.archive.disconnect();
     this.node.close();

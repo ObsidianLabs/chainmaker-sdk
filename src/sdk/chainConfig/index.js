@@ -54,7 +54,7 @@ class ChainConfig {
   }
 
   async createChainConfigBlockUpdatePayload({
-    txTimestampVerify, txTimeout = -1, blockTxCapacity = -1, blockSize = -1, blockInterval = -1, userInfoList,
+    txTimestampVerify, txTimeout = -1, blockTxCapacity = -1, blockSize = -1, blockInterval = -1,
   }) {
     const params = {};
     if (txTimeout !== -1 && txTimeout < 600) {
@@ -85,10 +85,6 @@ class ChainConfig {
       params.block_interval = `${blockInterval}`;
     }
 
-    if (!userInfoList || userInfoList.length === 0) {
-      throw new Error('[userInfoList] not found');
-    }
-
     return await this.createSystemContractPayload({
       contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_CHAIN_CONFIG),
       method: utils.enum2str(utils.common.ConfigFunction, utils.common.ConfigFunction.BLOCK_UPDATE),
@@ -100,14 +96,14 @@ class ChainConfig {
     txTimestampVerify, txTimeout = -1, blockTxCapacity = -1, blockSize = -1, blockInterval = -1, userInfoList,
   }) {
     const payload = await this.createChainConfigBlockUpdatePayload({
-      txTimestampVerify, txTimeout, blockTxCapacity, blockSize, blockInterval, userInfoList,
+      txTimestampVerify, txTimeout, blockTxCapacity, blockSize, blockInterval,
     });
     const response = this.signAndSendRequest(payload, userInfoList);
     return response;
   }
 
   ceateChainConfigCoreUpdatePayload({
-    txSchedulerTimeout = -1, txSchedulerValidateTimeout = -1,  userInfoList,
+    txSchedulerTimeout = -1, txSchedulerValidateTimeout = -1,
   }) {
     const params = {};
     if (txSchedulerTimeout !== -1 && txSchedulerTimeout > 0 && txSchedulerTimeout <= 60) {
@@ -122,10 +118,6 @@ class ChainConfig {
       throw new Error('[tx_scheduler_validate_timeout] should be [0, 60]');
     }
 
-    if (!userInfoList || userInfoList.length === 0) {
-      throw new Error('[userInfoList] not found');
-    }
-
     return this.createSystemContractPayload({
       contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_CHAIN_CONFIG),
       method: utils.enum2str(utils.common.ConfigFunction, utils.common.ConfigFunction.CORE_UPDATE),
@@ -137,7 +129,7 @@ class ChainConfig {
     txSchedulerTimeout = -1, txSchedulerValidateTimeout = -1,  userInfoList,
   }) {
     const payload = await this.ceateChainConfigCoreUpdatePayload({
-      txSchedulerTimeout, txSchedulerValidateTimeout,  userInfoList,
+      txSchedulerTimeout, txSchedulerValidateTimeout,
     });
     const response = this.signAndSendRequest(payload, userInfoList);
     return response;

@@ -58,7 +58,7 @@ class UserContruct {
       runtimeType, contractFilePath, params,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendContractManageRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray);
   }
 
   createContractUpgradePayload({ contractName, contractVersion, runtimeType, contractFilePath, params }) {
@@ -76,7 +76,7 @@ class UserContruct {
       runtimeType, contractFilePath, params,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendContractManageRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray);
   }
 
   createContractFreezePayload({ contractName }) {
@@ -92,7 +92,7 @@ class UserContruct {
       contractName,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendContractManageRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray);
   }
 
   createContractUnfreezePayload({ contractName }) {
@@ -108,7 +108,7 @@ class UserContruct {
       contractName,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendContractManageRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray);
   }
 
   createContractRevokePayload({ contractName }) {
@@ -124,7 +124,7 @@ class UserContruct {
       contractName,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendContractManageRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray);
   }
 
   /* user contract ...
@@ -194,8 +194,25 @@ class UserContruct {
     return utils.mergeContractMgmtPayload(signedPayloadBytesArray, utils.common.ContractMgmtPayload);
   }
 
+  async sendContractManageRequest(mergedPayload) {
+    const txId = utils.newTxID();
+    const request = utils.newRequest(
+      txId,
+      this.chainID,
+      utils.common.TxType.MANAGE_USER_CONTRACT,
+      this.userInfo.orgID,
+      this.userInfo.userSignCertBytes,
+      this.userInfo.isFullCert,
+      mergedPayload.serializeBinary(),
+      this.userInfo.userSignKeyBytes,
+    );
+
+    const result = await this.node.sendRequest(request);
+    return { txId, result };
+  }
+
   // return promise
-  async sendContractManageRequest(signedPayloadBytesArray) {
+  async sendRequest(signedPayloadBytesArray) {
     const mergedPayload = this.mergeContractManageSignedPayload(
       signedPayloadBytesArray,
       utils.common.ContractMgmtPayload,

@@ -1,61 +1,92 @@
-#
+详细接口描述，请参看：[sdk_interface.md](./sdk_interface.md)
 
-[google grpc example](https://grpc.io/docs/languages/node/basics/)
+# 接口清单
 
-[node grpc ssl](https://github.com/gbahamondezc/node-grpc-ssl)
+## 1 用户合约接口
+ 1.1 创建合约待签名payload生成
+ 1.2 升级合约待签名payload生成
+ 1.3 冻结合约payload生成
+ 1.4 解冻合约payload生成
+ 1.5 吊销合约payload生成
+ 1.6 合约管理获取Payload签名
+ 1.7 合约管理Payload签名收集&合并
+ 1.8 发送合约管理请求（创建、更新、冻结、解冻、吊销）
+ 1.9 合约调用
+ 1.10 合约查询接口调用
+ 1.11 构造待发送交易体
+ 1.12 发送已构造好的交易体
+## 2 系统合约接口
+ 2.1 根据交易Id查询交易
+ 2.2 根据区块高度查询区块
+ 2.3 根据区块哈希查询区块
+ 2.4 根据交易Id查询区块
+ 2.5 查询最新的配置块
+ 2.6 查询节点加入的链信息
+ 2.7 查询链信息
+ 2.8 根据交易Id获取区块高度
+ 2.9 根据区块Hash获取区块高度
+ 2.10 查询当前最新区块高度
+ 2.11 根据区块高度查询区块头
+ 2.12 查询最新区块
+ 2.13 根据区块高度查询完整区块
+## 3 链配置接口
+ 3.1 查询最新链配置
+ 3.2 根据指定区块高度查询最近链配置
+ 3.3 查询最新链配置序号Sequence
+ 3.4 链配置更新获取Payload签名
+ 3.5 链配置更新Payload签名收集&合并
+ 3.6 发送链配置更新请求
+ 3.7 更新Core模块待签名payload生成
+ 3.8 更新Core模块待签名payload生成
+ 3.9 添加信任组织根证书待签名payload生成
+ 3.10 更新信任组织根证书待签名payload生成
+ 3.11 删除信任组织根证书待签名payload生成
+ 3.12 添加权限配置待签名payload生成
+ 3.13 更新权限配置待签名payload生成
+ 3.14 删除权限配置待签名payload生成
+ 3.15 添加共识节点地址待签名payload生成
+ 3.16 更新共识节点地址待签名payload生成
+ 3.17 删除共识节点地址待签名payload生成
+ 3.18 添加共识节点待签名payload生成
+ 3.19 更新共识节点待签名payload生成
+ 3.20 删除共识节点待签名payload生成
+ 3.21 添加共识扩展字段待签名payload生成
+ 3.22 添加共识扩展字段待签名payload生成
+ 3.23 添加共识扩展字段待签名payload生成
+## 4 证书管理接口
+ 4.1 用户证书添加
+ 4.2 用户证书删除
+ 4.3 用户证书查询
+ 4.4 获取用户证书哈希
+ 4.5 生成证书管理操作Payload（三合一接口）
+ 4.6 生成证书冻结操作Payload
+ 4.7 生成证书解冻操作Payload
+ 4.8 生成证书吊销操作Payload
+ 4.9 待签payload签名
+ 4.10 证书管理Payload签名收集&合并
+ 4.11 发送证书管理请求（证书冻结、解冻、吊销）
+## 5 消息订阅接口
+ 5.1 区块订阅
+ 5.2 交易订阅
+ 5.3 合约事件订阅
+ 5.4 多合一订阅
+## 6 证书压缩
+ 6.1 启用压缩证书功能
+ 6.2 停用压缩证书功能
+## 7 工具类
+ 7.1 将EasyCodec编码解码成map
+## 8 数据归档接口
+ 8.1 获取已归档区块高度
+ 8.2 构造数据归档区块Payload
+ 8.3 构造归档归档数据恢复Payload
+ 8.4 获取归档操作Payload签名
+ 8.5 发送归档请求
+ 8.6 归档数据恢复
+ 8.7 根据交易Id查询已归档交易
+ 8.8 根据区块高度查询已归档区块
+ 8.9 根据区块高度查询已归档完整区块(包含：区块数据、读写集、合约事件日志)
+ 8.10 根据区块哈希查询已归档区块
+ 8.11 根据交易Id查询已归档区块
+## 9 系统类接口
+ 9.1 SDK停止接口
 
-[grpc server credential IF](https://grpc.github.io/grpc/node/grpc.ServerCredentials.html)
-
-
-
-# rsa self sign ca
-openssl genrsa -out ca-key.pem -des 1024
-
-openssl req -new -key ca-key.pem -out ca-csr.pem -password:baas2021
-
-openssl x509 -req -days 3650 -in ca-csr.pem -signkey ca-key.pem -out ca-cert.pem -password:baas2021
-
-
-## server cert
-openssl genrsa -out server-key.pem 1024 
-openssl req -new -key server-key.pem -config openssl.cnf -out server-csr.pem
-openssl x509 -req -days 730 -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -in server-csr.pem -out server-cert.pem -extensions v3_req -extfile openssl.cnf
-
-
-```openssl.cnf
-[req]
-    distinguished_name = req_distinguished_name
-    req_extensions = v3_req
-
-    [req_distinguished_name]
-    countryName = Country Name (2 letter code)
-    countryName_default = CN
-    stateOrProvinceName = State or Province Name (full name)
-    stateOrProvinceName_default = BeiJing
-    localityName = Locality Name (eg, city)
-    localityName_default = YaYunCun
-    organizationalUnitName	= Organizational Unit Name (eg, section)
-    organizationalUnitName_default	= Domain Control Validated
-    commonName = Internet Widgits Ltd
-    commonName_max	= 64
-
-    [ v3_req ]
-    # Extensions to add to a certificate request
-    basicConstraints = CA:FALSE
-    keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-    subjectAltName = @alt_names
-
-    [alt_names]
-    DNS.1 = ns1.dns.com
-    DNS.2 = ns2.dns.com
-    DNS.3 = ns3.dns.com
-    IP.1 = 192.168.1.84
-    IP.2 = 127.0.0.1
-    IP.3 = 127.0.0.2
-```
-
-## client cert
-
-openssl genrsa -out client-key.pem
-openssl req -new -key client-key.pem -out client-csr.pem
-openssl x509 -req -days 365 -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -in client-csr.pem -out client-cert.pem
