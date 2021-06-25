@@ -862,7 +862,135 @@
 	stop()
 ```
 
-### 10.2 获取链版本
-```go
-	GetChainMakerServerVersion() (string, error)
+## 10 类构造函数
+
+### 10.1 UserContruct
+
+**参数说明**
+  - chainID: chainId(string)
+  - userInfo: 用户类(calss UserInfo)
+  - node: 节点类(class node)
+
+```node
+	constructor(chainID, userInfo, node)
+```
+
+### 10.2 CallUserContruct
+
+**参数说明**
+  - chainID: chainId(string)
+  - userInfo: 用户类(calss UserInfo)
+  - node: 节点类(class node)
+
+```node
+	constructor(chainID, userInfo, node)
+```
+
+### 10.3 CallSystemContract
+
+**参数说明**
+  - chainID: chainId(string)
+  - userInfo: 用户类(calss UserInfo)
+  - node: 节点类(class node)
+
+```node
+	constructor(chainID, userInfo, node)
+```
+
+### 10.4 ChainConfig
+
+**参数说明**
+  - chainID: chainId(string)
+  - userInfo: 用户类(calss UserInfo)
+  - node: 节点类(class node)
+
+```node
+	constructor(chainID, userInfo, node)
+```
+
+### 10.5 CertMgr
+
+**参数说明**
+  - chainConfig: ChainConfig类(class ChainConfig)
+  - chainID: chainId(string)
+  - userInfo: 用户类(calss UserInfo)
+  - node: 节点类(class node)
+
+```node
+	constructor(chainConfig, chainID, userInfo, node)
+```
+
+### 10.6 Subscribe
+
+**参数说明**
+  - chainID: chainId(string)
+  - userInfo: 用户类(calss UserInfo)
+  - node: 节点类(class node)
+
+```node
+	constructor(chainID, userInfo, node)
+```
+
+### 10.7 EasyCodec
+```node
+	constructor()
+```
+
+### 10.8 Archive
+
+**参数说明**
+  - chainID: chainId(string)
+  - userInfo: 用户类(calss UserInfo)
+  - node: 节点类(class node)
+  - callSystemContract: 系统合约调用类(class callSystemContract)
+
+  &nbsp;&nbsp;&nbsp;&nbsp;数据库参数，类型：k-v Object对象
+  - type: 数据库类型，目前只支持mysql，默认为mysql，无需设置
+  - dbHost: 数据库地址
+  - dbPort: 数据库端口
+  - dbUsername: 数据库用户名
+  - dbPassword: 数据库密码
+```node
+	constructor(chainID, userInfo, node, callSystemContract, { type = 'mysql', dbHost, dbPort, dbUsername, dbPassword })
+```
+
+### 10.6 UserInfo
+
+**参数说明**
+  - orgID: 组织ID
+  - userSignKeyPath: 用户私钥路径
+  - userSignCertPath: 用户证书路径
+
+```node
+	constructor(orgID, userSignKeyPath, userSignCertPath)
+```
+
+### 10.6 Node
+
+**参数说明**
+  - requestTimeout: 延时，单位ms，默认3000
+
+  &nbsp;&nbsp;&nbsp;&nbsp;节点配置参数nodeConfigArray，类型：k-v Object数组(Array[Object])
+  - nodeAddr: 节点地址，ip+端口(string)
+  - tlsEnable: 是否开启tls(boolean)
+  - options: 类型k-v Object(pem: 根ca证书Buffer, clientKey: 客户端私钥Buffer, clientCert: 客户端证书Buffer, ssl-target-name-override: 节点域名，对应证书中的sans字段)
+
+```node
+	constructor(nodeConfigArray, requestTimeout)
+```
+
+### 10.6 Sdk
+
+**参数说明**
+  - chainID: chainId(string)
+  - orgID: 组织ID
+  - userSignKeyPath: 用户私钥路径
+  - userSignCertPath: 用户证书路径
+  - nodeConfigArray: 参考10.6nodeConfigArray
+  - timeout: 延时，单位ms
+  - archiveConfig: 参考10.8数据库参数
+
+```node
+	constructor(chainID, orgID, userSignKeyPath, userSignCertPath, nodeConfigArray, timeout, archiveConfig = {},
+  )
 ```
