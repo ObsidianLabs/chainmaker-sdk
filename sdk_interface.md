@@ -6,7 +6,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - contractName: 合约名(string)
   - contractVersion: 版本号(string)
   - runtimeType: 合约运行环境(number)
@@ -22,7 +22,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - contractName: 合约名(string)
   - contractVersion: 版本号(string)
   - runtimeType: 合约运行环境(number)
@@ -38,7 +38,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - contractName: 合约名(string)
 ```javascript
 	createContractFreezePayload({ contractName })
@@ -50,7 +50,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - contractName: 合约名(string)
 ```javascript
 	createContractUnfreezePayload({ contractName })
@@ -62,7 +62,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - contractName: 合约名(string)
 ```javascript
 	createContractRevokePayload({ contractName })
@@ -105,7 +105,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - contractName: 合约名称(string)
   - method: 合约方法(string)
   - params: 合约参数(k-v Object对象)
@@ -119,7 +119,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - contractName: 合约名称(string)
   - method: 合约方法(string)
   - params: 合约参数(k-v Object对象)
@@ -317,7 +317,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - payload: 待签名payload
   - userInfo: 需要签名的用户（class UserInfo）
 ```javascript
@@ -350,13 +350,13 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - txTimestampVerify: 是否需要开启交易时间戳校验(boolean)
   - (以下参数，若无需修改，请置为-1)
-  - txTimeout: 交易时间戳的过期时间(秒)，其值范围为[600, +∞)(number)
-  - blockTxCapacity: 区块中最大交易数，其值范围为(0, +∞](number)
-  - blockSize: 区块最大限制，单位MB，其值范围为(0, +∞](number)
-  - blockInterval: 出块间隔，单位:ms，其值范围为[10, +∞](number)
+  - txTimeout: 交易时间戳的过期时间(秒)，其值范围为`[600, +∞)(number)`
+  - blockTxCapacity: 区块中最大交易数，其值范围为`(0, +∞](number)`
+  - blockSize: 区块最大限制，单位MB，其值范围为`(0, +∞](number)`
+  - blockInterval: 出块间隔，单位:ms，其值范围为`[10, +∞](number)`
 ```javascript
   async createChainConfigBlockUpdatePayload({txTimestampVerify, txTimeout = -1, blockTxCapacity = -1, blockSize = -1, blockInterval = -1, userInfoList})
 ```
@@ -367,9 +367,9 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
-  - txSchedulerTimeout: 交易调度器从交易池拿到交易后, 进行调度的时间，其值范围为[0, 60]，若无需修改，请置为-1(number)
-  - txSchedulerValidateTimeout: 交易调度器从区块中拿到交易后, 进行验证的超时时间，其值范围为[0, 60]，若无需修改，请置为-1(number)
+  类型：k-v Object对象
+  - txSchedulerTimeout: 交易调度器从交易池拿到交易后, 进行调度的时间，其值范围为`[0, 60]`，若无需修改，请置为-1(number)
+  - txSchedulerValidateTimeout: 交易调度器从区块中拿到交易后, 进行验证的超时时间，其值范围为`[0, 60]`，若无需修改，请置为-1(number)
 ```javascript
   async ceateChainConfigCoreUpdatePayload({txSchedulerTimeout = -1, txSchedulerValidateTimeout = -1,  userInfoList,})
 ```
@@ -380,7 +380,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - orgId: 组织Id(string)
   - root: 根证书(string)
 ```javascript
@@ -393,7 +393,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - orgId: 组织Id(string)
   - root: 根证书(string)
 ```javascript
@@ -406,7 +406,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - orgId: 组织Id(string)
 ```javascript
   async createChainConfigTrustRootDeletePayload({ orgId })
@@ -418,7 +418,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - permissionResourceName: 权限名(string)
   - rule: 权限内容(string)
   - orgList: 组织列表(Array[string])
@@ -433,7 +433,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - permissionResourceName: 权限名(string)
   - rule: 权限内容(string)
   - orgList: 组织列表(Array[string])
@@ -448,7 +448,7 @@
 
 **参数说明**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;类型：k-v Object对象
+  类型：k-v Object对象
   - permissionResourceName: 权限名(string)
 ```javascript
   async createChainConfigPermissionDeletePayload({ permissionResourceName })
@@ -944,7 +944,7 @@
   - node: 节点类(class node)
   - callSystemContract: 系统合约调用类(class callSystemContract)
 
-  &nbsp;&nbsp;&nbsp;&nbsp;数据库参数，类型：k-v Object对象
+  数据库参数，类型：k-v Object对象
   - type: 数据库类型，目前只支持mysql，默认为mysql，无需设置
   - dbHost: 数据库地址
   - dbPort: 数据库端口
@@ -954,7 +954,7 @@
 	constructor(chainID, userInfo, node, callSystemContract, { type = 'mysql', dbHost, dbPort, dbUsername, dbPassword })
 ```
 
-### 10.6 UserInfo
+### 10.9 UserInfo
 
 **参数说明**
   - orgID: 组织ID
@@ -965,12 +965,12 @@
 	constructor(orgID, userSignKeyPath, userSignCertPath)
 ```
 
-### 10.6 Node
+### 10.10 Node
 
 **参数说明**
   - requestTimeout: 延时，单位ms，默认3000
 
-  &nbsp;&nbsp;&nbsp;&nbsp;节点配置参数nodeConfigArray，类型：k-v Object数组(Array[Object])
+  节点配置参数nodeConfigArray，类型：k-v Object数组(Array[Object])
   - nodeAddr: 节点地址，ip+端口(string)
   - tlsEnable: 是否开启tls(boolean)
   - options: 类型k-v Object(pem: 根ca证书Buffer, clientKey: 客户端私钥Buffer, clientCert: 客户端证书Buffer, ssl-target-name-override: 节点域名，对应证书中的sans字段)
@@ -979,7 +979,7 @@
 	constructor(nodeConfigArray, requestTimeout)
 ```
 
-### 10.6 Sdk
+### 10.11 Sdk
 
 **参数说明**
   - chainID: chainId(string)
@@ -991,6 +991,5 @@
   - archiveConfig: 参考10.8数据库参数
 
 ```javascript
-	constructor(chainID, orgID, userSignKeyPath, userSignCertPath, nodeConfigArray, timeout, archiveConfig = {},
-  )
+	constructor(chainID, orgID, userSignKeyPath, userSignCertPath, nodeConfigArray, timeout, archiveConfig = {})
 ```
