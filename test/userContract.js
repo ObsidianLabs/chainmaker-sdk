@@ -14,10 +14,10 @@ const contractFilePath = path.join(__dirname, './testFile/go_ctx.wasm');
 
 const { sdk, ['Utils']: utils } = sdkInit();
 
-describe('user contruct manager', async () => {
+describe('user contract manager', async () => {
   // this.timeout(6000);
   before(async () => {
-    await sdk.userContructMgr.createUserContract({
+    await sdk.userContractMgr.createUserContract({
       contractName,
       contractVersion,
       contractFilePath,
@@ -30,7 +30,7 @@ describe('user contruct manager', async () => {
   });
 
   it('create user contract', async () => {
-    const res = await sdk.userContructMgr.createUserContract({
+    const res = await sdk.userContractMgr.createUserContract({
       contractVersion,
       contractFilePath,
       contractName: createContractName,
@@ -45,7 +45,7 @@ describe('user contruct manager', async () => {
 
   it('upgrade user contract', async () => {
     await sleep(4);
-    const res = await sdk.userContructMgr.upgradeUserContract({
+    const res = await sdk.userContractMgr.upgradeUserContract({
       contractName,
       contractFilePath,
       contractVersion: contractUpGradeVersion,
@@ -57,7 +57,7 @@ describe('user contruct manager', async () => {
 
   it('freeze user contract', async () => {
     await sleep(4);
-    const res = await sdk.userContructMgr.freezeUserContract({
+    const res = await sdk.userContractMgr.freezeUserContract({
       contractName,
     });
     assert.strictEqual(0, res.result.code);
@@ -65,7 +65,7 @@ describe('user contruct manager', async () => {
 
   it('unfreeze user contract', async () => {
     await sleep(4);
-    const res = await sdk.userContructMgr.unFreezeUserContract({
+    const res = await sdk.userContractMgr.unFreezeUserContract({
       contractName,
     });
     assert.strictEqual(0, res.result.code);
@@ -73,7 +73,7 @@ describe('user contruct manager', async () => {
 
   it('invoke user contract', async () => {
     await sleep(4);
-    const res = await sdk.callUserContruct.invokeUserContract({
+    const res = await sdk.callUserContract.invokeUserContract({
       contractName, method: 'save', params: {
         file_hash: '1234567890',
         file_name: 'test.txt',
@@ -84,7 +84,7 @@ describe('user contruct manager', async () => {
 
   it('query user contract', async () => {
     await utils.sleep(5);
-    const res = await sdk.callUserContruct.queryContract({
+    const res = await sdk.callUserContract.queryContract({
       contractName, method: 'find_by_file_hash', params: {
         file_hash: '1234567890',
       },
@@ -93,7 +93,7 @@ describe('user contruct manager', async () => {
   });
 
   // it('revoke user contract', async () => {
-  //   const res = await sdk.userContructMgr.revokeUserContract({
+  //   const res = await sdk.userContractMgr.revokeUserContract({
   //     contractName: createContractName,
   //   });
   //   assert.strictEqual(0, res.result.code);

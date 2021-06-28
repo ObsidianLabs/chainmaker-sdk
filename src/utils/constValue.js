@@ -13,7 +13,7 @@
 // UNFREEZE_CONTRACT = 3;
 // Revocation of contract
 // REVOKE_CONTRACT = 4;
-const userContructMgrMethod = [0, 1, 2, 3, 4];
+const userContractMgrMethod = [0, 1, 2, 3, 4];
 
 // INVALID = 0;
 // native implement in chainmaker-go
@@ -37,5 +37,5 @@ const NEED_SRC_RESPONSE = true;
 const DEFAULT_SEQUENCE = 0;
 
 module.exports = {
-  userContructMgrMethod, runtimeType, NEED_SRC_RESPONSE, DEFAULT_SEQUENCE,
+  userContractMgrMethod, runtimeType, NEED_SRC_RESPONSE, DEFAULT_SEQUENCE,
 };

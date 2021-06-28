@@ -8,72 +8,72 @@ const sdkInit = require('../sdkInit');
 const { sdk } = sdkInit();
 
 const testGetTxByTxId = async (sdk, txId) => {
-  const response = await sdk.callSystemContruct.getTxByTxId(txId);
+  const response = await sdk.callSystemContract.getTxByTxId(txId);
   return response;
 };
 
 const testGetBlockByHeight = async (sdk, height, withRWSet) => {
-  const response = await sdk.callSystemContruct.getBlockByHeight(height, withRWSet);
+  const response = await sdk.callSystemContract.getBlockByHeight(height, withRWSet);
   return response;
 };
 
 const testGetBlockByHash = async (sdk, hash, withRWSet) => {
-  const response = await sdk.callSystemContruct.getBlockByHash(hash, withRWSet);
+  const response = await sdk.callSystemContract.getBlockByHash(hash, withRWSet);
   return response;
 };
 
 const testGetBlockByTxId = async (sdk, txId, withRWSet) => {
-  const response = await sdk.callSystemContruct.getBlockByTxId(txId, withRWSet);
+  const response = await sdk.callSystemContract.getBlockByTxId(txId, withRWSet);
   return response;
 };
 
 const testGetLastConfigBlock = async (sdk, withRWSet) => {
-  const response = await sdk.callSystemContruct.getLastConfigBlock(withRWSet);
+  const response = await sdk.callSystemContract.getLastConfigBlock(withRWSet);
   return response;
 };
 
 const testGetNodeChainList = async (sdk, nodeAddr) => {
-  const response = await sdk.callSystemContruct.getNodeChainList(nodeAddr);
+  const response = await sdk.callSystemContract.getNodeChainList(nodeAddr);
   return response;
 };
 
 const testGetChainInfo = async (sdk) => {
-  const response = await sdk.callSystemContruct.getChainInfo();
+  const response = await sdk.callSystemContract.getChainInfo();
   return response;
 };
 
 const testGetFullBlockByHeight = async (sdk, height) => {
-  const response = await sdk.callSystemContruct.getFullBlockByHeight(height);
+  const response = await sdk.callSystemContract.getFullBlockByHeight(height);
   return response;
 };
 
 const testGetLastBlock = async (sdk, withRWSet) => {
-  const response = await sdk.callSystemContruct.getLastBlock(withRWSet);
+  const response = await sdk.callSystemContract.getLastBlock(withRWSet);
   return response;
 };
 
 const testGetArchivedBlockHeight = async (sdk) => {
-  const response = await sdk.callSystemContruct.getArchivedBlockHeight();
+  const response = await sdk.callSystemContract.getArchivedBlockHeight();
   return response;
 };
 
 const testGetBlockHeightByTxId = async (sdk, txId) => {
-  const response = await sdk.callSystemContruct.getBlockHeightByTxId(txId);
+  const response = await sdk.callSystemContract.getBlockHeightByTxId(txId);
   return response;
 };
 
 const testGetBlockHeightByHash = async (sdk, hash) => {
-  const response = await sdk.callSystemContruct.getBlockHeightByHash(hash);
+  const response = await sdk.callSystemContract.getBlockHeightByHash(hash);
   return response;
 };
 
 const testGetCurrentBlockHeight = async (sdk) => {
-  const response = await sdk.callSystemContruct.getCurrentBlockHeight();
+  const response = await sdk.callSystemContract.getCurrentBlockHeight();
   return response;
 };
 
 const testGetBlockHeaderByHeight = async (sdk, height) => {
-  const response = await sdk.callSystemContruct.getBlockHeaderByHeight(height);
+  const response = await sdk.callSystemContract.getBlockHeaderByHeight(height);
   return response;
 };
 

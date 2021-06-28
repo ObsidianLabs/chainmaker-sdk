@@ -4,7 +4,7 @@
  */
 const utils = require('../../utils');
 
-class CallUserContruct {
+class CallUserContract {
   constructor(chainID, userInfo, node) {
     this.chainID = chainID;
     this.userInfo = userInfo;
@@ -93,4 +93,4 @@ class CallUserContruct {
   }
 }
 
-module.exports = CallUserContruct;
+module.exports = CallUserContract;

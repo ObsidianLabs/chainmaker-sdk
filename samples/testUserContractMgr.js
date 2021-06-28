@@ -6,7 +6,7 @@ const sdkInit = require('../sdkInit');
 const { sdk, ['Utils']: utils } = sdkInit();
 
 const testCreateUserContract = async (sdk, contractName, contractVersion, contractFilePath) => {
-  const response = await sdk.userContructMgr.createUserContract({
+  const response = await sdk.userContractMgr.createUserContract({
     contractName,
     contractVersion,
     contractFilePath,
@@ -20,7 +20,7 @@ const testCreateUserContract = async (sdk, contractName, contractVersion, contra
 };
 
 const testUpgradeUserContract = async (sdk, contractName, contractVersion, contractFilePath) => {
-  const response = await sdk.userContructMgr.upgradeUserContract({
+  const response = await sdk.userContractMgr.upgradeUserContract({
     contractName,
     contractVersion,
     contractFilePath,
@@ -31,28 +31,28 @@ const testUpgradeUserContract = async (sdk, contractName, contractVersion, contr
 };
 
 const testFreezeUserContract = async (sdk, contractName) => {
-  const response = await sdk.userContructMgr.freezeUserContract({
+  const response = await sdk.userContractMgr.freezeUserContract({
     contractName,
   });
   return response;
 };
 
 const testUnFreezeUserContract = async (sdk, contractName) => {
-  const response = await sdk.userContructMgr.unFreezeUserContract({
+  const response = await sdk.userContractMgr.unFreezeUserContract({
     contractName,
   });
   return response;
 };
 
 const testRevokeUserContract = async (sdk, contractName) => {
-  const response = await sdk.userContructMgr.revokeUserContract({
+  const response = await sdk.userContractMgr.revokeUserContract({
     contractName,
   });
   return response;
 };
 
 const testInvokeUserContract = async (sdk, contractName) => {
-  const response = await sdk.callUserContruct.invokeUserContract({
+  const response = await sdk.callUserContract.invokeUserContract({
     contractName, method: 'save', params: {
       file_hash: '1234567890',
       file_name: 'test.txt',
@@ -62,7 +62,7 @@ const testInvokeUserContract = async (sdk, contractName) => {
 };
 
 const testQueryUserContract = async (sdk, contractName) => {
-  const response = await sdk.callUserContruct.queryContract({
+  const response = await sdk.callUserContract.queryContract({
     contractName, method: 'find_by_file_hash', params: {
       file_hash: '1234567890',
     },

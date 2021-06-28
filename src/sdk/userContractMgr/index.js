@@ -7,7 +7,7 @@ const cv = require('../../utils/constValue');
 const _ = require('loadsh');
 const fs = require('fs');
 
-class UserContruct {
+class UserContract {
   constructor(chainID, userInfo, node) {
     this.chainID = chainID;
     this.userInfo = userInfo;
@@ -26,7 +26,7 @@ class UserContruct {
         if (!cv.runtimeType.includes(runtimeType)) {
           throw new Error(`runTimeType: Unsupported value: ${runtimeType}`);
         }
-        if (!cv.userContructMgrMethod.includes(method)) {
+        if (!cv.userContractMgrMethod.includes(method)) {
           throw new Error(`method: Unsupported value: ${method}`);
         }
         break;
@@ -235,4 +235,4 @@ class UserContruct {
   }
 }
 
-module.exports = UserContruct;
+module.exports = UserContract;

@@ -2,9 +2,9 @@
  Copyright (C) THL A29 Limited, a Tencent company. All rights reserved.
    SPDX-License-Identifier: Apache-2.0
  */
-const UserContructMgr = require('./userContructMgr');
-const CallUserContruct = require('./callUserContruct');
-const CallSystemContruct = require('./callSystemContract');
+const UserContractMgr = require('./userContractMgr');
+const CallUserContract = require('./callUserContract');
+const CallSystemContract = require('./callSystemContract');
 const ChainConfig = require('./chainConfig');
 const UserInfo = require('./userInfo');
 const CertMgr = require('./certMgr');
@@ -33,11 +33,11 @@ class Sdk {
     this.node = new Node(nodeConfigArray, timeout);
 
     this.userInfo = new UserInfo(orgID, userSignKeyPath, userSignCertPath);
-    this.userContructMgr = new UserContructMgr(chainID, this.userInfo, this.node);
+    this.userContractMgr = new UserContractMgr(chainID, this.userInfo, this.node);
 
-    this.callUserContruct = new CallUserContruct(chainID, this.userInfo, this.node);
+    this.callUserContract = new CallUserContract(chainID, this.userInfo, this.node);
 
-    this.callSystemContruct = new CallSystemContruct(chainID, this.userInfo, this.node);
+    this.callSystemContract = new CallSystemContract(chainID, this.userInfo, this.node);
 
     this.chainConfig = new ChainConfig(chainID, this.userInfo, this.node);
 
@@ -49,7 +49,7 @@ class Sdk {
 
     this.easyCodec = easyCodec;
 
-    this.archive = new Archive(chainID, this.userInfo, this.node, this.callSystemContruct, archiveConfig);
+    this.archive = new Archive(chainID, this.userInfo, this.node, this.callSystemContract, archiveConfig);
   }
 
   getChainMakerServerVersion() {

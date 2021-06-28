@@ -1,4 +1,4 @@
-# ChainMaker Js SDK 接口说明
+# ChainMaker Nodejs SDK 接口说明
 
 ## 概述
 
@@ -6,7 +6,7 @@
 
 提供的接口，覆盖合约管理、链配置管理、证书管理、多签收集、各类查询操作、事件订阅、数据归档等场景，满足了不同的业务场景需要。
 
-## 关键词
+## 约定概念
 
 - **`Node`（节点）**：代表一个链节点的基本信息，包括：节点地址、连接数、是否启用`TLS`认证等信息
 - **`ChainClient`（链客户端）**：所有客户端对链节点的操作接口都来自`ChainClient`
@@ -14,7 +14,7 @@
 ## 1 用户合约接口
 ### 1.1 创建合约待签名payload生成
 **类名**
-  - userContructMgr
+  - userContractMgr
 
 **参数说明**
 
@@ -30,7 +30,7 @@
 
 ### 1.2 升级合约待签名payload生成
 **类名**
-  - userContructMgr
+  - userContractMgr
 
 **参数说明**
 
@@ -46,7 +46,7 @@
 
 ### 1.3 冻结合约payload生成
 **类名**
-  - userContructMgr
+  - userContractMgr
 
 **参数说明**
 
@@ -58,7 +58,7 @@
 
 ### 1.4 解冻合约payload生成
 **类名**
-  - userContructMgr
+  - userContractMgr
 
 **参数说明**
 
@@ -70,7 +70,7 @@
 
 ### 1.5 吊销合约payload生成
 **类名**
-  - userContructMgr
+  - userContractMgr
 
 **参数说明**
 
@@ -82,7 +82,7 @@
 
 ### 1.6 合约管理获取Payload签名
 **类名**
-  - userContructMgr
+  - userContractMgr
 
 **参数说明**
   - payload: 待签名payload
@@ -93,7 +93,7 @@
 
 ### 1.7 合约管理Payload签名收集&合并
 **类名**
-  - userContructMgr
+  - userContractMgr
 
 **参数说明**
   - signedPayloadBytesArray: 已签名payload列表(array[payloadBytes])
@@ -103,7 +103,7 @@
 
 ### 1.8 发送合约管理请求（创建、更新、冻结、解冻、吊销）
 **类名**
-  - userContructMgr
+  - userContractMgr
 
 **参数说明**
   - mergedPayload: 多签结果
@@ -113,7 +113,7 @@
 
 ### 1.9 合约调用
 **类名**
-  - callUserContruct
+  - callUserContract
 
 **参数说明**
 
@@ -127,7 +127,7 @@
 
 ### 1.10 合约查询接口调用
 **类名**
-  - callUserContruct
+  - callUserContract
 
 **参数说明**
 
@@ -141,7 +141,7 @@
 
 ### 1.11 构造待发送交易体
 **类名**
-  - callUserContruct
+  - callUserContract
 
 **参数说明**
   - contractName: 合约名称(string)
@@ -153,7 +153,7 @@
 
 ### 1.12 发送已构造好的交易体
 **类名**
-  - callUserContruct
+  - callUserContract
 
 **参数说明**
   - request: 已构造好的交易体
@@ -165,7 +165,7 @@
 ## 2 系统合约接口
 ### 2.1 根据交易Id查询交易
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - txId: 交易ID(string)
@@ -175,7 +175,7 @@
 
 ### 2.2 根据区块高度查询区块
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - blockHeight: 区块高度,若为-1，将返回最新区块(number)
@@ -186,7 +186,7 @@
 
 ### 2.3 根据区块哈希查询区块
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - blockHash: 区块哈希(string)
@@ -197,7 +197,7 @@
 
 ### 2.4 根据交易Id查询区块
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - txId: 交易ID(string)
@@ -208,7 +208,7 @@
 
 ### 2.5 查询最新的配置块
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - withRWSet: 是否返回读写集(boolean)
@@ -218,7 +218,7 @@
 
 ### 2.6 查询节点加入的链信息
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - nodeAddr: 节点地址,如127.0.0.1(string)
@@ -228,7 +228,7 @@
 
 ### 2.7 查询链信息
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - 包括：当前链最新高度，链节点信息
@@ -238,7 +238,7 @@
 
 ### 2.8 根据交易Id获取区块高度
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - txId: 交易ID(string)
@@ -248,7 +248,7 @@
 
 ### 2.9 根据区块Hash获取区块高度
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - blockHash: 区块哈希(string)
@@ -258,7 +258,7 @@
 
 ### 2.10 查询当前最新区块高度
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - 返回当前最新区块高度
@@ -268,7 +268,7 @@
 
 ### 2.11 根据区块高度查询区块头
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - blockHeight: 区块高度(number)
@@ -278,7 +278,7 @@
 
 ### 2.12 查询最新区块
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - withRWSet: 是否返回读写集(boolean)
@@ -288,7 +288,7 @@
 
 ### 2.13 根据区块高度查询完整区块
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
   - blockHeight: 区块高度(number)
@@ -757,7 +757,7 @@
 ## 8 数据归档
 ### 8.1 获取已归档区块高度
 **类名**
-  - callSystemContruct
+  - callSystemContract
 
 **参数说明**
 ```javascript
@@ -876,7 +876,7 @@
 
 ## 10 类构造函数
 
-### 10.1 UserContruct
+### 10.1 UserContract
 
 **参数说明**
   - chainID: chainId(string)
@@ -887,7 +887,7 @@
 	constructor(chainID, userInfo, node)
 ```
 
-### 10.2 CallUserContruct
+### 10.2 CallUserContract
 
 **参数说明**
   - chainID: chainId(string)
