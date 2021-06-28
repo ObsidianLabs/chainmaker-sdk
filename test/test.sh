@@ -2,7 +2,7 @@
 
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 
-mocha -t 100000 $SHELL_FOLDER/userContruct.js
+mocha -t 100000 $SHELL_FOLDER/userContract.js
 mocha -t 100000 $SHELL_FOLDER/systemContract.js
 mocha -t 100000 $SHELL_FOLDER/chainConfig.js
 mocha -t 100000 $SHELL_FOLDER/cert.js
