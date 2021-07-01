@@ -3,7 +3,7 @@
    SPDX-License-Identifier: Apache-2.0
  */
 const fs = require('fs');
-const sdkInit = require('../sdkInit');
+const sdkInit = require('./sdkInit');
 // const UserInfo = require('../src/sdk/userInfo');
 // const utils = require('../src/utils');
 

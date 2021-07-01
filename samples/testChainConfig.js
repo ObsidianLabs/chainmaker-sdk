@@ -5,7 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 // const utils = require('../src/utils');
-const sdkInit = require('../sdkInit');
+const sdkInit = require('./sdkInit');
 const { sdk, user2, user3, user4, user5 } = sdkInit();
 
 const testGetChainConfig = async (sdk) => {

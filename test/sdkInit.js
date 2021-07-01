@@ -55,8 +55,8 @@ const init = () => {
   const chainID = 'chain1';
   const orgID = 'wx-org1.chainmaker.org';
 
-  const userKeyPathFile = '/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.key';
-  const userCertPathFile = '/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.crt';
+  const userKeyPathFile = path.join(__dirname, './testFile/crypto-config/wx-org1.chainmaker.org/user/admin1/admin1.sign.key');
+  const userCertPathFile = path.join(__dirname, './testFile/crypto-config/wx-org1.chainmaker.org/user/admin1/admin1.sign.crt');
 
   const sdk = new Sdk(chainID, orgID, userKeyPathFile, userCertPathFile, nodeConfigArray, 30000, archiveConfig);
 
