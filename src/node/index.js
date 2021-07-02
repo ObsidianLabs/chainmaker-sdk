@@ -18,6 +18,7 @@ class Node {
       const grpcOption = {
         'grpc.max_send_message_length': -1,
         'grpc.max_receive_message_length': -1,
+        'grpc.max_reconnect_backoff_ms': 1024,
       };
       let creds;
       if (tlsEnable) {

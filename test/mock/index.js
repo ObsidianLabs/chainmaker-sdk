@@ -1,50 +1,38 @@
-const { createMockServer } = require('grpc-mock');
+
 const path = require('path');
-const mockServer = createMockServer({
-  protoPath: path.join(__dirname, '../../proto/api/rpc_node.proto'),
-  packageName: 'api',
-  serviceName: 'RpcNode',
-  rules: [
-    { method: 'SendRequest', input: { message: 'test' }, output: { message: 'Hello' } },
-    { method: 'goodbye', input: '.*', output: { message: 'Goodbye' } },
+const PROTO_PATH = path.join(__dirname, './rpc_node.proto');
+const grpc = require('grpc');
+const utils = require('../../src/utils');
+const proto = grpc.load(PROTO_PATH);
+const certMgr = require('./certMgr');
 
-    {
-      method: 'howAreYou',
-      streamType: 'client',
-      stream: [
-        { input: { message: 'Hi' } },
-        { input: { message: 'How are you?' } },
-      ],
-      output: { message: 'I\'m fine, thank you' },
-    },
+const getOutput = (payload) => {
+  switch (payload.contractName) {
+    case 'SYSTEM_CONTRACT_CERT_MANAGE':
+      return certMgr.getoutPut(payload.method);
+  }
+};
 
-    {
-      method: 'niceToMeetYou',
-      streamType: 'server',
-      stream: [
-        { output: { message: 'Hi, I\'m Sana' } },
-        { output: { message: 'Nice to meet you too' } },
-      ],
-      input: { message: 'Hi. I\'m John. Nice to meet you' },
-    },
+const SendRequest = (call, callback) => {
+  console.log(call);
+  let payload;
+  let output;
+  switch (call.request.header.tx_type) {
+    case 'QUERY_SYSTEM_CONTRACT': {
+      payload = utils.common.QueryPayload.deserializeBinary(call.request.payload).toObject();
+      output = getOutput(payload);
+      break;
+    }
+  }
+  console.log(payload);
+  callback(null, output);
+};
 
-    {
-      method: 'chat',
-      streamType: 'mutual',
-      stream: [
-        { input: { message: 'Hi' }, output: { message: 'Hi there' } },
-        { input: { message: 'How are you?' }, output: { message: 'I\'m fine, thank you.' } },
-      ],
-    },
+const server = new grpc.Server();
 
-    { method: 'returnsError', input: { }, error: { code: 3, message: 'Message text is required' } },
+const credentials = grpc.ServerCredentials.createInsecure();
 
-    {
-      method: 'returnsErrorWithMetadata',
-      streamType: 'server',
-      input: { },
-      error: { code: 3, message: 'Message text is required', metadata: { key: 'value' } },
-    },
-  ],
-});
-mockServer.listen('0.0.0.0:50051');
+server.addService(proto.api.RpcNode.service, { SendRequest });
+server.bind('0.0.0.0:50051', credentials);
+server.start();
+console.info('GRPC server started at port 50051');

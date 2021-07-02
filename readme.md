@@ -1,5 +1,14 @@
 详细接口描述，请参看：[sdk_interface.md](./sdk_interface.md)
 
+与chainmaker-go版本对照表
+
+| chainmaker-go     | chainmaker-sdk-nodejs                      |
+| -------- | ----------------------------- |
+| v1.0.0 | /   |
+| v1.1.0 | /   |
+| v1.1.1 | / |
+| v1.2.0   | v1.2.0    |
+
 # 接口清单
 
 ## 1 用户合约接口
