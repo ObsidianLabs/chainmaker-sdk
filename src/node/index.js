@@ -15,6 +15,8 @@ class Node {
     this.client = {};
     nodeConfigArray.forEach((config) => {
       const { nodeAddr, tlsEnable, options } = config;
+      if (typeof nodeAddr !== 'string') throw new Error('[nodeAddr] must be a string');
+
       const grpcOption = {
         'grpc.max_send_message_length': -1,
         'grpc.max_receive_message_length': -1,
@@ -23,12 +25,18 @@ class Node {
       let creds;
       if (tlsEnable) {
         const { pem, clientKey, clientCert, ['ssl-target-name-override']: sslTargetNameOverride } = options;
+
+        if (!pem) throw new Error(`[tlsEnable] is ${tlsEnable}, [pem] is required`);
+        if (!Buffer.isBuffer(pem)) throw new Error('[options.pem] must be a buffer');
+
         if (sslTargetNameOverride && typeof sslTargetNameOverride === 'string') {
           grpcOption['grpc.ssl_target_name_override'] = sslTargetNameOverride;
           grpcOption['grpc.default_authority'] = sslTargetNameOverride;
         }
         const pembuf = Buffer.concat([Buffer.from(pem), Buffer.from('\0')]);
         if (clientKey && clientCert) {
+          if (!Buffer.isBuffer(clientKey)) throw new Error('[options.clientKey] must be a buffer');
+          if (!Buffer.isBuffer(clientCert)) throw new Error('[options.clientCert] must be a buffer');
           creds = grpc.credentials.createSsl(pembuf, clientKey, clientCert);
         } else {
           creds = grpc.credentials.createSsl(pembuf);

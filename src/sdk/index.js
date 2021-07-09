@@ -27,6 +27,7 @@ class Sdk {
     timeout,
     archiveConfig = {},
   ) {
+    if (typeof(chainID) !== 'string') throw new Error(`[chainID] must be string: ${chainID}`);
     this.chainID = chainID;
 
     /* nodeList 是node类的数组 */
