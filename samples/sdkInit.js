@@ -8,8 +8,8 @@ const path = require('path');
 
 const nodeConfigArray = [
   {
-    nodeAddr: '127.0.0.1:50051',
-    tlsEnable: false,
+    nodeAddr: '127.0.0.1:12301',
+    tlsEnable: true,
     options: {
       pem: fs.readFileSync(path.join(__dirname, '../test/testFile/crypto-config/wx-org1.chainmaker.org/ca/ca.crt')),
       clientKey: fs.readFileSync(path.join(__dirname, '../test/testFile/crypto-config/wx-org1.chainmaker.org/user/client1/client1.tls.key')),

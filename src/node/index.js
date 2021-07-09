@@ -5,7 +5,8 @@
  */
 const { api } = require('../utils');
 const grpc = require('@grpc/grpc-js');
-const logger = require('../utils').createLogger('node');
+const utils = require('../utils');
+const logger = utils.createLogger('node');
 
 class Node {
   constructor(nodeConfigArray, requestTimeout) {
@@ -98,6 +99,23 @@ class Node {
         }
       });
     });
+  }
+
+  async sendPayload(userInfo, chainID, payloadBytes, txType, srcRes = false, nodeAddr) {
+    const txId = utils.newTxID();
+    const request = utils.newRequest(
+      txId,
+      chainID,
+      txType,
+      userInfo.orgID,
+      userInfo.userSignCertBytes,
+      userInfo.isFullCert,
+      payloadBytes,
+      userInfo.userSignKeyBytes,
+    );
+    // console.log(JSON.stringify(request.toObject(), null, 4));
+    const result = await this.sendRequest(request, srcRes, nodeAddr);
+    return { txId, result };
   }
 
   subscribe(request) {

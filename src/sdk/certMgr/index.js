@@ -195,20 +195,7 @@ class CertMgr {
 
   // return promise
   async sendPayload(payloadBytes, txType, srcRes = false) {
-    const txId = utils.newTxID();
-    const request = utils.newRequest(
-      txId,
-      this.chainID,
-      txType,
-      this.userInfo.orgID,
-      this.userInfo.userSignCertBytes,
-      this.userInfo.isFullCert,
-      payloadBytes,
-      this.userInfo.userSignKeyBytes,
-    );
-    // console.log(JSON.stringify(request.toObject(), null, 4));
-    const result = await this.node.sendRequest(request, srcRes);
-    return { txId, result };
+    return this.node.sendPayload(this.userInfo, this.chainID, payloadBytes, txType, srcRes);
   }
 }
 

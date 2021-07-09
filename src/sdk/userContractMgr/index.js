@@ -195,20 +195,12 @@ class UserContract {
   }
 
   async sendContractManageRequest(mergedPayload) {
-    const txId = utils.newTxID();
-    const request = utils.newRequest(
-      txId,
+    return this.node.sendPayload(
+      this.userInfo,
       this.chainID,
-      utils.common.TxType.MANAGE_USER_CONTRACT,
-      this.userInfo.orgID,
-      this.userInfo.userSignCertBytes,
-      this.userInfo.isFullCert,
       mergedPayload.serializeBinary(),
-      this.userInfo.userSignKeyBytes,
+      utils.common.TxType.MANAGE_USER_CONTRACT,
     );
-
-    const result = await this.node.sendRequest(request);
-    return { txId, result };
   }
 
   // return promise
@@ -218,20 +210,7 @@ class UserContract {
       utils.common.ContractMgmtPayload,
     );
 
-    const txId = utils.newTxID();
-    const request = utils.newRequest(
-      txId,
-      this.chainID,
-      utils.common.TxType.MANAGE_USER_CONTRACT,
-      this.userInfo.orgID,
-      this.userInfo.userSignCertBytes,
-      this.userInfo.isFullCert,
-      mergedPayload.serializeBinary(),
-      this.userInfo.userSignKeyBytes,
-    );
-
-    const result = await this.node.sendRequest(request);
-    return { txId, result };
+    return this.sendContractManageRequest(mergedPayload);
   }
 }
 

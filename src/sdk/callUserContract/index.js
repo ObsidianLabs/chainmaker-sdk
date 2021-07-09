@@ -55,20 +55,13 @@ class CallUserContract {
 
   // return promise
   async sendUserContractPayload(payloadBytes, txType) {
-    const txId = utils.newTxID();
-    const request = utils.newRequest(
-      txId,
+    return this.node.sendPayload(
+      this.userInfo,
       this.chainID,
-      txType,
-      this.userInfo.orgID,
-      this.userInfo.userSignCertBytes,
-      this.userInfo.isFullCert,
       payloadBytes,
-      this.userInfo.userSignKeyBytes,
+      txType,
+      false,
     );
-    // console.log(JSON.stringify(request.toObject(), null, 4));
-    const result = await this.node.sendRequest(request);
-    return { txId, result };
   }
 
   getTxRequest(contractName, method, params) {

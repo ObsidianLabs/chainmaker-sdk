@@ -65,4 +65,4 @@ const test = async (type) => {
   }
 };
 
-test('getArchivedBlockByHeight');
+test('archiveBlock');

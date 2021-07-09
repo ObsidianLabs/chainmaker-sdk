@@ -212,20 +212,14 @@ class CallSystemContract {
 
   // return promise
   async sendSystemContractPayload(payloadBytes, srcRes = false, nodeAddr) {
-    const txId = utils.newTxID();
-    const request = utils.newRequest(
-      txId,
+    return this.node.sendPayload(
+      this.userInfo,
       this.chainID,
-      utils.common.TxType.QUERY_SYSTEM_CONTRACT,
-      this.userInfo.orgID,
-      this.userInfo.userSignCertBytes,
-      this.userInfo.isFullCert,
       payloadBytes,
-      this.userInfo.userSignKeyBytes,
+      utils.common.TxType.QUERY_SYSTEM_CONTRACT,
+      srcRes,
+      nodeAddr,
     );
-    // console.log(JSON.stringify(request.toObject(), null, 4));
-    const result = await this.node.sendRequest(request, srcRes, nodeAddr);
-    return { txId, result };
   }
 }
 
