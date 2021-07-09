@@ -5,7 +5,8 @@
 const Sdk = require('./sdk');
 const User = require('./sdk/userInfo');
 const Utils = require('./utils');
+const LoadFromYaml = require('./sdk/loadFromYaml');
 
 module.exports = {
-  Sdk, User, Utils,
+  Sdk, LoadFromYaml, User, Utils,
 };

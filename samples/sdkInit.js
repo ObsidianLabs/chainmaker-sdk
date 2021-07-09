@@ -2,7 +2,7 @@
  Copyright (C) THL A29 Limited, a Tencent company. All rights reserved.
    SPDX-License-Identifier: Apache-2.0
  */
-const { Sdk, User, Utils } = require('../index');
+const { Sdk, User, Utils /* LoadFromYaml */ } = require('../index');
 const fs = require('fs');
 const path = require('path');
 
@@ -17,16 +17,16 @@ const nodeConfigArray = [
       'ssl-target-name-override': 'chainmaker.org',
     },
   },
-  // {
-  //   nodeAddr: '127.0.0.1:12302',
-  //   tlsEnable: true,
-  //   options: {
-  //     pem: fs.readFileSync(path.join(__dirname, '../test/testFile/crypto-config/wx-org2.chainmaker.org/ca/ca.crt')),
-  //     clientKey: fs.readFileSync(path.join(__dirname, '../test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.key')),
-  //     clientCert: fs.readFileSync(path.join(__dirname, '../test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.crt')),
-  //     'ssl-target-name-override': 'chainmaker.org',
-  //   },
-  // },
+  {
+    nodeAddr: '127.0.0.1:12302',
+    tlsEnable: true,
+    options: {
+      pem: fs.readFileSync(path.join(__dirname, '../test/testFile/crypto-config/wx-org2.chainmaker.org/ca/ca.crt')),
+      clientKey: fs.readFileSync(path.join(__dirname, '../test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.key')),
+      clientCert: fs.readFileSync(path.join(__dirname, '../test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.crt')),
+      'ssl-target-name-override': 'chainmaker.org',
+    },
+  },
 ];
 
 const archiveConfig = {
@@ -60,6 +60,8 @@ const init = () => {
 
   const sdk = new Sdk(chainID, orgID, userKeyPathFile, userCertPathFile, nodeConfigArray, 30000, archiveConfig);
 
+  // 也可以使用如下方式从配置文件中获取sdk对象
+  // const sdk = new LoadFromYaml(path.join(__dirname, './sdkConfigNodejs.yaml'));
 
   return { sdk, Utils, user2, user3, user4, user5 };
 };
