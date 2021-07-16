@@ -24,7 +24,7 @@ chainClient:
         #客户端证书
         clientCert: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org1.chainmaker.org/node/consensus1/consensus1.tls.crt"
         #域名
-        ssl-target-name-override: 'chainmaker.org'
+        hostName: 'chainmaker.org'
 
     - # 节点地址，格式为：IP:端口
       nodeAddr: "127.0.0.1:12302"
@@ -39,14 +39,14 @@ chainClient:
         #客户端证书
         clientCert: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.crt"
         #域名
-        ssl-target-name-override: 'chainmaker.org'
+        hostName: 'chainmaker.org'
   #归档配置
   archiveConfig:
     #归档的数据库类型，只支持mysql
     type: "mysql"
     #数据库地址
     dbHost: "127.0.0.1"
-    #数据库端口（字符串类型的数据需要转义引号）
+    #数据库端口
     dbPort: "3306"
     #数据库用户名
     dbUsername: "root"

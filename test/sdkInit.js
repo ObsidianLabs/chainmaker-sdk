@@ -14,7 +14,7 @@ const nodeConfigArray = [
       pem: fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org1.chainmaker.org/ca/ca.crt')),
       clientKey: fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org1.chainmaker.org/user/client1/client1.tls.key')),
       clientCert: fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org1.chainmaker.org/user/client1/client1.tls.crt')),
-      'ssl-target-name-override': 'chainmaker.org',
+      hostName: 'chainmaker.org',
     },
   },
   {
@@ -24,7 +24,7 @@ const nodeConfigArray = [
       pem: fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/ca/ca.crt')),
       clientKey: fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.key')),
       clientCert: fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.crt')),
-      'ssl-target-name-override': 'chainmaker.org',
+      hostName: 'chainmaker.org',
     },
   },
 ];
@@ -61,7 +61,7 @@ const init = () => {
   const sdk = new Sdk(chainID, orgID, userKeyPathFile, userCertPathFile, nodeConfigArray, 30000, archiveConfig);
 
   // 也可以使用如下方式从配置文件中获取sdk对象
-  // const sdk = new LoadFromYaml(path.join(__dirname, './sdkConfigNodejs.yaml'));
+  // const sdk = new LoadFromYaml(path.join(__dirname, './sdk_config.yaml'));
 
   return { sdk, Utils, user2, user3, user4, user5 };
 };

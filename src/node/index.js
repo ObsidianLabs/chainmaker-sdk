@@ -25,7 +25,7 @@ class Node {
       };
       let creds;
       if (tlsEnable) {
-        const { pem, clientKey, clientCert, ['ssl-target-name-override']: sslTargetNameOverride } = options;
+        const { pem, clientKey, clientCert, ['hostName']: sslTargetNameOverride } = options;
 
         if (!pem) throw new Error(`[tlsEnable] is ${tlsEnable}, [pem] is required`);
         if (!Buffer.isBuffer(pem)) throw new Error('[options.pem] must be a buffer');

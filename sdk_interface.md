@@ -985,7 +985,7 @@
   节点配置参数nodeConfigArray，类型：k-v Object数组(Array[Object])
   - nodeAddr: 节点地址，ip+端口(string)
   - tlsEnable: 是否开启tls(boolean)
-  - options: 类型k-v Object(pem: 根ca证书Buffer, clientKey: 客户端私钥Buffer, clientCert: 客户端证书Buffer, ssl-target-name-override: 节点域名，对应证书中的sans字段)
+  - options: 类型k-v Object(pem: 根ca证书Buffer, clientKey: 客户端私钥Buffer, clientCert: 客户端证书Buffer, hostName: 节点域名，对应证书中的sans字段)
 
 ```javascript
 	constructor(nodeConfigArray, requestTimeout)
