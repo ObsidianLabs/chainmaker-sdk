@@ -2,7 +2,7 @@
  Copyright (C) THL A29 Limited, a Tencent company. All rights reserved.
    SPDX-License-Identifier: Apache-2.0
  */
-const { Sdk, User, Utils /* LoadFromYaml */ } = require('../index');
+const { Sdk, User, Utils, LoadFromYaml } = require('../index');
 const fs = require('fs');
 const path = require('path');
 
@@ -58,10 +58,10 @@ const init = () => {
   const userKeyPathFile = path.join(__dirname, './testFile/crypto-config/wx-org1.chainmaker.org/user/admin1/admin1.sign.key');
   const userCertPathFile = path.join(__dirname, './testFile/crypto-config/wx-org1.chainmaker.org/user/admin1/admin1.sign.crt');
 
-  const sdk = new Sdk(chainID, orgID, userKeyPathFile, userCertPathFile, nodeConfigArray, 30000, archiveConfig);
+  // const sdk = new Sdk(chainID, orgID, userKeyPathFile, userCertPathFile, nodeConfigArray, 30000, archiveConfig);
 
   // 也可以使用如下方式从配置文件中获取sdk对象
-  // const sdk = new LoadFromYaml(path.join(__dirname, './sdk_config.yaml'));
+  const sdk = new LoadFromYaml(path.join(__dirname, './sdk_config.yaml'));
 
   return { sdk, Utils, user2, user3, user4, user5 };
 };

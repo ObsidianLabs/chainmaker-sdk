@@ -1,54 +1,49 @@
-chainClient:
-  # 链ID
-  chainID: "chain1"
-  # 组织ID
-  orgID: "wx-org1.chainmaker.org"
-  # 客户端用户私钥路径
-  userSignKeyPath: "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.key"
-  # 客户端用户证书路径
-  userSignCertPath: "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.crt"
-  # 请求超时时间ms
-  timeout: 3000
-  #节点列表
-  nodes:
-    - # 节点地址，格式为：IP:端口
-      nodeAddr: "127.0.0.1:12301"
-      # RPC连接是否启用双向TLS认证
-      tlsEnable: true
-      #连接选项
-      options:
-        #根ca路径
-        pem: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org1.chainmaker.org/ca/ca.crt"
+chain_client:
+   # 链ID
+   chain_id: "chain1"
+   # 组织ID
+   org_id: "wx-org1.chainmaker.org"
+   # 客户端用户私钥路径
+   user_key_file_path: "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.key"
+   # 客户端用户证书路径
+   user_crt_file_path: "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.crt"
+   # 客户端用户交易签名私钥路径(若未设置，将使用user_key_file_path)
+   user_sign_key_file_path: "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.key"
+   # 客户端用户交易签名证书路径(若未设置，将使用user_crt_file_path)
+   user_sign_crt_file_path: "/Users/chengliang/go/src/chainmaker.org/chainmaker-go/build/config/node1/certs/user/admin1/admin1.sign.crt"
+ 
+   nodes:
+     - # 节点地址，格式为：IP:端口:连接数
+        node_addr: "127.0.0.1:12301"
+        # 节点连接数
+        conn_cnt: 1
+        # RPC连接是否启用双向TLS认证
+        enable_tls: true
+        # 信任证书池路径(nodejs sdk只支持一个)
+        trust_root_paths:
+          - "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org1.chainmaker.org/ca/ca.crt"
         #客户端私钥
-        clientKey: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org1.chainmaker.org/node/consensus1/consensus1.tls.key"
+        tls_client_key: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org1.chainmaker.org/node/consensus1/consensus1.tls.key"
         #客户端证书
-        clientCert: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org1.chainmaker.org/node/consensus1/consensus1.tls.crt"
-        #域名
-        hostName: 'chainmaker.org'
-
-    - # 节点地址，格式为：IP:端口
-      nodeAddr: "127.0.0.1:12302"
-      # RPC连接是否启用双向TLS认证
-      tlsEnable: true
-      #连接选项
-      options:
-        #根ca路径
-        pem: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org2.chainmaker.org/ca/ca.crt"
+        tls_client_cert: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org1.chainmaker.org/node/consensus1/consensus1.tls.crt"
+        # TLS hostname
+        tls_host_name: "chainmaker.org"
+     - # 节点地址，格式为：IP:端口:连接数
+        node_addr: "127.0.0.1:12302"
+        # 节点连接数
+        conn_cnt: 1
+        # RPC连接是否启用双向TLS认证
+        enable_tls: true
+        # 信任证书池路径(nodejs sdk只支持一个)
+        trust_root_paths:
+          - "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org2.chainmaker.org/ca/ca.crt"
         #客户端私钥
-        clientKey: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.key"
+        tls_client_key: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.key"
         #客户端证书
-        clientCert: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.crt"
-        #域名
-        hostName: 'chainmaker.org'
-  #归档配置
-  archiveConfig:
-    #归档的数据库类型，只支持mysql
-    type: "mysql"
-    #数据库地址
-    dbHost: "127.0.0.1"
-    #数据库端口
-    dbPort: "3306"
-    #数据库用户名
-    dbUsername: "root"
-    #数据库密码
-    dbPassword: "123456"
+        tls_client_cert: "/Users/chengliang/workspaces/chainMakerNodeSdk/sm/chainmaker-sdk-js/test/testFile/crypto-config/wx-org2.chainmaker.org/node/consensus1/consensus1.tls.crt"
+        # TLS hostname
+        tls_host_name: "chainmaker.org"
+   archive:
+      # 数据归档链外存储相关配置
+      type: "mysql"
+      dest: "root:123456:127.0.0.1:3306"
