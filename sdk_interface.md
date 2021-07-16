@@ -1005,3 +1005,12 @@
 ```javascript
 	constructor(chainID, orgID, userSignKeyPath, userSignCertPath, nodeConfigArray, timeout, archiveConfig = {})
 ```
+
+### 10.12 LoadFromYaml
+
+**参数说明**
+  - configPath: 配置文件路径(string)
+
+```javascript
+	constructor(configPath)
+```
