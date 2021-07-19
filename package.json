@@ -20,7 +20,7 @@
     "winston": "^3.3.3",
     "yamljs": "^0.3.0"
   },
-  "author": "",
+  "author": "gregcheng",
   "license": "ISC",
   "devDependencies": {
     "@tencent/eslint-config-tencent": "^0.15.1",
