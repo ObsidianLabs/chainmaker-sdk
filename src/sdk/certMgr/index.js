@@ -195,12 +195,13 @@ class CertMgr {
 
   // return promise
   async sendPayload(payloadBytes, txType, srcRes = false, withSyncResult = false) {
-    const result = this.node.sendPayload(this.userInfo, this.chainID, payloadBytes, txType, srcRes);
+    const result = await this.node.sendPayload(this.userInfo, this.chainID, payloadBytes, txType, srcRes);
     if (withSyncResult) {
       const res = await this.callSystemContract.getSyncResult(result.txId);
       result.result.contractResult = res;
       return result;
     }
+    return result;
   }
 }
 

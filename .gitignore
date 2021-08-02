@@ -1,4 +1,4 @@
 node_modules/*
 .vscode
-./test/testFile/crypto_config
-./proto
+test/testFile/crypto_config
+proto
