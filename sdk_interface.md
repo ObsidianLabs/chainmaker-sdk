@@ -107,8 +107,9 @@
 
 **参数说明**
   - mergedPayload: 多签结果
+  - withSyncResult: 是否同步获取结果（boolean）
 ```javascript
-	async sendContractManageRequest(mergedPayload)
+	async sendContractManageRequest(mergedPayload, withSyncResult)
 ```
 
 ### 1.9 合约调用
@@ -121,8 +122,9 @@
   - contractName: 合约名称(string)
   - method: 合约方法(string)
   - params: 合约参数(k-v Object对象)
+  - withSyncResult: 是否同步获取结果（boolean）
 ```javascript
-	async invokeUserContract({ contractName, method, params })
+	async invokeUserContract({ contractName, method, params, withSyncResult })
 ```
 
 ### 1.10 合约查询接口调用
@@ -158,8 +160,9 @@
 **参数说明**
   - request: 已构造好的交易体
   - txId: getTxRequest方法的返回值
+  - withSyncResult: 是否同步获取结果(boolean)
 ```javascript
-	async sendTxRequest(request, txId)
+	async sendTxRequest(request, txId, withSyncResult)
 ```
 
 ## 2 系统合约接口
@@ -669,8 +672,9 @@
 
 **参数说明**
   - payloadBytes: 签名之后的payload bytes
+  - withSyncResult: 是否同步获取结果
 ```javascript
-  async sendCertManageRequest(payloadBytes)
+  async sendCertManageRequest(payloadBytes, withSyncResult)
 ```
 
 ## 5 消息订阅接口
