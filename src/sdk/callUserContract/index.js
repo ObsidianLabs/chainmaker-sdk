@@ -5,16 +5,17 @@
 const utils = require('../../utils');
 
 class CallUserContract {
-  constructor(chainID, userInfo, node) {
+  constructor(chainID, userInfo, node, callSystemContract) {
     this.chainID = chainID;
     this.userInfo = userInfo;
     this.node = node;
+    this.callSystemContract = callSystemContract;
   }
 
   // return promise
-  invokeUserContract({ contractName, method, params }) {
+  invokeUserContract({ contractName, method, params, withSyncResult = false }) {
     const payloadBytes = this.createTransactPayload({ contractName, method, params });
-    return this.sendUserContractPayload(payloadBytes, utils.common.TxType.INVOKE_USER_CONTRACT);
+    return this.sendUserContractPayload(payloadBytes, utils.common.TxType.INVOKE_USER_CONTRACT, withSyncResult);
   }
 
   // return promise
@@ -54,14 +55,20 @@ class CallUserContract {
   }
 
   // return promise
-  async sendUserContractPayload(payloadBytes, txType) {
-    return this.node.sendPayload(
+  async sendUserContractPayload(payloadBytes, txType, withSyncResult = false) {
+    const result = await this.node.sendPayload(
       this.userInfo,
       this.chainID,
       payloadBytes,
       txType,
       false,
     );
+    if (withSyncResult) {
+      const res = await this.callSystemContract.getSyncResult(result.txId);
+      result.result.contractResult = res;
+      return result;
+    }
+    return result;
   }
 
   getTxRequest(contractName, method, params) {
@@ -80,8 +87,13 @@ class CallUserContract {
     return { request, txId };
   }
 
-  async sendTxRequest(request, txId) {
+  async sendTxRequest(request, txId, withSyncResult = false) {
     const result = await this.node.sendRequest(request);
+    if (withSyncResult) {
+      const res = await this.callSystemContract.getSyncResult(txId);
+      result.contractResult = res;
+      return { txId, result };
+    }
     return { txId, result };
   }
 }

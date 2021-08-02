@@ -4,6 +4,7 @@
  */
 const sdkInit = require('./sdkInit');
 const { sdk, ['Utils']: utils } = sdkInit();
+const path = require('path');
 
 const testCreateUserContract = async (sdk, contractName, contractVersion, contractFilePath) => {
   const response = await sdk.userContractMgr.createUserContract({
@@ -15,6 +16,7 @@ const testCreateUserContract = async (sdk, contractName, contractVersion, contra
       key1: 'value1',
       key2: 'value2',
     },
+    withSyncResult: true,
   });
   return response;
 };
@@ -57,6 +59,7 @@ const testInvokeUserContract = async (sdk, contractName) => {
       file_hash: '1234567890',
       file_name: 'test.txt',
     },
+    withSyncResult: true,
   });
   return response;
 };
@@ -74,7 +77,7 @@ const testQueryUserContract = async (sdk, contractName) => {
 const test = async (type) => {
   const contractName = 'go_ctx_010';
   const contractVersion = 'v1.0.0';
-  const contractFilePath = '/Users/chengliang/workspaces/chainMakerNodeSdk/node-sdk/test/testFile/go_ctx.wasm';
+  const contractFilePath = path.join(__dirname, '../test/testFile/go_ctx.wasm');
   let res;
   try {
     switch (type) {
@@ -108,4 +111,4 @@ const test = async (type) => {
   }
 };
 
-test('invoke');
+test('query');

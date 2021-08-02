@@ -77,14 +77,14 @@ class Node {
         clearTimeout(sendTimeout);
         if (err) {
           const errorInfo = `call sendRequest error: ${err}`;
-          console.error(errorInfo);
+          // console.error(errorInfo);
           reject(errorInfo);
         } else {
           const res = response.toObject();
           // console.log('get sendRequest response:', res);
 
           if (response.getCode() !== 0) {
-            console.log('response failed:', response.getMessage());
+            // console.log('response failed:', response.getMessage());
             reject(response);
           }
           if (srcRes) {

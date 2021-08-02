@@ -34,9 +34,6 @@ class Sdk {
     this.node = new Node(nodeConfigArray, timeout);
 
     this.userInfo = new UserInfo(orgID, userSignKeyPath, userSignCertPath);
-    this.userContractMgr = new UserContractMgr(chainID, this.userInfo, this.node);
-
-    this.callUserContract = new CallUserContract(chainID, this.userInfo, this.node);
 
     this.callSystemContract = new CallSystemContract(chainID, this.userInfo, this.node);
 
@@ -45,6 +42,10 @@ class Sdk {
     this.certMgr = new CertMgr(this.chainConfig, chainID, this.userInfo, this.node);
 
     this.subscribe = new Subscribe(chainID, this.userInfo, this.node);
+
+    this.userContractMgr = new UserContractMgr(chainID, this.userInfo, this.node, this.callSystemContract);
+
+    this.callUserContract = new CallUserContract(chainID, this.userInfo, this.node, this.callSystemContract);
 
     this.certCompression = new CertCompression(this.userInfo, this.certMgr);
 

@@ -221,6 +221,28 @@ class CallSystemContract {
       nodeAddr,
     );
   }
+
+  getSyncResult(txId) {
+    return new Promise(async (resolve) => {
+      const { requestTimeout } = this.node;
+      let count = requestTimeout / 100;
+      const interval = setInterval(async () => {
+        let tx;
+        try {
+          tx = await this.getTxByTxId(txId);
+        } catch {}
+        if (tx && tx.result) {
+          clearInterval(interval);
+          resolve(tx.result.contractResult);
+        }
+        if (count === 0) {
+          clearInterval(interval);
+          resolve('error');
+        }
+        count -= 1;
+      }, 100);
+    });
+  }
 }
 
 module.exports = CallSystemContract;

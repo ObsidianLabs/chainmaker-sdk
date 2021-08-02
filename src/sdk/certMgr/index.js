@@ -153,8 +153,8 @@ class CertMgr {
     return mergedPayload;
   }
 
-  sendCertManageRequest(payloadBytes, srcRes = false) {
-    return this.sendPayload(payloadBytes, utils.common.TxType.INVOKE_SYSTEM_CONTRACT, srcRes);
+  sendCertManageRequest(payloadBytes, srcRes = false, withSyncResult = false) {
+    return this.sendPayload(payloadBytes, utils.common.TxType.INVOKE_SYSTEM_CONTRACT, srcRes, withSyncResult);
   }
 
   createQueryPayload({ contractName, method, params }) {
@@ -194,8 +194,13 @@ class CertMgr {
   }
 
   // return promise
-  async sendPayload(payloadBytes, txType, srcRes = false) {
-    return this.node.sendPayload(this.userInfo, this.chainID, payloadBytes, txType, srcRes);
+  async sendPayload(payloadBytes, txType, srcRes = false, withSyncResult = false) {
+    const result = this.node.sendPayload(this.userInfo, this.chainID, payloadBytes, txType, srcRes);
+    if (withSyncResult) {
+      const res = await this.callSystemContract.getSyncResult(result.txId);
+      result.result.contractResult = res;
+      return result;
+    }
   }
 }
 

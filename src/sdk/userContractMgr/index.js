@@ -8,10 +8,11 @@ const _ = require('loadsh');
 const fs = require('fs');
 
 class UserContract {
-  constructor(chainID, userInfo, node) {
+  constructor(chainID, userInfo, node, callSystemContract) {
     this.chainID = chainID;
     this.userInfo = userInfo;
     this.node = node;
+    this.callSystemContract = callSystemContract;
   }
 
   checkParam(method, contractName, contractVersion, runtimeType, contractFilePath, params) {
@@ -52,13 +53,13 @@ class UserContract {
     });
   }
   // return promise
-  createUserContract({ contractName, contractVersion, runtimeType, contractFilePath, params }) {
+  createUserContract({ contractName, contractVersion, runtimeType, contractFilePath, params, withSyncResult = false }) {
     const payload = this.createContractCreatePayload({
       contractName, contractVersion,
       runtimeType, contractFilePath, params,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
   }
 
   createContractUpgradePayload({ contractName, contractVersion, runtimeType, contractFilePath, params }) {
@@ -70,13 +71,20 @@ class UserContract {
     });
   }
   // return promise
-  upgradeUserContract({ contractName, contractVersion, runtimeType, contractFilePath, params }) {
+  upgradeUserContract({
+    contractName,
+    contractVersion,
+    runtimeType,
+    contractFilePath,
+    params,
+    withSyncResult = false,
+  }) {
     const payload = this.createContractUpgradePayload({
       contractName, contractVersion,
       runtimeType, contractFilePath, params,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
   }
 
   createContractFreezePayload({ contractName }) {
@@ -87,12 +95,12 @@ class UserContract {
     });
   }
   // return promise
-  freezeUserContract({ contractName }) {
+  freezeUserContract({ contractName, withSyncResult = false }) {
     const payload = this.createContractFreezePayload({
       contractName,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
   }
 
   createContractUnfreezePayload({ contractName }) {
@@ -103,12 +111,12 @@ class UserContract {
     });
   }
   // return promise
-  unFreezeUserContract({ contractName }) {
+  unFreezeUserContract({ contractName, withSyncResult = false }) {
     const payload = this.createContractUnfreezePayload({
       contractName,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
   }
 
   createContractRevokePayload({ contractName }) {
@@ -119,12 +127,12 @@ class UserContract {
     });
   }
   // return promise
-  revokeUserContract({ contractName }) {
+  revokeUserContract({ contractName, withSyncResult = false }) {
     const payload = this.createContractRevokePayload({
       contractName,
     });
     const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray);
+    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
   }
 
   /* user contract ...
@@ -194,23 +202,29 @@ class UserContract {
     return utils.mergeContractMgmtPayload(signedPayloadBytesArray, utils.common.ContractMgmtPayload);
   }
 
-  async sendContractManageRequest(mergedPayload) {
-    return this.node.sendPayload(
+  async sendContractManageRequest(mergedPayload, withSyncResult = false) {
+    const result =  await this.node.sendPayload(
       this.userInfo,
       this.chainID,
       mergedPayload.serializeBinary(),
       utils.common.TxType.MANAGE_USER_CONTRACT,
     );
+    if (withSyncResult) {
+      const res = await this.callSystemContract.getSyncResult(result.txId);
+      result.result.contractResult = res;
+      return result;
+    }
+    return result;
   }
 
   // return promise
-  async sendRequest(signedPayloadBytesArray) {
+  async sendRequest(signedPayloadBytesArray, withSyncResult = false) {
     const mergedPayload = this.mergeContractManageSignedPayload(
       signedPayloadBytesArray,
       utils.common.ContractMgmtPayload,
     );
 
-    return this.sendContractManageRequest(mergedPayload);
+    return this.sendContractManageRequest(mergedPayload, withSyncResult);
   }
 }
 
