@@ -11,18 +11,25 @@ class ChainConfig {
     this.chainID = chainID;
     this.userInfo = userInfo;
     this.node = node;
+    this.commonObj = {
+      chainId: this.chainID,
+      contractName: utils.enum2str(utils.sysContract.SystemContract, utils.sysContract.SystemContract.CHAIN_CONFIG),
+    };
   }
 
   // return promise
   async getChainConfig() {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_CHAIN_CONFIG),
-      method: utils.enum2str(utils.common.ConfigFunction, utils.common.ConfigFunction.GET_CHAIN_CONFIG),
-      params: {},
+    const payload = utils.buildPayload({
+      ...this.commonObj,
+      txType: utils.common.TxType.QUERY_CONTRACT,
+      method: utils.enum2str(
+        utils.sysContract.ChainConfigFunction,
+        utils.sysContract.ChainConfigFunction.GET_CHAIN_CONFIG,
+      ),
+      sequence: cv.DEFAULT_SEQUENCE,
     });
     const response = await this.sendPayload(
-      payloadBytes,
-      utils.common.TxType.QUERY_SYSTEM_CONTRACT,
+      payload,
       cv.NEED_SRC_RESPONSE,
     );
     response.result = utils.config.ChainConfig.deserializeBinary(response.result).toObject();
@@ -49,7 +56,7 @@ class ChainConfig {
       utils.common.TxType.QUERY_SYSTEM_CONTRACT,
       cv.NEED_SRC_RESPONSE,
     );
-    response.result = utils.config.ChainConfig.deserializeBinary(response.result).toObject();
+    response.result = utils.common.TxResponse(response.result).toObject();
     return response;
   }
 
@@ -497,8 +504,8 @@ class ChainConfig {
   }
 
   // return promise
-  async sendPayload(payloadBytes, txType, srcRes = false) {
-    return this.node.sendPayload(this.userInfo, this.chainID, payloadBytes, txType, srcRes);
+  async sendPayload(payload, srcRes = false) {
+    return this.node.sendPayload(this.userInfo, payload, srcRes);
   }
 
   sendChainConfigUpdateRequest(signPayloadBytes) {

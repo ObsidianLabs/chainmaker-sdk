@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const winston = require('winston');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
+const { PAYLOAD_KEY_METHOD, PAYLOAD_KEY } = require('./constValue');
 
 const createLogger = (service) => {
   let level = 'info';
@@ -50,6 +51,11 @@ const common = {
   ...require('../../chainmaker/common/transaction_pb'),
 };
 
+const sysContract = {
+  ...require('../../chainmaker/syscontract/chain_config_pb'),
+  ...require('../../chainmaker/syscontract/system_contract_pb'),
+};
+
 const accesscontrol = {
   ...require('../../chainmaker/accesscontrol/member_pb'),
   ...require('../../chainmaker/accesscontrol/policy_pb'),
@@ -80,29 +86,29 @@ const newTxID = () => {
   return id.replace(/-/g, '');
 };
 
-const getRequestUnsignedRaw = (request) => {
-  const headerBytes = request.getHeader().serializeBinary();
-  return Buffer.concat([headerBytes, request.getPayload()]);
-};
+// const getRequestUnsignedRaw = (request) => {
+//   const headerBytes = request.getHeader().serializeBinary();
+//   return Buffer.concat([headerBytes, request.getPayload()]);
+// };
 
-const signTx = (request, privateKey) => {
-  const rawData = getRequestUnsignedRaw(request);
-  const signedData = signDataSha256(rawData, privateKey);
-  request.setSignature(signedData);
-};
+// const signTx = (request, privateKey) => {
+//   const rawData = getRequestUnsignedRaw(request);
+//   const signedData = signDataSha256(rawData, privateKey);
+//   request.setSignature(signedData);
+// };
 
-const newRequestHeader = (txId, chainID, txType, orgID, userCertBytes, isFullCert) => {
-  const header = new common.TxHeader();
-  header.setChainId(chainID);
-  header.setTxType(txType);
-  header.setTxId(txId);
-  header.setTimestamp(Date.now() / 1000 | 0);
-  header.setExpirationTime(0);
+// const newRequestHeader = (txId, chainID, txType, orgID, userCertBytes, isFullCert) => {
+//   const header = new common.TxHeader();
+//   header.setChainId(chainID);
+//   header.setTxType(txType);
+//   header.setTxId(txId);
+//   header.setTimestamp(Date.now() / 1000 | 0);
+//   header.setExpirationTime(0);
 
-  header.setSender(newSender(orgID, userCertBytes, isFullCert));
+//   header.setSender(newSender(orgID, userCertBytes, isFullCert));
 
-  return header;
-};
+//   return header;
+// };
 
 const signDataSha256 = (data, privateKey) => {
   // var dataHash = crypto.createHash('sha256').update(data);
@@ -117,6 +123,19 @@ const newSender = (orgID, userCertBytes, isFullCert) => {
   sender.setMemberInfo(userCertBytes);
   sender.setIsFullCert(isFullCert);
   return sender;
+};
+
+const newEndorsement = (orgID, isFullCert, userCertBytes, payload, userPrivateKey) => {
+  const payloadBytes = payload.serializeBinary();
+  const signedData = signDataSha256(payloadBytes, userPrivateKey);
+  const member = new accesscontrol.Member();
+  member.setOrgId(orgID);
+  member.setMemberType(isFullCert ? accesscontrol.MemberType.CERT : accesscontrol.MemberType.CERT_HASH);
+  member.setMemberInfo(userCertBytes);
+  const entry = new common.EndorsementEntry();
+  entry.setSigner(member);
+  entry.setSignature(signedData);
+  return entry;
 };
 
 const mergeContractMgmtPayload = (payloadByteList, enumType) => {
@@ -150,11 +169,11 @@ const mergeContractMgmtPayload = (payloadByteList, enumType) => {
   return mergedPayload;
 };
 
-const newRequest = (txId, chainID, txType, orgID, userCertBytes, isFullCert, payload, userPrivateKey) => {
+const newRequest = (orgID, userCertBytes, isFullCert, payload, userPrivateKey, endorsements = []) => {
   const request = new common.TxRequest();
-  request.setHeader(newRequestHeader(txId, chainID, txType, orgID, userCertBytes, isFullCert));
   request.setPayload(payload);
-  signTx(request, userPrivateKey);
+  if (endorsements.length) require.setEndorsementList(endorsements);
+  request.setSender(newEndorsement(orgID, isFullCert, userCertBytes, payload, userPrivateKey));
 
   return request;
 };
@@ -223,8 +242,36 @@ const sleep = second => new Promise((resolve) => {
   }, second * 1000);
 });
 
+const buildPayload = (config) => {
+  const kv = Object.assign({}, config);
+  if (!kv.txId) {
+    kv.txId = newTxID();
+  }
+  kv.timestamp = Date.now() / 1000 | 0;
+  kv.expirationTime = 0;
+  const payload = new common.Payload();
+  Object.keys(kv).forEach((key) => {
+    if (PAYLOAD_KEY.includes(key)) {
+      payload[PAYLOAD_KEY_METHOD[key]](kv[key]);
+    }
+  });
+  return payload;
+};
+
+const buildKeyValuePair = (kv) => {
+  const result = [];
+  Object.keys(kv).forEach((key) => {
+    const param = new common.KeyValuePair();
+    param.setKey(key);
+    if (kv[key] !== '') param.setValue(kv[key]);
+    result.push(param);
+  });
+  return result;
+};
+
 module.exports = {
   common,
+  sysContract,
   accesscontrol,
   api,
   config,
@@ -242,4 +289,6 @@ module.exports = {
   pemDecode,
   getCertHash,
   sleep,
+  buildPayload,
+  buildKeyValuePair,
 };

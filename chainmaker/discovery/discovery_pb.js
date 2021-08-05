@@ -160,7 +160,7 @@ proto.discovery.ChainInfo.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setBlockHeight(value);
       break;
     case 2:
@@ -199,7 +199,7 @@ proto.discovery.ChainInfo.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getBlockHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       1,
       f
     );
@@ -216,7 +216,7 @@ proto.discovery.ChainInfo.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int64 block_height = 1;
+ * optional uint64 block_height = 1;
  * @return {number}
  */
 proto.discovery.ChainInfo.prototype.getBlockHeight = function() {

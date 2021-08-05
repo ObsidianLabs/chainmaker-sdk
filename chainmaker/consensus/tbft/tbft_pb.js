@@ -19,8 +19,6 @@ var common_block_pb = require('../../common/block_pb.js');
 goog.object.extend(proto, common_block_pb);
 var common_request_pb = require('../../common/request_pb.js');
 goog.object.extend(proto, common_request_pb);
-var google_protobuf_duration_pb = require('google-protobuf/google/protobuf/duration_pb.js');
-goog.object.extend(proto, google_protobuf_duration_pb);
 goog.exportSymbol('proto.tbft.BlockVotes', null, global);
 goog.exportSymbol('proto.tbft.ConsensusState', null, global);
 goog.exportSymbol('proto.tbft.GossipState', null, global);
@@ -708,7 +706,7 @@ proto.tbft.Proposal.deserializeBinaryFromReader = function(msg, reader) {
       msg.setVoter(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 3:
@@ -767,7 +765,7 @@ proto.tbft.Proposal.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       2,
       f
     );
@@ -824,7 +822,7 @@ proto.tbft.Proposal.prototype.setVoter = function(value) {
 
 
 /**
- * optional int64 height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.tbft.Proposal.prototype.getHeight = function() {
@@ -1034,7 +1032,7 @@ proto.tbft.Vote.deserializeBinaryFromReader = function(msg, reader) {
       msg.setVoter(value);
       break;
     case 3:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 4:
@@ -1095,7 +1093,7 @@ proto.tbft.Vote.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       3,
       f
     );
@@ -1162,7 +1160,7 @@ proto.tbft.Vote.prototype.setVoter = function(value) {
 
 
 /**
- * optional int64 height = 3;
+ * optional uint64 height = 3;
  * @return {number}
  */
 proto.tbft.Vote.prototype.getHeight = function() {
@@ -1353,7 +1351,7 @@ proto.tbft.BlockVotes.deserializeBinaryFromReader = function(msg, reader) {
          });
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setSum(value);
       break;
     default:
@@ -1391,7 +1389,7 @@ proto.tbft.BlockVotes.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getSum();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       2,
       f
     );
@@ -1422,7 +1420,7 @@ proto.tbft.BlockVotes.prototype.clearVotesMap = function() {
 
 
 /**
- * optional int64 sum = 2;
+ * optional uint64 sum = 2;
  * @return {number}
  */
 proto.tbft.BlockVotes.prototype.getSum = function() {
@@ -1519,7 +1517,7 @@ proto.tbft.VoteSet.deserializeBinaryFromReader = function(msg, reader) {
       msg.setType(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 3:
@@ -1527,7 +1525,7 @@ proto.tbft.VoteSet.deserializeBinaryFromReader = function(msg, reader) {
       msg.setRound(value);
       break;
     case 4:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setSum(value);
       break;
     case 5:
@@ -1584,7 +1582,7 @@ proto.tbft.VoteSet.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       2,
       f
     );
@@ -1598,7 +1596,7 @@ proto.tbft.VoteSet.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getSum();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       4,
       f
     );
@@ -1640,7 +1638,7 @@ proto.tbft.VoteSet.prototype.setType = function(value) {
 
 
 /**
- * optional int64 height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.tbft.VoteSet.prototype.getHeight = function() {
@@ -1676,7 +1674,7 @@ proto.tbft.VoteSet.prototype.setRound = function(value) {
 
 
 /**
- * optional int64 sum = 4;
+ * optional uint64 sum = 4;
  * @return {number}
  */
 proto.tbft.VoteSet.prototype.getSum = function() {
@@ -1852,7 +1850,7 @@ proto.tbft.RoundVoteSet.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 2:
@@ -1900,7 +1898,7 @@ proto.tbft.RoundVoteSet.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       1,
       f
     );
@@ -1932,7 +1930,7 @@ proto.tbft.RoundVoteSet.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int64 height = 1;
+ * optional uint64 height = 1;
  * @return {number}
  */
 proto.tbft.RoundVoteSet.prototype.getHeight = function() {
@@ -2075,7 +2073,7 @@ proto.tbft.HeightRoundVoteSet.toObject = function(includeInstance, msg) {
   var f, obj = {
     height: jspb.Message.getFieldWithDefault(msg, 1, 0),
     round: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    roundvotesetsMap: (f = msg.getRoundvotesetsMap()) ? f.toObject(includeInstance, proto.tbft.RoundVoteSet.toObject) : []
+    roundVoteSetsMap: (f = msg.getRoundVoteSetsMap()) ? f.toObject(includeInstance, proto.tbft.RoundVoteSet.toObject) : []
   };
 
   if (includeInstance) {
@@ -2113,7 +2111,7 @@ proto.tbft.HeightRoundVoteSet.deserializeBinaryFromReader = function(msg, reader
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 2:
@@ -2121,7 +2119,7 @@ proto.tbft.HeightRoundVoteSet.deserializeBinaryFromReader = function(msg, reader
       msg.setRound(value);
       break;
     case 3:
-      var value = msg.getRoundvotesetsMap();
+      var value = msg.getRoundVoteSetsMap();
       reader.readMessage(value, function(message, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readInt32, jspb.BinaryReader.prototype.readMessage, proto.tbft.RoundVoteSet.deserializeBinaryFromReader, 0, new proto.tbft.RoundVoteSet());
          });
@@ -2157,7 +2155,7 @@ proto.tbft.HeightRoundVoteSet.serializeBinaryToWriter = function(message, writer
   var f = undefined;
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       1,
       f
     );
@@ -2169,7 +2167,7 @@ proto.tbft.HeightRoundVoteSet.serializeBinaryToWriter = function(message, writer
       f
     );
   }
-  f = message.getRoundvotesetsMap(true);
+  f = message.getRoundVoteSetsMap(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(3, writer, jspb.BinaryWriter.prototype.writeInt32, jspb.BinaryWriter.prototype.writeMessage, proto.tbft.RoundVoteSet.serializeBinaryToWriter);
   }
@@ -2177,7 +2175,7 @@ proto.tbft.HeightRoundVoteSet.serializeBinaryToWriter = function(message, writer
 
 
 /**
- * optional int64 height = 1;
+ * optional uint64 height = 1;
  * @return {number}
  */
 proto.tbft.HeightRoundVoteSet.prototype.getHeight = function() {
@@ -2213,12 +2211,12 @@ proto.tbft.HeightRoundVoteSet.prototype.setRound = function(value) {
 
 
 /**
- * map<int32, RoundVoteSet> roundVoteSets = 3;
+ * map<int32, RoundVoteSet> round_vote_sets = 3;
  * @param {boolean=} opt_noLazyCreate Do not create the map if
  * empty, instead returning `undefined`
  * @return {!jspb.Map<number,!proto.tbft.RoundVoteSet>}
  */
-proto.tbft.HeightRoundVoteSet.prototype.getRoundvotesetsMap = function(opt_noLazyCreate) {
+proto.tbft.HeightRoundVoteSet.prototype.getRoundVoteSetsMap = function(opt_noLazyCreate) {
   return /** @type {!jspb.Map<number,!proto.tbft.RoundVoteSet>} */ (
       jspb.Message.getMapField(this, 3, opt_noLazyCreate,
       proto.tbft.RoundVoteSet));
@@ -2229,8 +2227,8 @@ proto.tbft.HeightRoundVoteSet.prototype.getRoundvotesetsMap = function(opt_noLaz
  * Clears values from the map. The map will be non-null.
  * @return {!proto.tbft.HeightRoundVoteSet} returns this
  */
-proto.tbft.HeightRoundVoteSet.prototype.clearRoundvotesetsMap = function() {
-  this.getRoundvotesetsMap().clear();
+proto.tbft.HeightRoundVoteSet.prototype.clearRoundVoteSetsMap = function() {
+  this.getRoundVoteSetsMap().clear();
   return this;};
 
 
@@ -2316,7 +2314,7 @@ proto.tbft.ConsensusState.deserializeBinaryFromReader = function(msg, reader) {
       msg.setId(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 3:
@@ -2390,7 +2388,7 @@ proto.tbft.ConsensusState.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       2,
       f
     );
@@ -2471,7 +2469,7 @@ proto.tbft.ConsensusState.prototype.setId = function(value) {
 
 
 /**
- * optional int64 height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.tbft.ConsensusState.prototype.getHeight = function() {
@@ -2789,7 +2787,7 @@ proto.tbft.GossipState.deserializeBinaryFromReader = function(msg, reader) {
       msg.setId(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 3:
@@ -2851,7 +2849,7 @@ proto.tbft.GossipState.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       2,
       f
     );
@@ -2914,7 +2912,7 @@ proto.tbft.GossipState.prototype.setId = function(value) {
 
 
 /**
- * optional int64 height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.tbft.GossipState.prototype.getHeight = function() {
@@ -3120,7 +3118,7 @@ proto.tbft.TimeoutInfo.prototype.toObject = function(opt_includeInstance) {
  */
 proto.tbft.TimeoutInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    duration: (f = msg.getDuration()) && google_protobuf_duration_pb.Duration.toObject(includeInstance, f),
+    duration: jspb.Message.getFieldWithDefault(msg, 1, 0),
     height: jspb.Message.getFieldWithDefault(msg, 2, 0),
     round: jspb.Message.getFieldWithDefault(msg, 3, 0),
     step: jspb.Message.getFieldWithDefault(msg, 4, 0)
@@ -3161,12 +3159,11 @@ proto.tbft.TimeoutInfo.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new google_protobuf_duration_pb.Duration;
-      reader.readMessage(value,google_protobuf_duration_pb.Duration.deserializeBinaryFromReader);
+      var value = /** @type {number} */ (reader.readInt64());
       msg.setDuration(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 3:
@@ -3207,16 +3204,15 @@ proto.tbft.TimeoutInfo.prototype.serializeBinary = function() {
 proto.tbft.TimeoutInfo.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getDuration();
-  if (f != null) {
-    writer.writeMessage(
+  if (f !== 0) {
+    writer.writeInt64(
       1,
-      f,
-      google_protobuf_duration_pb.Duration.serializeBinaryToWriter
+      f
     );
   }
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       2,
       f
     );
@@ -3239,44 +3235,25 @@ proto.tbft.TimeoutInfo.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional google.protobuf.Duration duration = 1;
- * @return {?proto.google.protobuf.Duration}
+ * optional int64 duration = 1;
+ * @return {number}
  */
 proto.tbft.TimeoutInfo.prototype.getDuration = function() {
-  return /** @type{?proto.google.protobuf.Duration} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_duration_pb.Duration, 1));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
 /**
- * @param {?proto.google.protobuf.Duration|undefined} value
+ * @param {number} value
  * @return {!proto.tbft.TimeoutInfo} returns this
-*/
+ */
 proto.tbft.TimeoutInfo.prototype.setDuration = function(value) {
-  return jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
 /**
- * Clears the message field making it undefined.
- * @return {!proto.tbft.TimeoutInfo} returns this
- */
-proto.tbft.TimeoutInfo.prototype.clearDuration = function() {
-  return this.setDuration(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.tbft.TimeoutInfo.prototype.hasDuration = function() {
-  return jspb.Message.getField(this, 1) != null;
-};
-
-
-/**
- * optional int64 height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.tbft.TimeoutInfo.prototype.getHeight = function() {
@@ -3362,7 +3339,7 @@ proto.tbft.WalEntry.prototype.toObject = function(opt_includeInstance) {
 proto.tbft.WalEntry.toObject = function(includeInstance, msg) {
   var f, obj = {
     height: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    heightfirstindex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    heightFirstIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
     type: jspb.Message.getFieldWithDefault(msg, 3, 0),
     data: msg.getData_asB64()
   };
@@ -3402,12 +3379,12 @@ proto.tbft.WalEntry.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setHeight(value);
       break;
     case 2:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setHeightfirstindex(value);
+      msg.setHeightFirstIndex(value);
       break;
     case 3:
       var value = /** @type {!proto.tbft.WalEntryType} */ (reader.readEnum());
@@ -3448,12 +3425,12 @@ proto.tbft.WalEntry.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       1,
       f
     );
   }
-  f = message.getHeightfirstindex();
+  f = message.getHeightFirstIndex();
   if (f !== 0) {
     writer.writeUint64(
       2,
@@ -3478,7 +3455,7 @@ proto.tbft.WalEntry.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int64 height = 1;
+ * optional uint64 height = 1;
  * @return {number}
  */
 proto.tbft.WalEntry.prototype.getHeight = function() {
@@ -3496,10 +3473,10 @@ proto.tbft.WalEntry.prototype.setHeight = function(value) {
 
 
 /**
- * optional uint64 heightFirstIndex = 2;
+ * optional uint64 height_first_index = 2;
  * @return {number}
  */
-proto.tbft.WalEntry.prototype.getHeightfirstindex = function() {
+proto.tbft.WalEntry.prototype.getHeightFirstIndex = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -3508,7 +3485,7 @@ proto.tbft.WalEntry.prototype.getHeightfirstindex = function() {
  * @param {number} value
  * @return {!proto.tbft.WalEntry} returns this
  */
-proto.tbft.WalEntry.prototype.setHeightfirstindex = function(value) {
+proto.tbft.WalEntry.prototype.setHeightFirstIndex = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -3577,31 +3554,31 @@ proto.tbft.WalEntry.prototype.setData = function(value) {
  * @enum {number}
  */
 proto.tbft.TBFTMsgType = {
-  PROPOSE: 0,
-  PREVOTE: 1,
-  PRECOMMIT: 2,
-  STATE: 3
+  MSG_PROPOSE: 0,
+  MSG_PREVOTE: 1,
+  MSG_PRECOMMIT: 2,
+  MSG_STATE: 3
 };
 
 /**
  * @enum {number}
  */
 proto.tbft.VoteType = {
-  VOTEPREVOTE: 0,
-  VOTEPRECOMMIT: 1
+  VOTE_PREVOTE: 0,
+  VOTE_PRECOMMIT: 1
 };
 
 /**
  * @enum {number}
  */
 proto.tbft.Step = {
-  NEWHEIGHT: 0,
-  NEWROUND: 1,
+  NEW_HEIGHT: 0,
+  NEW_ROUND: 1,
   PROPOSE: 2,
   PREVOTE: 3,
-  PREVOTEWAIT: 4,
+  PREVOTE_WAIT: 4,
   PRECOMMIT: 5,
-  PRECOMMITWAIT: 6,
+  PRECOMMIT_WAIT: 6,
   COMMIT: 7
 };
 
@@ -3609,9 +3586,9 @@ proto.tbft.Step = {
  * @enum {number}
  */
 proto.tbft.WalEntryType = {
-  TIMEOUTENTRY: 0,
-  PROPOSALENTRY: 1,
-  VOTEENTRY: 2
+  TIMEOUT_ENTRY: 0,
+  PROPOSAL_ENTRY: 1,
+  VOTE_ENTRY: 2
 };
 
 goog.object.extend(exports, proto.tbft);

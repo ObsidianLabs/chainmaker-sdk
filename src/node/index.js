@@ -101,21 +101,17 @@ class Node {
     });
   }
 
-  async sendPayload(userInfo, chainID, payloadBytes, txType, srcRes = false, nodeAddr) {
-    const txId = utils.newTxID();
+  async sendPayload(userInfo, payload, srcRes = false, nodeAddr) {
     const request = utils.newRequest(
-      txId,
-      chainID,
-      txType,
       userInfo.orgID,
       userInfo.userSignCertBytes,
       userInfo.isFullCert,
-      payloadBytes,
+      payload,
       userInfo.userSignKeyBytes,
     );
     // console.log(JSON.stringify(request.toObject(), null, 4));
     const result = await this.sendRequest(request, srcRes, nodeAddr);
-    return { txId, result };
+    return { txId: payload.getTxId(), result };
   }
 
   subscribe(request) {

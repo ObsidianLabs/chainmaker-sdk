@@ -36,6 +36,21 @@ const NEED_SRC_RESPONSE = true;
 
 const DEFAULT_SEQUENCE = 0;
 
+const PAYLOAD_KEY_METHOD = {
+  chainId: 'setChainId',
+  txType: 'setTxType',
+  txId: 'setTxId',
+  timestamp: 'setTimestamp',
+  expirationTime: 'setExpirationTime',
+  contractName: 'setContractName',
+  method: 'setMethod',
+  parameters: 'setParametersList',
+  sequence: 'setSequence',
+  limit: 'setLimit',
+};
+
+const PAYLOAD_KEY = Object.keys(PAYLOAD_KEY_METHOD);
+
 module.exports = {
-  userContractMgrMethod, runtimeType, NEED_SRC_RESPONSE, DEFAULT_SEQUENCE,
+  userContractMgrMethod, runtimeType, NEED_SRC_RESPONSE, DEFAULT_SEQUENCE, PAYLOAD_KEY_METHOD, PAYLOAD_KEY,
 };

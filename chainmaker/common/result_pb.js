@@ -21,7 +21,6 @@ goog.exportSymbol('proto.common.ContractEvent', null, global);
 goog.exportSymbol('proto.common.ContractEventInfo', null, global);
 goog.exportSymbol('proto.common.ContractEventInfoList', null, global);
 goog.exportSymbol('proto.common.ContractResult', null, global);
-goog.exportSymbol('proto.common.ContractResultCode', null, global);
 goog.exportSymbol('proto.common.PrivateGetContract', null, global);
 goog.exportSymbol('proto.common.Result', null, global);
 goog.exportSymbol('proto.common.StrSlice', null, global);
@@ -293,7 +292,8 @@ proto.common.TxResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     code: jspb.Message.getFieldWithDefault(msg, 1, 0),
     message: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    contractResult: (f = msg.getContractResult()) && proto.common.ContractResult.toObject(includeInstance, f)
+    contractResult: (f = msg.getContractResult()) && proto.common.ContractResult.toObject(includeInstance, f),
+    txId: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -342,6 +342,10 @@ proto.common.TxResponse.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.common.ContractResult;
       reader.readMessage(value,proto.common.ContractResult.deserializeBinaryFromReader);
       msg.setContractResult(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTxId(value);
       break;
     default:
       reader.skipField();
@@ -392,6 +396,13 @@ proto.common.TxResponse.serializeBinaryToWriter = function(message, writer) {
       3,
       f,
       proto.common.ContractResult.serializeBinaryToWriter
+    );
+  }
+  f = message.getTxId();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
     );
   }
 };
@@ -467,6 +478,24 @@ proto.common.TxResponse.prototype.clearContractResult = function() {
  */
 proto.common.TxResponse.prototype.hasContractResult = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional string tx_id = 4;
+ * @return {string}
+ */
+proto.common.TxResponse.prototype.getTxId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.common.TxResponse} returns this
+ */
+proto.common.TxResponse.prototype.setTxId = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -658,7 +687,8 @@ proto.common.Result.toObject = function(includeInstance, msg) {
   var f, obj = {
     code: jspb.Message.getFieldWithDefault(msg, 1, 0),
     contractResult: (f = msg.getContractResult()) && proto.common.ContractResult.toObject(includeInstance, f),
-    rwSetHash: msg.getRwSetHash_asB64()
+    rwSetHash: msg.getRwSetHash_asB64(),
+    message: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -708,6 +738,10 @@ proto.common.Result.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setRwSetHash(value);
       break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMessage(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -756,6 +790,13 @@ proto.common.Result.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeBytes(
       3,
+      f
+    );
+  }
+  f = message.getMessage();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
       f
     );
   }
@@ -859,6 +900,24 @@ proto.common.Result.prototype.setRwSetHash = function(value) {
 };
 
 
+/**
+ * optional string message = 4;
+ * @return {string}
+ */
+proto.common.Result.prototype.getMessage = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.common.Result} returns this
+ */
+proto.common.Result.prototype.setMessage = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -941,7 +1000,7 @@ proto.common.ContractResult.deserializeBinaryFromReader = function(msg, reader) 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!proto.common.ContractResultCode} */ (reader.readEnum());
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setCode(value);
       break;
     case 2:
@@ -953,7 +1012,7 @@ proto.common.ContractResult.deserializeBinaryFromReader = function(msg, reader) 
       msg.setMessage(value);
       break;
     case 4:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setGasUsed(value);
       break;
     case 5:
@@ -991,8 +1050,8 @@ proto.common.ContractResult.prototype.serializeBinary = function() {
 proto.common.ContractResult.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getCode();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  if (f !== 0) {
+    writer.writeUint32(
       1,
       f
     );
@@ -1013,7 +1072,7 @@ proto.common.ContractResult.serializeBinaryToWriter = function(message, writer) 
   }
   f = message.getGasUsed();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       4,
       f
     );
@@ -1030,20 +1089,20 @@ proto.common.ContractResult.serializeBinaryToWriter = function(message, writer) 
 
 
 /**
- * optional ContractResultCode code = 1;
- * @return {!proto.common.ContractResultCode}
+ * optional uint32 code = 1;
+ * @return {number}
  */
 proto.common.ContractResult.prototype.getCode = function() {
-  return /** @type {!proto.common.ContractResultCode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
 /**
- * @param {!proto.common.ContractResultCode} value
+ * @param {number} value
  * @return {!proto.common.ContractResult} returns this
  */
 proto.common.ContractResult.prototype.setCode = function(value) {
-  return jspb.Message.setProto3EnumField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -1108,7 +1167,7 @@ proto.common.ContractResult.prototype.setMessage = function(value) {
 
 
 /**
- * optional int64 gas_used = 4;
+ * optional uint64 gas_used = 4;
  * @return {number}
  */
 proto.common.ContractResult.prototype.getGasUsed = function() {
@@ -1243,7 +1302,7 @@ proto.common.PrivateGetContract.deserializeBinaryFromReader = function(msg, read
       msg.setVersion(value);
       break;
     case 3:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setGasLimit(value);
       break;
     default:
@@ -1291,7 +1350,7 @@ proto.common.PrivateGetContract.serializeBinaryToWriter = function(message, writ
   }
   f = message.getGasLimit();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       3,
       f
     );
@@ -1360,7 +1419,7 @@ proto.common.PrivateGetContract.prototype.setVersion = function(value) {
 
 
 /**
- * optional int64 gas_limit = 3;
+ * optional uint64 gas_limit = 3;
  * @return {number}
  */
 proto.common.PrivateGetContract.prototype.getGasLimit = function() {
@@ -2159,7 +2218,7 @@ proto.common.ContractEvent.prototype.clearEventDataList = function() {
  * @private {!Array<number>}
  * @const
  */
-proto.common.ContractEventInfo.repeatedFields_ = [7];
+proto.common.ContractEventInfo.repeatedFields_ = [8];
 
 
 
@@ -2196,9 +2255,10 @@ proto.common.ContractEventInfo.toObject = function(includeInstance, msg) {
     chainId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     topic: jspb.Message.getFieldWithDefault(msg, 3, ""),
     txId: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    contractName: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    contractVersion: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    eventDataList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f
+    eventIndex: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    contractName: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    contractVersion: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    eventDataList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -2236,7 +2296,7 @@ proto.common.ContractEventInfo.deserializeBinaryFromReader = function(msg, reade
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setBlockHeight(value);
       break;
     case 2:
@@ -2252,14 +2312,18 @@ proto.common.ContractEventInfo.deserializeBinaryFromReader = function(msg, reade
       msg.setTxId(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setContractName(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setEventIndex(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setContractVersion(value);
+      msg.setContractName(value);
       break;
     case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setContractVersion(value);
+      break;
+    case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.addEventData(value);
       break;
@@ -2294,7 +2358,7 @@ proto.common.ContractEventInfo.serializeBinaryToWriter = function(message, write
   var f = undefined;
   f = message.getBlockHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       1,
       f
     );
@@ -2320,24 +2384,31 @@ proto.common.ContractEventInfo.serializeBinaryToWriter = function(message, write
       f
     );
   }
-  f = message.getContractName();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getEventIndex();
+  if (f !== 0) {
+    writer.writeUint32(
       5,
       f
     );
   }
-  f = message.getContractVersion();
+  f = message.getContractName();
   if (f.length > 0) {
     writer.writeString(
       6,
       f
     );
   }
+  f = message.getContractVersion();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
   f = message.getEventDataList();
   if (f.length > 0) {
     writer.writeRepeatedString(
-      7,
+      8,
       f
     );
   }
@@ -2345,7 +2416,7 @@ proto.common.ContractEventInfo.serializeBinaryToWriter = function(message, write
 
 
 /**
- * optional int64 block_height = 1;
+ * optional uint64 block_height = 1;
  * @return {number}
  */
 proto.common.ContractEventInfo.prototype.getBlockHeight = function() {
@@ -2417,28 +2488,28 @@ proto.common.ContractEventInfo.prototype.setTxId = function(value) {
 
 
 /**
- * optional string contract_name = 5;
+ * optional uint32 event_index = 5;
+ * @return {number}
+ */
+proto.common.ContractEventInfo.prototype.getEventIndex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.common.ContractEventInfo} returns this
+ */
+proto.common.ContractEventInfo.prototype.setEventIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional string contract_name = 6;
  * @return {string}
  */
 proto.common.ContractEventInfo.prototype.getContractName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.common.ContractEventInfo} returns this
- */
-proto.common.ContractEventInfo.prototype.setContractName = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-/**
- * optional string contract_version = 6;
- * @return {string}
- */
-proto.common.ContractEventInfo.prototype.getContractVersion = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -2447,17 +2518,35 @@ proto.common.ContractEventInfo.prototype.getContractVersion = function() {
  * @param {string} value
  * @return {!proto.common.ContractEventInfo} returns this
  */
-proto.common.ContractEventInfo.prototype.setContractVersion = function(value) {
+proto.common.ContractEventInfo.prototype.setContractName = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * repeated string event_data = 7;
+ * optional string contract_version = 7;
+ * @return {string}
+ */
+proto.common.ContractEventInfo.prototype.getContractVersion = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.common.ContractEventInfo} returns this
+ */
+proto.common.ContractEventInfo.prototype.setContractVersion = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * repeated string event_data = 8;
  * @return {!Array<string>}
  */
 proto.common.ContractEventInfo.prototype.getEventDataList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 8));
 };
 
 
@@ -2466,7 +2555,7 @@ proto.common.ContractEventInfo.prototype.getEventDataList = function() {
  * @return {!proto.common.ContractEventInfo} returns this
  */
 proto.common.ContractEventInfo.prototype.setEventDataList = function(value) {
-  return jspb.Message.setField(this, 7, value || []);
+  return jspb.Message.setField(this, 8, value || []);
 };
 
 
@@ -2476,7 +2565,7 @@ proto.common.ContractEventInfo.prototype.setEventDataList = function(value) {
  * @return {!proto.common.ContractEventInfo} returns this
  */
 proto.common.ContractEventInfo.prototype.addEventData = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 8, value, opt_index);
 };
 
 
@@ -2689,14 +2778,6 @@ proto.common.TxStatusCode = {
   CONTRACT_INVOKE_METHOD_FAILED: 39,
   ARCHIVED_TX: 40,
   ARCHIVED_BLOCK: 41
-};
-
-/**
- * @enum {number}
- */
-proto.common.ContractResultCode = {
-  OK: 0,
-  FAIL: 1
 };
 
 goog.object.extend(exports, proto.common);

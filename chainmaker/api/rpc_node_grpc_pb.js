@@ -3,16 +3,17 @@
 // Original file comments:
 //
 // Copyright (C) BABEC. All rights reserved.
+// Copyright (C) THL A29 Limited, a Tencent company. All rights reserved.
 //
 // SPDX-License-Identifier: Apache-2.0
 //
 'use strict';
-const grpc = require('@grpc/grpc-js');
-const common_request_pb = require('../common/request_pb.js');
-const common_result_pb = require('../common/result_pb.js');
-const config_local_config_pb = require('../config/local_config_pb.js');
-const config_log_config_pb = require('../config/log_config_pb.js');
-const config_chainmaker_server_pb = require('../config/chainmaker_server_pb.js');
+var grpc = require('@grpc/grpc-js');
+var common_request_pb = require('../common/request_pb.js');
+var common_result_pb = require('../common/result_pb.js');
+var config_local_config_pb = require('../config/local_config_pb.js');
+var config_log_config_pb = require('../config/log_config_pb.js');
+var config_chainmaker_server_pb = require('../config/chainmaker_server_pb.js');
 
 function serialize_common_SubscribeResult(arg) {
   if (!(arg instanceof common_result_pb.SubscribeResult)) {
@@ -137,9 +138,9 @@ function deserialize_config_LogLevelsResponse(buffer_arg) {
 
 
 // rpcNnode is the server API for
-const RpcNodeService = exports['api.RpcNode'] = {
+var RpcNodeService = exports['api.RpcNode'] = {
   // processing transaction message requests
-  sendRequest: {
+sendRequest: {
     path: '/api.RpcNode/SendRequest',
     requestStream: false,
     responseStream: false,
@@ -151,7 +152,7 @@ const RpcNodeService = exports['api.RpcNode'] = {
     responseDeserialize: deserialize_common_TxResponse,
   },
   // processing requests for message subscription
-  subscribe: {
+subscribe: {
     path: '/api.RpcNode/Subscribe',
     requestStream: false,
     responseStream: true,
@@ -163,7 +164,7 @@ const RpcNodeService = exports['api.RpcNode'] = {
     responseDeserialize: deserialize_common_SubscribeResult,
   },
   // update debug status (development debugging)
-  updateDebugConfig: {
+updateDebugConfig: {
     path: '/api.RpcNode/UpdateDebugConfig',
     requestStream: false,
     responseStream: false,
@@ -175,7 +176,7 @@ const RpcNodeService = exports['api.RpcNode'] = {
     responseDeserialize: deserialize_config_DebugConfigResponse,
   },
   // refreshLogLevelsConfig
-  refreshLogLevelsConfig: {
+refreshLogLevelsConfig: {
     path: '/api.RpcNode/RefreshLogLevelsConfig',
     requestStream: false,
     responseStream: false,
@@ -187,7 +188,7 @@ const RpcNodeService = exports['api.RpcNode'] = {
     responseDeserialize: deserialize_config_LogLevelsResponse,
   },
   // get chainmaker version
-  getChainMakerVersion: {
+getChainMakerVersion: {
     path: '/api.RpcNode/GetChainMakerVersion',
     requestStream: false,
     responseStream: false,
@@ -199,7 +200,7 @@ const RpcNodeService = exports['api.RpcNode'] = {
     responseDeserialize: deserialize_config_ChainMakerVersionResponse,
   },
   // check chain configuration and load new chain dynamically
-  checkNewBlockChainConfig: {
+checkNewBlockChainConfig: {
     path: '/api.RpcNode/CheckNewBlockChainConfig',
     requestStream: false,
     responseStream: false,

@@ -32,7 +32,7 @@ goog.exportSymbol('proto.common.TransactionInfo', null, global);
  * @constructor
  */
 proto.common.Transaction = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.common.Transaction.repeatedFields_, null);
 };
 goog.inherits(proto.common.Transaction, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -63,6 +63,13 @@ if (goog.DEBUG && !COMPILED) {
    */
   proto.common.TransactionInfo.displayName = 'proto.common.TransactionInfo';
 }
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.common.Transaction.repeatedFields_ = [3];
 
 
 
@@ -95,9 +102,10 @@ proto.common.Transaction.prototype.toObject = function(opt_includeInstance) {
  */
 proto.common.Transaction.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && common_request_pb.TxHeader.toObject(includeInstance, f),
-    requestPayload: msg.getRequestPayload_asB64(),
-    requestSignature: msg.getRequestSignature_asB64(),
+    payload: (f = msg.getPayload()) && common_request_pb.Payload.toObject(includeInstance, f),
+    sender: (f = msg.getSender()) && common_request_pb.EndorsementEntry.toObject(includeInstance, f),
+    endorsersList: jspb.Message.toObjectList(msg.getEndorsersList(),
+    common_request_pb.EndorsementEntry.toObject, includeInstance),
     result: (f = msg.getResult()) && common_result_pb.Result.toObject(includeInstance, f)
   };
 
@@ -136,17 +144,19 @@ proto.common.Transaction.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new common_request_pb.TxHeader;
-      reader.readMessage(value,common_request_pb.TxHeader.deserializeBinaryFromReader);
-      msg.setHeader(value);
+      var value = new common_request_pb.Payload;
+      reader.readMessage(value,common_request_pb.Payload.deserializeBinaryFromReader);
+      msg.setPayload(value);
       break;
     case 2:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setRequestPayload(value);
+      var value = new common_request_pb.EndorsementEntry;
+      reader.readMessage(value,common_request_pb.EndorsementEntry.deserializeBinaryFromReader);
+      msg.setSender(value);
       break;
     case 3:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setRequestSignature(value);
+      var value = new common_request_pb.EndorsementEntry;
+      reader.readMessage(value,common_request_pb.EndorsementEntry.deserializeBinaryFromReader);
+      msg.addEndorsers(value);
       break;
     case 4:
       var value = new common_result_pb.Result;
@@ -182,26 +192,28 @@ proto.common.Transaction.prototype.serializeBinary = function() {
  */
 proto.common.Transaction.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getHeader();
+  f = message.getPayload();
   if (f != null) {
     writer.writeMessage(
       1,
       f,
-      common_request_pb.TxHeader.serializeBinaryToWriter
+      common_request_pb.Payload.serializeBinaryToWriter
     );
   }
-  f = message.getRequestPayload_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
+  f = message.getSender();
+  if (f != null) {
+    writer.writeMessage(
       2,
-      f
+      f,
+      common_request_pb.EndorsementEntry.serializeBinaryToWriter
     );
   }
-  f = message.getRequestSignature_asU8();
+  f = message.getEndorsersList();
   if (f.length > 0) {
-    writer.writeBytes(
+    writer.writeRepeatedMessage(
       3,
-      f
+      f,
+      common_request_pb.EndorsementEntry.serializeBinaryToWriter
     );
   }
   f = message.getResult();
@@ -216,20 +228,20 @@ proto.common.Transaction.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional TxHeader header = 1;
- * @return {?proto.common.TxHeader}
+ * optional Payload payload = 1;
+ * @return {?proto.common.Payload}
  */
-proto.common.Transaction.prototype.getHeader = function() {
-  return /** @type{?proto.common.TxHeader} */ (
-    jspb.Message.getWrapperField(this, common_request_pb.TxHeader, 1));
+proto.common.Transaction.prototype.getPayload = function() {
+  return /** @type{?proto.common.Payload} */ (
+    jspb.Message.getWrapperField(this, common_request_pb.Payload, 1));
 };
 
 
 /**
- * @param {?proto.common.TxHeader|undefined} value
+ * @param {?proto.common.Payload|undefined} value
  * @return {!proto.common.Transaction} returns this
 */
-proto.common.Transaction.prototype.setHeader = function(value) {
+proto.common.Transaction.prototype.setPayload = function(value) {
   return jspb.Message.setWrapperField(this, 1, value);
 };
 
@@ -238,8 +250,8 @@ proto.common.Transaction.prototype.setHeader = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.common.Transaction} returns this
  */
-proto.common.Transaction.prototype.clearHeader = function() {
-  return this.setHeader(undefined);
+proto.common.Transaction.prototype.clearPayload = function() {
+  return this.setPayload(undefined);
 };
 
 
@@ -247,92 +259,83 @@ proto.common.Transaction.prototype.clearHeader = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.common.Transaction.prototype.hasHeader = function() {
+proto.common.Transaction.prototype.hasPayload = function() {
   return jspb.Message.getField(this, 1) != null;
 };
 
 
 /**
- * optional bytes request_payload = 2;
- * @return {!(string|Uint8Array)}
+ * optional EndorsementEntry sender = 2;
+ * @return {?proto.common.EndorsementEntry}
  */
-proto.common.Transaction.prototype.getRequestPayload = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+proto.common.Transaction.prototype.getSender = function() {
+  return /** @type{?proto.common.EndorsementEntry} */ (
+    jspb.Message.getWrapperField(this, common_request_pb.EndorsementEntry, 2));
 };
 
 
 /**
- * optional bytes request_payload = 2;
- * This is a type-conversion wrapper around `getRequestPayload()`
- * @return {string}
- */
-proto.common.Transaction.prototype.getRequestPayload_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getRequestPayload()));
+ * @param {?proto.common.EndorsementEntry|undefined} value
+ * @return {!proto.common.Transaction} returns this
+*/
+proto.common.Transaction.prototype.setSender = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
 };
 
 
 /**
- * optional bytes request_payload = 2;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getRequestPayload()`
- * @return {!Uint8Array}
- */
-proto.common.Transaction.prototype.getRequestPayload_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getRequestPayload()));
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
+ * Clears the message field making it undefined.
  * @return {!proto.common.Transaction} returns this
  */
-proto.common.Transaction.prototype.setRequestPayload = function(value) {
-  return jspb.Message.setProto3BytesField(this, 2, value);
+proto.common.Transaction.prototype.clearSender = function() {
+  return this.setSender(undefined);
 };
 
 
 /**
- * optional bytes request_signature = 3;
- * @return {!(string|Uint8Array)}
+ * Returns whether this field is set.
+ * @return {boolean}
  */
-proto.common.Transaction.prototype.getRequestSignature = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+proto.common.Transaction.prototype.hasSender = function() {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 
 /**
- * optional bytes request_signature = 3;
- * This is a type-conversion wrapper around `getRequestSignature()`
- * @return {string}
+ * repeated EndorsementEntry endorsers = 3;
+ * @return {!Array<!proto.common.EndorsementEntry>}
  */
-proto.common.Transaction.prototype.getRequestSignature_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getRequestSignature()));
+proto.common.Transaction.prototype.getEndorsersList = function() {
+  return /** @type{!Array<!proto.common.EndorsementEntry>} */ (
+    jspb.Message.getRepeatedWrapperField(this, common_request_pb.EndorsementEntry, 3));
 };
 
 
 /**
- * optional bytes request_signature = 3;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getRequestSignature()`
- * @return {!Uint8Array}
+ * @param {!Array<!proto.common.EndorsementEntry>} value
+ * @return {!proto.common.Transaction} returns this
+*/
+proto.common.Transaction.prototype.setEndorsersList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 3, value);
+};
+
+
+/**
+ * @param {!proto.common.EndorsementEntry=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.common.EndorsementEntry}
  */
-proto.common.Transaction.prototype.getRequestSignature_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getRequestSignature()));
+proto.common.Transaction.prototype.addEndorsers = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.common.EndorsementEntry, opt_index);
 };
 
 
 /**
- * @param {!(string|Uint8Array)} value
+ * Clears the list making it empty but non-null.
  * @return {!proto.common.Transaction} returns this
  */
-proto.common.Transaction.prototype.setRequestSignature = function(value) {
-  return jspb.Message.setProto3BytesField(this, 3, value);
+proto.common.Transaction.prototype.clearEndorsersList = function() {
+  return this.setEndorsersList([]);
 };
 
 

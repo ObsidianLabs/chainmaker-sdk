@@ -370,11 +370,11 @@ proto.chainedbft.QuorumCert.prototype.toObject = function(opt_includeInstance) {
  */
 proto.chainedbft.QuorumCert.toObject = function(includeInstance, msg) {
   var f, obj = {
-    blockid: msg.getBlockid_asB64(),
+    blockId: msg.getBlockId_asB64(),
     height: jspb.Message.getFieldWithDefault(msg, 2, 0),
     level: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    newview: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
-    epochid: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    newView: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    epochId: jspb.Message.getFieldWithDefault(msg, 5, 0),
     votesList: jspb.Message.toObjectList(msg.getVotesList(),
     proto.chainedbft.VoteData.toObject, includeInstance)
   };
@@ -415,7 +415,7 @@ proto.chainedbft.QuorumCert.deserializeBinaryFromReader = function(msg, reader) 
     switch (field) {
     case 1:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setBlockid(value);
+      msg.setBlockId(value);
       break;
     case 2:
       var value = /** @type {number} */ (reader.readUint64());
@@ -427,11 +427,11 @@ proto.chainedbft.QuorumCert.deserializeBinaryFromReader = function(msg, reader) 
       break;
     case 4:
       var value = /** @type {boolean} */ (reader.readBool());
-      msg.setNewview(value);
+      msg.setNewView(value);
       break;
     case 5:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setEpochid(value);
+      msg.setEpochId(value);
       break;
     case 6:
       var value = new proto.chainedbft.VoteData;
@@ -467,7 +467,7 @@ proto.chainedbft.QuorumCert.prototype.serializeBinary = function() {
  */
 proto.chainedbft.QuorumCert.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getBlockid_asU8();
+  f = message.getBlockId_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       1,
@@ -488,14 +488,14 @@ proto.chainedbft.QuorumCert.serializeBinaryToWriter = function(message, writer) 
       f
     );
   }
-  f = message.getNewview();
+  f = message.getNewView();
   if (f) {
     writer.writeBool(
       4,
       f
     );
   }
-  f = message.getEpochid();
+  f = message.getEpochId();
   if (f !== 0) {
     writer.writeUint64(
       5,
@@ -514,35 +514,35 @@ proto.chainedbft.QuorumCert.serializeBinaryToWriter = function(message, writer) 
 
 
 /**
- * optional bytes BlockID = 1;
+ * optional bytes block_id = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.chainedbft.QuorumCert.prototype.getBlockid = function() {
+proto.chainedbft.QuorumCert.prototype.getBlockId = function() {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * optional bytes BlockID = 1;
- * This is a type-conversion wrapper around `getBlockid()`
+ * optional bytes block_id = 1;
+ * This is a type-conversion wrapper around `getBlockId()`
  * @return {string}
  */
-proto.chainedbft.QuorumCert.prototype.getBlockid_asB64 = function() {
+proto.chainedbft.QuorumCert.prototype.getBlockId_asB64 = function() {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getBlockid()));
+      this.getBlockId()));
 };
 
 
 /**
- * optional bytes BlockID = 1;
+ * optional bytes block_id = 1;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getBlockid()`
+ * This is a type-conversion wrapper around `getBlockId()`
  * @return {!Uint8Array}
  */
-proto.chainedbft.QuorumCert.prototype.getBlockid_asU8 = function() {
+proto.chainedbft.QuorumCert.prototype.getBlockId_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getBlockid()));
+      this.getBlockId()));
 };
 
 
@@ -550,13 +550,13 @@ proto.chainedbft.QuorumCert.prototype.getBlockid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.chainedbft.QuorumCert} returns this
  */
-proto.chainedbft.QuorumCert.prototype.setBlockid = function(value) {
+proto.chainedbft.QuorumCert.prototype.setBlockId = function(value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
- * optional uint64 Height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.chainedbft.QuorumCert.prototype.getHeight = function() {
@@ -574,7 +574,7 @@ proto.chainedbft.QuorumCert.prototype.setHeight = function(value) {
 
 
 /**
- * optional uint64 Level = 3;
+ * optional uint64 level = 3;
  * @return {number}
  */
 proto.chainedbft.QuorumCert.prototype.getLevel = function() {
@@ -592,10 +592,10 @@ proto.chainedbft.QuorumCert.prototype.setLevel = function(value) {
 
 
 /**
- * optional bool NewView = 4;
+ * optional bool new_view = 4;
  * @return {boolean}
  */
-proto.chainedbft.QuorumCert.prototype.getNewview = function() {
+proto.chainedbft.QuorumCert.prototype.getNewView = function() {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
 };
 
@@ -604,16 +604,16 @@ proto.chainedbft.QuorumCert.prototype.getNewview = function() {
  * @param {boolean} value
  * @return {!proto.chainedbft.QuorumCert} returns this
  */
-proto.chainedbft.QuorumCert.prototype.setNewview = function(value) {
+proto.chainedbft.QuorumCert.prototype.setNewView = function(value) {
   return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
 /**
- * optional uint64 EpochId = 5;
+ * optional uint64 epoch_id = 5;
  * @return {number}
  */
-proto.chainedbft.QuorumCert.prototype.getEpochid = function() {
+proto.chainedbft.QuorumCert.prototype.getEpochId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
@@ -622,13 +622,13 @@ proto.chainedbft.QuorumCert.prototype.getEpochid = function() {
  * @param {number} value
  * @return {!proto.chainedbft.QuorumCert} returns this
  */
-proto.chainedbft.QuorumCert.prototype.setEpochid = function(value) {
+proto.chainedbft.QuorumCert.prototype.setEpochId = function(value) {
   return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
- * repeated VoteData Votes = 6;
+ * repeated VoteData votes = 6;
  * @return {!Array<!proto.chainedbft.VoteData>}
  */
 proto.chainedbft.QuorumCert.prototype.getVotesList = function() {
@@ -780,7 +780,7 @@ proto.chainedbft.ConsensusInfo.serializeBinaryToWriter = function(message, write
 
 
 /**
- * optional QuorumCert QC = 1;
+ * optional QuorumCert qc = 1;
  * @return {?proto.chainedbft.QuorumCert}
  */
 proto.chainedbft.ConsensusInfo.prototype.getQc = function() {
@@ -848,9 +848,9 @@ proto.chainedbft.SyncInfo.prototype.toObject = function(opt_includeInstance) {
  */
 proto.chainedbft.SyncInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-    highestqc: (f = msg.getHighestqc()) && proto.chainedbft.QuorumCert.toObject(includeInstance, f),
-    highesttc: (f = msg.getHighesttc()) && proto.chainedbft.QuorumCert.toObject(includeInstance, f),
-    highesttclevel: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    highestQc: (f = msg.getHighestQc()) && proto.chainedbft.QuorumCert.toObject(includeInstance, f),
+    highestTc: (f = msg.getHighestTc()) && proto.chainedbft.QuorumCert.toObject(includeInstance, f),
+    highestTcLevel: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -890,16 +890,16 @@ proto.chainedbft.SyncInfo.deserializeBinaryFromReader = function(msg, reader) {
     case 1:
       var value = new proto.chainedbft.QuorumCert;
       reader.readMessage(value,proto.chainedbft.QuorumCert.deserializeBinaryFromReader);
-      msg.setHighestqc(value);
+      msg.setHighestQc(value);
       break;
     case 2:
       var value = new proto.chainedbft.QuorumCert;
       reader.readMessage(value,proto.chainedbft.QuorumCert.deserializeBinaryFromReader);
-      msg.setHighesttc(value);
+      msg.setHighestTc(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setHighesttclevel(value);
+      msg.setHighestTcLevel(value);
       break;
     default:
       reader.skipField();
@@ -930,7 +930,7 @@ proto.chainedbft.SyncInfo.prototype.serializeBinary = function() {
  */
 proto.chainedbft.SyncInfo.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getHighestqc();
+  f = message.getHighestQc();
   if (f != null) {
     writer.writeMessage(
       1,
@@ -938,7 +938,7 @@ proto.chainedbft.SyncInfo.serializeBinaryToWriter = function(message, writer) {
       proto.chainedbft.QuorumCert.serializeBinaryToWriter
     );
   }
-  f = message.getHighesttc();
+  f = message.getHighestTc();
   if (f != null) {
     writer.writeMessage(
       2,
@@ -946,7 +946,7 @@ proto.chainedbft.SyncInfo.serializeBinaryToWriter = function(message, writer) {
       proto.chainedbft.QuorumCert.serializeBinaryToWriter
     );
   }
-  f = message.getHighesttclevel();
+  f = message.getHighestTcLevel();
   if (f !== 0) {
     writer.writeUint64(
       3,
@@ -957,10 +957,10 @@ proto.chainedbft.SyncInfo.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional QuorumCert HighestQC = 1;
+ * optional QuorumCert highest_qc = 1;
  * @return {?proto.chainedbft.QuorumCert}
  */
-proto.chainedbft.SyncInfo.prototype.getHighestqc = function() {
+proto.chainedbft.SyncInfo.prototype.getHighestQc = function() {
   return /** @type{?proto.chainedbft.QuorumCert} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.QuorumCert, 1));
 };
@@ -970,7 +970,7 @@ proto.chainedbft.SyncInfo.prototype.getHighestqc = function() {
  * @param {?proto.chainedbft.QuorumCert|undefined} value
  * @return {!proto.chainedbft.SyncInfo} returns this
 */
-proto.chainedbft.SyncInfo.prototype.setHighestqc = function(value) {
+proto.chainedbft.SyncInfo.prototype.setHighestQc = function(value) {
   return jspb.Message.setWrapperField(this, 1, value);
 };
 
@@ -979,8 +979,8 @@ proto.chainedbft.SyncInfo.prototype.setHighestqc = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.SyncInfo} returns this
  */
-proto.chainedbft.SyncInfo.prototype.clearHighestqc = function() {
-  return this.setHighestqc(undefined);
+proto.chainedbft.SyncInfo.prototype.clearHighestQc = function() {
+  return this.setHighestQc(undefined);
 };
 
 
@@ -988,16 +988,16 @@ proto.chainedbft.SyncInfo.prototype.clearHighestqc = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.SyncInfo.prototype.hasHighestqc = function() {
+proto.chainedbft.SyncInfo.prototype.hasHighestQc = function() {
   return jspb.Message.getField(this, 1) != null;
 };
 
 
 /**
- * optional QuorumCert HighestTC = 2;
+ * optional QuorumCert highest_tc = 2;
  * @return {?proto.chainedbft.QuorumCert}
  */
-proto.chainedbft.SyncInfo.prototype.getHighesttc = function() {
+proto.chainedbft.SyncInfo.prototype.getHighestTc = function() {
   return /** @type{?proto.chainedbft.QuorumCert} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.QuorumCert, 2));
 };
@@ -1007,7 +1007,7 @@ proto.chainedbft.SyncInfo.prototype.getHighesttc = function() {
  * @param {?proto.chainedbft.QuorumCert|undefined} value
  * @return {!proto.chainedbft.SyncInfo} returns this
 */
-proto.chainedbft.SyncInfo.prototype.setHighesttc = function(value) {
+proto.chainedbft.SyncInfo.prototype.setHighestTc = function(value) {
   return jspb.Message.setWrapperField(this, 2, value);
 };
 
@@ -1016,8 +1016,8 @@ proto.chainedbft.SyncInfo.prototype.setHighesttc = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.SyncInfo} returns this
  */
-proto.chainedbft.SyncInfo.prototype.clearHighesttc = function() {
-  return this.setHighesttc(undefined);
+proto.chainedbft.SyncInfo.prototype.clearHighestTc = function() {
+  return this.setHighestTc(undefined);
 };
 
 
@@ -1025,16 +1025,16 @@ proto.chainedbft.SyncInfo.prototype.clearHighesttc = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.SyncInfo.prototype.hasHighesttc = function() {
+proto.chainedbft.SyncInfo.prototype.hasHighestTc = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
 
 /**
- * optional uint64 HighestTCLevel = 3;
+ * optional uint64 highest_tc_level = 3;
  * @return {number}
  */
-proto.chainedbft.SyncInfo.prototype.getHighesttclevel = function() {
+proto.chainedbft.SyncInfo.prototype.getHighestTcLevel = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -1043,7 +1043,7 @@ proto.chainedbft.SyncInfo.prototype.getHighesttclevel = function() {
  * @param {number} value
  * @return {!proto.chainedbft.SyncInfo} returns this
  */
-proto.chainedbft.SyncInfo.prototype.setHighesttclevel = function(value) {
+proto.chainedbft.SyncInfo.prototype.setHighestTcLevel = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
@@ -1084,9 +1084,9 @@ proto.chainedbft.ProposalData.toObject = function(includeInstance, msg) {
     height: jspb.Message.getFieldWithDefault(msg, 2, 0),
     level: jspb.Message.getFieldWithDefault(msg, 3, 0),
     proposer: msg.getProposer_asB64(),
-    proposeridx: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    epochid: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    justifyqc: (f = msg.getJustifyqc()) && proto.chainedbft.QuorumCert.toObject(includeInstance, f)
+    proposerIdx: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    epochId: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    justifyQc: (f = msg.getJustifyQc()) && proto.chainedbft.QuorumCert.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1142,16 +1142,16 @@ proto.chainedbft.ProposalData.deserializeBinaryFromReader = function(msg, reader
       break;
     case 5:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setProposeridx(value);
+      msg.setProposerIdx(value);
       break;
     case 6:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setEpochid(value);
+      msg.setEpochId(value);
       break;
     case 7:
       var value = new proto.chainedbft.QuorumCert;
       reader.readMessage(value,proto.chainedbft.QuorumCert.deserializeBinaryFromReader);
-      msg.setJustifyqc(value);
+      msg.setJustifyQc(value);
       break;
     default:
       reader.skipField();
@@ -1211,21 +1211,21 @@ proto.chainedbft.ProposalData.serializeBinaryToWriter = function(message, writer
       f
     );
   }
-  f = message.getProposeridx();
+  f = message.getProposerIdx();
   if (f !== 0) {
     writer.writeUint64(
       5,
       f
     );
   }
-  f = message.getEpochid();
+  f = message.getEpochId();
   if (f !== 0) {
     writer.writeUint64(
       6,
       f
     );
   }
-  f = message.getJustifyqc();
+  f = message.getJustifyQc();
   if (f != null) {
     writer.writeMessage(
       7,
@@ -1237,7 +1237,7 @@ proto.chainedbft.ProposalData.serializeBinaryToWriter = function(message, writer
 
 
 /**
- * optional common.Block Block = 1;
+ * optional common.Block block = 1;
  * @return {?proto.common.Block}
  */
 proto.chainedbft.ProposalData.prototype.getBlock = function() {
@@ -1274,7 +1274,7 @@ proto.chainedbft.ProposalData.prototype.hasBlock = function() {
 
 
 /**
- * optional uint64 Height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.chainedbft.ProposalData.prototype.getHeight = function() {
@@ -1292,7 +1292,7 @@ proto.chainedbft.ProposalData.prototype.setHeight = function(value) {
 
 
 /**
- * optional uint64 Level = 3;
+ * optional uint64 level = 3;
  * @return {number}
  */
 proto.chainedbft.ProposalData.prototype.getLevel = function() {
@@ -1310,7 +1310,7 @@ proto.chainedbft.ProposalData.prototype.setLevel = function(value) {
 
 
 /**
- * optional bytes Proposer = 4;
+ * optional bytes proposer = 4;
  * @return {!(string|Uint8Array)}
  */
 proto.chainedbft.ProposalData.prototype.getProposer = function() {
@@ -1319,7 +1319,7 @@ proto.chainedbft.ProposalData.prototype.getProposer = function() {
 
 
 /**
- * optional bytes Proposer = 4;
+ * optional bytes proposer = 4;
  * This is a type-conversion wrapper around `getProposer()`
  * @return {string}
  */
@@ -1330,7 +1330,7 @@ proto.chainedbft.ProposalData.prototype.getProposer_asB64 = function() {
 
 
 /**
- * optional bytes Proposer = 4;
+ * optional bytes proposer = 4;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getProposer()`
@@ -1352,10 +1352,10 @@ proto.chainedbft.ProposalData.prototype.setProposer = function(value) {
 
 
 /**
- * optional uint64 ProposerIdx = 5;
+ * optional uint64 proposer_idx = 5;
  * @return {number}
  */
-proto.chainedbft.ProposalData.prototype.getProposeridx = function() {
+proto.chainedbft.ProposalData.prototype.getProposerIdx = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
@@ -1364,16 +1364,16 @@ proto.chainedbft.ProposalData.prototype.getProposeridx = function() {
  * @param {number} value
  * @return {!proto.chainedbft.ProposalData} returns this
  */
-proto.chainedbft.ProposalData.prototype.setProposeridx = function(value) {
+proto.chainedbft.ProposalData.prototype.setProposerIdx = function(value) {
   return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
- * optional uint64 EpochId = 6;
+ * optional uint64 epoch_id = 6;
  * @return {number}
  */
-proto.chainedbft.ProposalData.prototype.getEpochid = function() {
+proto.chainedbft.ProposalData.prototype.getEpochId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
 };
 
@@ -1382,16 +1382,16 @@ proto.chainedbft.ProposalData.prototype.getEpochid = function() {
  * @param {number} value
  * @return {!proto.chainedbft.ProposalData} returns this
  */
-proto.chainedbft.ProposalData.prototype.setEpochid = function(value) {
+proto.chainedbft.ProposalData.prototype.setEpochId = function(value) {
   return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
 /**
- * optional QuorumCert JustifyQC = 7;
+ * optional QuorumCert justify_qc = 7;
  * @return {?proto.chainedbft.QuorumCert}
  */
-proto.chainedbft.ProposalData.prototype.getJustifyqc = function() {
+proto.chainedbft.ProposalData.prototype.getJustifyQc = function() {
   return /** @type{?proto.chainedbft.QuorumCert} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.QuorumCert, 7));
 };
@@ -1401,7 +1401,7 @@ proto.chainedbft.ProposalData.prototype.getJustifyqc = function() {
  * @param {?proto.chainedbft.QuorumCert|undefined} value
  * @return {!proto.chainedbft.ProposalData} returns this
 */
-proto.chainedbft.ProposalData.prototype.setJustifyqc = function(value) {
+proto.chainedbft.ProposalData.prototype.setJustifyQc = function(value) {
   return jspb.Message.setWrapperField(this, 7, value);
 };
 
@@ -1410,8 +1410,8 @@ proto.chainedbft.ProposalData.prototype.setJustifyqc = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.ProposalData} returns this
  */
-proto.chainedbft.ProposalData.prototype.clearJustifyqc = function() {
-  return this.setJustifyqc(undefined);
+proto.chainedbft.ProposalData.prototype.clearJustifyQc = function() {
+  return this.setJustifyQc(undefined);
 };
 
 
@@ -1419,7 +1419,7 @@ proto.chainedbft.ProposalData.prototype.clearJustifyqc = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.ProposalData.prototype.hasJustifyqc = function() {
+proto.chainedbft.ProposalData.prototype.hasJustifyQc = function() {
   return jspb.Message.getField(this, 7) != null;
 };
 
@@ -1456,8 +1456,8 @@ proto.chainedbft.ProposalMsg.prototype.toObject = function(opt_includeInstance) 
  */
 proto.chainedbft.ProposalMsg.toObject = function(includeInstance, msg) {
   var f, obj = {
-    proposaldata: (f = msg.getProposaldata()) && proto.chainedbft.ProposalData.toObject(includeInstance, f),
-    syncinfo: (f = msg.getSyncinfo()) && proto.chainedbft.SyncInfo.toObject(includeInstance, f)
+    proposalData: (f = msg.getProposalData()) && proto.chainedbft.ProposalData.toObject(includeInstance, f),
+    syncInfo: (f = msg.getSyncInfo()) && proto.chainedbft.SyncInfo.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1497,12 +1497,12 @@ proto.chainedbft.ProposalMsg.deserializeBinaryFromReader = function(msg, reader)
     case 1:
       var value = new proto.chainedbft.ProposalData;
       reader.readMessage(value,proto.chainedbft.ProposalData.deserializeBinaryFromReader);
-      msg.setProposaldata(value);
+      msg.setProposalData(value);
       break;
     case 2:
       var value = new proto.chainedbft.SyncInfo;
       reader.readMessage(value,proto.chainedbft.SyncInfo.deserializeBinaryFromReader);
-      msg.setSyncinfo(value);
+      msg.setSyncInfo(value);
       break;
     default:
       reader.skipField();
@@ -1533,7 +1533,7 @@ proto.chainedbft.ProposalMsg.prototype.serializeBinary = function() {
  */
 proto.chainedbft.ProposalMsg.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getProposaldata();
+  f = message.getProposalData();
   if (f != null) {
     writer.writeMessage(
       1,
@@ -1541,7 +1541,7 @@ proto.chainedbft.ProposalMsg.serializeBinaryToWriter = function(message, writer)
       proto.chainedbft.ProposalData.serializeBinaryToWriter
     );
   }
-  f = message.getSyncinfo();
+  f = message.getSyncInfo();
   if (f != null) {
     writer.writeMessage(
       2,
@@ -1553,10 +1553,10 @@ proto.chainedbft.ProposalMsg.serializeBinaryToWriter = function(message, writer)
 
 
 /**
- * optional ProposalData ProposalData = 1;
+ * optional ProposalData proposal_data = 1;
  * @return {?proto.chainedbft.ProposalData}
  */
-proto.chainedbft.ProposalMsg.prototype.getProposaldata = function() {
+proto.chainedbft.ProposalMsg.prototype.getProposalData = function() {
   return /** @type{?proto.chainedbft.ProposalData} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.ProposalData, 1));
 };
@@ -1566,7 +1566,7 @@ proto.chainedbft.ProposalMsg.prototype.getProposaldata = function() {
  * @param {?proto.chainedbft.ProposalData|undefined} value
  * @return {!proto.chainedbft.ProposalMsg} returns this
 */
-proto.chainedbft.ProposalMsg.prototype.setProposaldata = function(value) {
+proto.chainedbft.ProposalMsg.prototype.setProposalData = function(value) {
   return jspb.Message.setWrapperField(this, 1, value);
 };
 
@@ -1575,8 +1575,8 @@ proto.chainedbft.ProposalMsg.prototype.setProposaldata = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.ProposalMsg} returns this
  */
-proto.chainedbft.ProposalMsg.prototype.clearProposaldata = function() {
-  return this.setProposaldata(undefined);
+proto.chainedbft.ProposalMsg.prototype.clearProposalData = function() {
+  return this.setProposalData(undefined);
 };
 
 
@@ -1584,16 +1584,16 @@ proto.chainedbft.ProposalMsg.prototype.clearProposaldata = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.ProposalMsg.prototype.hasProposaldata = function() {
+proto.chainedbft.ProposalMsg.prototype.hasProposalData = function() {
   return jspb.Message.getField(this, 1) != null;
 };
 
 
 /**
- * optional SyncInfo SyncInfo = 2;
+ * optional SyncInfo sync_info = 2;
  * @return {?proto.chainedbft.SyncInfo}
  */
-proto.chainedbft.ProposalMsg.prototype.getSyncinfo = function() {
+proto.chainedbft.ProposalMsg.prototype.getSyncInfo = function() {
   return /** @type{?proto.chainedbft.SyncInfo} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.SyncInfo, 2));
 };
@@ -1603,7 +1603,7 @@ proto.chainedbft.ProposalMsg.prototype.getSyncinfo = function() {
  * @param {?proto.chainedbft.SyncInfo|undefined} value
  * @return {!proto.chainedbft.ProposalMsg} returns this
 */
-proto.chainedbft.ProposalMsg.prototype.setSyncinfo = function(value) {
+proto.chainedbft.ProposalMsg.prototype.setSyncInfo = function(value) {
   return jspb.Message.setWrapperField(this, 2, value);
 };
 
@@ -1612,8 +1612,8 @@ proto.chainedbft.ProposalMsg.prototype.setSyncinfo = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.ProposalMsg} returns this
  */
-proto.chainedbft.ProposalMsg.prototype.clearSyncinfo = function() {
-  return this.setSyncinfo(undefined);
+proto.chainedbft.ProposalMsg.prototype.clearSyncInfo = function() {
+  return this.setSyncInfo(undefined);
 };
 
 
@@ -1621,7 +1621,7 @@ proto.chainedbft.ProposalMsg.prototype.clearSyncinfo = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.ProposalMsg.prototype.hasSyncinfo = function() {
+proto.chainedbft.ProposalMsg.prototype.hasSyncInfo = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
@@ -1658,13 +1658,13 @@ proto.chainedbft.VoteData.prototype.toObject = function(opt_includeInstance) {
  */
 proto.chainedbft.VoteData.toObject = function(includeInstance, msg) {
   var f, obj = {
-    blockid: msg.getBlockid_asB64(),
+    blockId: msg.getBlockId_asB64(),
     height: jspb.Message.getFieldWithDefault(msg, 2, 0),
     level: jspb.Message.getFieldWithDefault(msg, 3, 0),
     author: msg.getAuthor_asB64(),
-    authoridx: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    newview: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
-    epochid: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    authorIdx: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    newView: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
+    epochId: jspb.Message.getFieldWithDefault(msg, 7, 0),
     signature: (f = msg.getSignature()) && common_request_pb.EndorsementEntry.toObject(includeInstance, f)
   };
 
@@ -1704,7 +1704,7 @@ proto.chainedbft.VoteData.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setBlockid(value);
+      msg.setBlockId(value);
       break;
     case 2:
       var value = /** @type {number} */ (reader.readUint64());
@@ -1720,15 +1720,15 @@ proto.chainedbft.VoteData.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 5:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setAuthoridx(value);
+      msg.setAuthorIdx(value);
       break;
     case 6:
       var value = /** @type {boolean} */ (reader.readBool());
-      msg.setNewview(value);
+      msg.setNewView(value);
       break;
     case 7:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setEpochid(value);
+      msg.setEpochId(value);
       break;
     case 8:
       var value = new common_request_pb.EndorsementEntry;
@@ -1764,7 +1764,7 @@ proto.chainedbft.VoteData.prototype.serializeBinary = function() {
  */
 proto.chainedbft.VoteData.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getBlockid_asU8();
+  f = message.getBlockId_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       1,
@@ -1792,21 +1792,21 @@ proto.chainedbft.VoteData.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getAuthoridx();
+  f = message.getAuthorIdx();
   if (f !== 0) {
     writer.writeUint64(
       5,
       f
     );
   }
-  f = message.getNewview();
+  f = message.getNewView();
   if (f) {
     writer.writeBool(
       6,
       f
     );
   }
-  f = message.getEpochid();
+  f = message.getEpochId();
   if (f !== 0) {
     writer.writeUint64(
       7,
@@ -1825,35 +1825,35 @@ proto.chainedbft.VoteData.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional bytes BlockID = 1;
+ * optional bytes block_id = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.chainedbft.VoteData.prototype.getBlockid = function() {
+proto.chainedbft.VoteData.prototype.getBlockId = function() {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * optional bytes BlockID = 1;
- * This is a type-conversion wrapper around `getBlockid()`
+ * optional bytes block_id = 1;
+ * This is a type-conversion wrapper around `getBlockId()`
  * @return {string}
  */
-proto.chainedbft.VoteData.prototype.getBlockid_asB64 = function() {
+proto.chainedbft.VoteData.prototype.getBlockId_asB64 = function() {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getBlockid()));
+      this.getBlockId()));
 };
 
 
 /**
- * optional bytes BlockID = 1;
+ * optional bytes block_id = 1;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getBlockid()`
+ * This is a type-conversion wrapper around `getBlockId()`
  * @return {!Uint8Array}
  */
-proto.chainedbft.VoteData.prototype.getBlockid_asU8 = function() {
+proto.chainedbft.VoteData.prototype.getBlockId_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getBlockid()));
+      this.getBlockId()));
 };
 
 
@@ -1861,13 +1861,13 @@ proto.chainedbft.VoteData.prototype.getBlockid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.chainedbft.VoteData} returns this
  */
-proto.chainedbft.VoteData.prototype.setBlockid = function(value) {
+proto.chainedbft.VoteData.prototype.setBlockId = function(value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
- * optional uint64 Height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.chainedbft.VoteData.prototype.getHeight = function() {
@@ -1885,7 +1885,7 @@ proto.chainedbft.VoteData.prototype.setHeight = function(value) {
 
 
 /**
- * optional uint64 Level = 3;
+ * optional uint64 level = 3;
  * @return {number}
  */
 proto.chainedbft.VoteData.prototype.getLevel = function() {
@@ -1903,7 +1903,7 @@ proto.chainedbft.VoteData.prototype.setLevel = function(value) {
 
 
 /**
- * optional bytes Author = 4;
+ * optional bytes author = 4;
  * @return {!(string|Uint8Array)}
  */
 proto.chainedbft.VoteData.prototype.getAuthor = function() {
@@ -1912,7 +1912,7 @@ proto.chainedbft.VoteData.prototype.getAuthor = function() {
 
 
 /**
- * optional bytes Author = 4;
+ * optional bytes author = 4;
  * This is a type-conversion wrapper around `getAuthor()`
  * @return {string}
  */
@@ -1923,7 +1923,7 @@ proto.chainedbft.VoteData.prototype.getAuthor_asB64 = function() {
 
 
 /**
- * optional bytes Author = 4;
+ * optional bytes author = 4;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getAuthor()`
@@ -1945,10 +1945,10 @@ proto.chainedbft.VoteData.prototype.setAuthor = function(value) {
 
 
 /**
- * optional uint64 AuthorIdx = 5;
+ * optional uint64 author_idx = 5;
  * @return {number}
  */
-proto.chainedbft.VoteData.prototype.getAuthoridx = function() {
+proto.chainedbft.VoteData.prototype.getAuthorIdx = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
@@ -1957,16 +1957,16 @@ proto.chainedbft.VoteData.prototype.getAuthoridx = function() {
  * @param {number} value
  * @return {!proto.chainedbft.VoteData} returns this
  */
-proto.chainedbft.VoteData.prototype.setAuthoridx = function(value) {
+proto.chainedbft.VoteData.prototype.setAuthorIdx = function(value) {
   return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
- * optional bool NewView = 6;
+ * optional bool new_view = 6;
  * @return {boolean}
  */
-proto.chainedbft.VoteData.prototype.getNewview = function() {
+proto.chainedbft.VoteData.prototype.getNewView = function() {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
 };
 
@@ -1975,16 +1975,16 @@ proto.chainedbft.VoteData.prototype.getNewview = function() {
  * @param {boolean} value
  * @return {!proto.chainedbft.VoteData} returns this
  */
-proto.chainedbft.VoteData.prototype.setNewview = function(value) {
+proto.chainedbft.VoteData.prototype.setNewView = function(value) {
   return jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
 /**
- * optional uint64 EpochId = 7;
+ * optional uint64 epoch_id = 7;
  * @return {number}
  */
-proto.chainedbft.VoteData.prototype.getEpochid = function() {
+proto.chainedbft.VoteData.prototype.getEpochId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
@@ -1993,13 +1993,13 @@ proto.chainedbft.VoteData.prototype.getEpochid = function() {
  * @param {number} value
  * @return {!proto.chainedbft.VoteData} returns this
  */
-proto.chainedbft.VoteData.prototype.setEpochid = function(value) {
+proto.chainedbft.VoteData.prototype.setEpochId = function(value) {
   return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
- * optional common.EndorsementEntry Signature = 8;
+ * optional common.EndorsementEntry signature = 8;
  * @return {?proto.common.EndorsementEntry}
  */
 proto.chainedbft.VoteData.prototype.getSignature = function() {
@@ -2067,8 +2067,8 @@ proto.chainedbft.VoteMsg.prototype.toObject = function(opt_includeInstance) {
  */
 proto.chainedbft.VoteMsg.toObject = function(includeInstance, msg) {
   var f, obj = {
-    votedata: (f = msg.getVotedata()) && proto.chainedbft.VoteData.toObject(includeInstance, f),
-    syncinfo: (f = msg.getSyncinfo()) && proto.chainedbft.SyncInfo.toObject(includeInstance, f)
+    voteData: (f = msg.getVoteData()) && proto.chainedbft.VoteData.toObject(includeInstance, f),
+    syncInfo: (f = msg.getSyncInfo()) && proto.chainedbft.SyncInfo.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2108,12 +2108,12 @@ proto.chainedbft.VoteMsg.deserializeBinaryFromReader = function(msg, reader) {
     case 1:
       var value = new proto.chainedbft.VoteData;
       reader.readMessage(value,proto.chainedbft.VoteData.deserializeBinaryFromReader);
-      msg.setVotedata(value);
+      msg.setVoteData(value);
       break;
     case 2:
       var value = new proto.chainedbft.SyncInfo;
       reader.readMessage(value,proto.chainedbft.SyncInfo.deserializeBinaryFromReader);
-      msg.setSyncinfo(value);
+      msg.setSyncInfo(value);
       break;
     default:
       reader.skipField();
@@ -2144,7 +2144,7 @@ proto.chainedbft.VoteMsg.prototype.serializeBinary = function() {
  */
 proto.chainedbft.VoteMsg.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getVotedata();
+  f = message.getVoteData();
   if (f != null) {
     writer.writeMessage(
       1,
@@ -2152,7 +2152,7 @@ proto.chainedbft.VoteMsg.serializeBinaryToWriter = function(message, writer) {
       proto.chainedbft.VoteData.serializeBinaryToWriter
     );
   }
-  f = message.getSyncinfo();
+  f = message.getSyncInfo();
   if (f != null) {
     writer.writeMessage(
       2,
@@ -2164,10 +2164,10 @@ proto.chainedbft.VoteMsg.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional VoteData VoteData = 1;
+ * optional VoteData vote_data = 1;
  * @return {?proto.chainedbft.VoteData}
  */
-proto.chainedbft.VoteMsg.prototype.getVotedata = function() {
+proto.chainedbft.VoteMsg.prototype.getVoteData = function() {
   return /** @type{?proto.chainedbft.VoteData} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.VoteData, 1));
 };
@@ -2177,7 +2177,7 @@ proto.chainedbft.VoteMsg.prototype.getVotedata = function() {
  * @param {?proto.chainedbft.VoteData|undefined} value
  * @return {!proto.chainedbft.VoteMsg} returns this
 */
-proto.chainedbft.VoteMsg.prototype.setVotedata = function(value) {
+proto.chainedbft.VoteMsg.prototype.setVoteData = function(value) {
   return jspb.Message.setWrapperField(this, 1, value);
 };
 
@@ -2186,8 +2186,8 @@ proto.chainedbft.VoteMsg.prototype.setVotedata = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.VoteMsg} returns this
  */
-proto.chainedbft.VoteMsg.prototype.clearVotedata = function() {
-  return this.setVotedata(undefined);
+proto.chainedbft.VoteMsg.prototype.clearVoteData = function() {
+  return this.setVoteData(undefined);
 };
 
 
@@ -2195,16 +2195,16 @@ proto.chainedbft.VoteMsg.prototype.clearVotedata = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.VoteMsg.prototype.hasVotedata = function() {
+proto.chainedbft.VoteMsg.prototype.hasVoteData = function() {
   return jspb.Message.getField(this, 1) != null;
 };
 
 
 /**
- * optional SyncInfo SyncInfo = 2;
+ * optional SyncInfo sync_info = 2;
  * @return {?proto.chainedbft.SyncInfo}
  */
-proto.chainedbft.VoteMsg.prototype.getSyncinfo = function() {
+proto.chainedbft.VoteMsg.prototype.getSyncInfo = function() {
   return /** @type{?proto.chainedbft.SyncInfo} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.SyncInfo, 2));
 };
@@ -2214,7 +2214,7 @@ proto.chainedbft.VoteMsg.prototype.getSyncinfo = function() {
  * @param {?proto.chainedbft.SyncInfo|undefined} value
  * @return {!proto.chainedbft.VoteMsg} returns this
 */
-proto.chainedbft.VoteMsg.prototype.setSyncinfo = function(value) {
+proto.chainedbft.VoteMsg.prototype.setSyncInfo = function(value) {
   return jspb.Message.setWrapperField(this, 2, value);
 };
 
@@ -2223,8 +2223,8 @@ proto.chainedbft.VoteMsg.prototype.setSyncinfo = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.VoteMsg} returns this
  */
-proto.chainedbft.VoteMsg.prototype.clearSyncinfo = function() {
-  return this.setSyncinfo(undefined);
+proto.chainedbft.VoteMsg.prototype.clearSyncInfo = function() {
+  return this.setSyncInfo(undefined);
 };
 
 
@@ -2232,7 +2232,7 @@ proto.chainedbft.VoteMsg.prototype.clearSyncinfo = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.VoteMsg.prototype.hasSyncinfo = function() {
+proto.chainedbft.VoteMsg.prototype.hasSyncInfo = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
@@ -2269,13 +2269,13 @@ proto.chainedbft.BlockFetchMsg.prototype.toObject = function(opt_includeInstance
  */
 proto.chainedbft.BlockFetchMsg.toObject = function(includeInstance, msg) {
   var f, obj = {
-    blockid: msg.getBlockid_asB64(),
+    blockId: msg.getBlockId_asB64(),
     height: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    numblocks: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    authoridx: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    reqid: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    commitblock: msg.getCommitblock_asB64(),
-    lockedblock: msg.getLockedblock_asB64()
+    numBlocks: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    authorIdx: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    reqId: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    commitBlock: msg.getCommitBlock_asB64(),
+    lockedBlock: msg.getLockedBlock_asB64()
   };
 
   if (includeInstance) {
@@ -2314,7 +2314,7 @@ proto.chainedbft.BlockFetchMsg.deserializeBinaryFromReader = function(msg, reade
     switch (field) {
     case 1:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setBlockid(value);
+      msg.setBlockId(value);
       break;
     case 2:
       var value = /** @type {number} */ (reader.readUint64());
@@ -2322,23 +2322,23 @@ proto.chainedbft.BlockFetchMsg.deserializeBinaryFromReader = function(msg, reade
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setNumblocks(value);
+      msg.setNumBlocks(value);
       break;
     case 4:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setAuthoridx(value);
+      msg.setAuthorIdx(value);
       break;
     case 5:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setReqid(value);
+      msg.setReqId(value);
       break;
     case 6:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setCommitblock(value);
+      msg.setCommitBlock(value);
       break;
     case 7:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setLockedblock(value);
+      msg.setLockedBlock(value);
       break;
     default:
       reader.skipField();
@@ -2369,7 +2369,7 @@ proto.chainedbft.BlockFetchMsg.prototype.serializeBinary = function() {
  */
 proto.chainedbft.BlockFetchMsg.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getBlockid_asU8();
+  f = message.getBlockId_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       1,
@@ -2383,35 +2383,35 @@ proto.chainedbft.BlockFetchMsg.serializeBinaryToWriter = function(message, write
       f
     );
   }
-  f = message.getNumblocks();
+  f = message.getNumBlocks();
   if (f !== 0) {
     writer.writeUint64(
       3,
       f
     );
   }
-  f = message.getAuthoridx();
+  f = message.getAuthorIdx();
   if (f !== 0) {
     writer.writeUint64(
       4,
       f
     );
   }
-  f = message.getReqid();
+  f = message.getReqId();
   if (f !== 0) {
     writer.writeUint64(
       5,
       f
     );
   }
-  f = message.getCommitblock_asU8();
+  f = message.getCommitBlock_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       6,
       f
     );
   }
-  f = message.getLockedblock_asU8();
+  f = message.getLockedBlock_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       7,
@@ -2422,35 +2422,35 @@ proto.chainedbft.BlockFetchMsg.serializeBinaryToWriter = function(message, write
 
 
 /**
- * optional bytes BlockID = 1;
+ * optional bytes block_id = 1;
  * @return {!(string|Uint8Array)}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getBlockid = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getBlockId = function() {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * optional bytes BlockID = 1;
- * This is a type-conversion wrapper around `getBlockid()`
+ * optional bytes block_id = 1;
+ * This is a type-conversion wrapper around `getBlockId()`
  * @return {string}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getBlockid_asB64 = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getBlockId_asB64 = function() {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getBlockid()));
+      this.getBlockId()));
 };
 
 
 /**
- * optional bytes BlockID = 1;
+ * optional bytes block_id = 1;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getBlockid()`
+ * This is a type-conversion wrapper around `getBlockId()`
  * @return {!Uint8Array}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getBlockid_asU8 = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getBlockId_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getBlockid()));
+      this.getBlockId()));
 };
 
 
@@ -2458,13 +2458,13 @@ proto.chainedbft.BlockFetchMsg.prototype.getBlockid_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.chainedbft.BlockFetchMsg} returns this
  */
-proto.chainedbft.BlockFetchMsg.prototype.setBlockid = function(value) {
+proto.chainedbft.BlockFetchMsg.prototype.setBlockId = function(value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
- * optional uint64 Height = 2;
+ * optional uint64 height = 2;
  * @return {number}
  */
 proto.chainedbft.BlockFetchMsg.prototype.getHeight = function() {
@@ -2482,10 +2482,10 @@ proto.chainedbft.BlockFetchMsg.prototype.setHeight = function(value) {
 
 
 /**
- * optional uint64 NumBlocks = 3;
+ * optional uint64 num_blocks = 3;
  * @return {number}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getNumblocks = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getNumBlocks = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -2494,16 +2494,16 @@ proto.chainedbft.BlockFetchMsg.prototype.getNumblocks = function() {
  * @param {number} value
  * @return {!proto.chainedbft.BlockFetchMsg} returns this
  */
-proto.chainedbft.BlockFetchMsg.prototype.setNumblocks = function(value) {
+proto.chainedbft.BlockFetchMsg.prototype.setNumBlocks = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
- * optional uint64 AuthorIdx = 4;
+ * optional uint64 author_idx = 4;
  * @return {number}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getAuthoridx = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getAuthorIdx = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
@@ -2512,16 +2512,16 @@ proto.chainedbft.BlockFetchMsg.prototype.getAuthoridx = function() {
  * @param {number} value
  * @return {!proto.chainedbft.BlockFetchMsg} returns this
  */
-proto.chainedbft.BlockFetchMsg.prototype.setAuthoridx = function(value) {
+proto.chainedbft.BlockFetchMsg.prototype.setAuthorIdx = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional uint64 ReqID = 5;
+ * optional uint64 req_id = 5;
  * @return {number}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getReqid = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getReqId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
@@ -2530,41 +2530,41 @@ proto.chainedbft.BlockFetchMsg.prototype.getReqid = function() {
  * @param {number} value
  * @return {!proto.chainedbft.BlockFetchMsg} returns this
  */
-proto.chainedbft.BlockFetchMsg.prototype.setReqid = function(value) {
+proto.chainedbft.BlockFetchMsg.prototype.setReqId = function(value) {
   return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
- * optional bytes CommitBlock = 6;
+ * optional bytes commit_block = 6;
  * @return {!(string|Uint8Array)}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getCommitblock = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getCommitBlock = function() {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
 
 /**
- * optional bytes CommitBlock = 6;
- * This is a type-conversion wrapper around `getCommitblock()`
+ * optional bytes commit_block = 6;
+ * This is a type-conversion wrapper around `getCommitBlock()`
  * @return {string}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getCommitblock_asB64 = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getCommitBlock_asB64 = function() {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getCommitblock()));
+      this.getCommitBlock()));
 };
 
 
 /**
- * optional bytes CommitBlock = 6;
+ * optional bytes commit_block = 6;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getCommitblock()`
+ * This is a type-conversion wrapper around `getCommitBlock()`
  * @return {!Uint8Array}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getCommitblock_asU8 = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getCommitBlock_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getCommitblock()));
+      this.getCommitBlock()));
 };
 
 
@@ -2572,41 +2572,41 @@ proto.chainedbft.BlockFetchMsg.prototype.getCommitblock_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.chainedbft.BlockFetchMsg} returns this
  */
-proto.chainedbft.BlockFetchMsg.prototype.setCommitblock = function(value) {
+proto.chainedbft.BlockFetchMsg.prototype.setCommitBlock = function(value) {
   return jspb.Message.setProto3BytesField(this, 6, value);
 };
 
 
 /**
- * optional bytes LockedBLock = 7;
+ * optional bytes locked_bLock = 7;
  * @return {!(string|Uint8Array)}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getLockedblock = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getLockedBlock = function() {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
 
 /**
- * optional bytes LockedBLock = 7;
- * This is a type-conversion wrapper around `getLockedblock()`
+ * optional bytes locked_bLock = 7;
+ * This is a type-conversion wrapper around `getLockedBlock()`
  * @return {string}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getLockedblock_asB64 = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getLockedBlock_asB64 = function() {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getLockedblock()));
+      this.getLockedBlock()));
 };
 
 
 /**
- * optional bytes LockedBLock = 7;
+ * optional bytes locked_bLock = 7;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getLockedblock()`
+ * This is a type-conversion wrapper around `getLockedBlock()`
  * @return {!Uint8Array}
  */
-proto.chainedbft.BlockFetchMsg.prototype.getLockedblock_asU8 = function() {
+proto.chainedbft.BlockFetchMsg.prototype.getLockedBlock_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getLockedblock()));
+      this.getLockedBlock()));
 };
 
 
@@ -2614,7 +2614,7 @@ proto.chainedbft.BlockFetchMsg.prototype.getLockedblock_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.chainedbft.BlockFetchMsg} returns this
  */
-proto.chainedbft.BlockFetchMsg.prototype.setLockedblock = function(value) {
+proto.chainedbft.BlockFetchMsg.prototype.setLockedBlock = function(value) {
   return jspb.Message.setProto3BytesField(this, 7, value);
 };
 
@@ -2748,7 +2748,7 @@ proto.chainedbft.BlockPair.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional common.Block Block = 1;
+ * optional common.Block block = 1;
  * @return {?proto.common.Block}
  */
 proto.chainedbft.BlockPair.prototype.getBlock = function() {
@@ -2785,7 +2785,7 @@ proto.chainedbft.BlockPair.prototype.hasBlock = function() {
 
 
 /**
- * optional QuorumCert QC = 2;
+ * optional QuorumCert qc = 2;
  * @return {?proto.chainedbft.QuorumCert}
  */
 proto.chainedbft.BlockPair.prototype.getQc = function() {
@@ -2863,8 +2863,8 @@ proto.chainedbft.BlockFetchRespMsg.toObject = function(includeInstance, msg) {
     status: jspb.Message.getFieldWithDefault(msg, 1, 0),
     blocksList: jspb.Message.toObjectList(msg.getBlocksList(),
     proto.chainedbft.BlockPair.toObject, includeInstance),
-    authoridx: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    respid: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    authorIdx: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    respId: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -2912,11 +2912,11 @@ proto.chainedbft.BlockFetchRespMsg.deserializeBinaryFromReader = function(msg, r
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setAuthoridx(value);
+      msg.setAuthorIdx(value);
       break;
     case 4:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setRespid(value);
+      msg.setRespId(value);
       break;
     default:
       reader.skipField();
@@ -2962,14 +2962,14 @@ proto.chainedbft.BlockFetchRespMsg.serializeBinaryToWriter = function(message, w
       proto.chainedbft.BlockPair.serializeBinaryToWriter
     );
   }
-  f = message.getAuthoridx();
+  f = message.getAuthorIdx();
   if (f !== 0) {
     writer.writeUint64(
       3,
       f
     );
   }
-  f = message.getRespid();
+  f = message.getRespId();
   if (f !== 0) {
     writer.writeUint64(
       4,
@@ -2980,7 +2980,7 @@ proto.chainedbft.BlockFetchRespMsg.serializeBinaryToWriter = function(message, w
 
 
 /**
- * optional BlockFetchStatus Status = 1;
+ * optional BlockFetchStatus status = 1;
  * @return {!proto.chainedbft.BlockFetchStatus}
  */
 proto.chainedbft.BlockFetchRespMsg.prototype.getStatus = function() {
@@ -2998,7 +2998,7 @@ proto.chainedbft.BlockFetchRespMsg.prototype.setStatus = function(value) {
 
 
 /**
- * repeated BlockPair Blocks = 2;
+ * repeated BlockPair blocks = 2;
  * @return {!Array<!proto.chainedbft.BlockPair>}
  */
 proto.chainedbft.BlockFetchRespMsg.prototype.getBlocksList = function() {
@@ -3036,10 +3036,10 @@ proto.chainedbft.BlockFetchRespMsg.prototype.clearBlocksList = function() {
 
 
 /**
- * optional uint64 AuthorIdx = 3;
+ * optional uint64 author_idx = 3;
  * @return {number}
  */
-proto.chainedbft.BlockFetchRespMsg.prototype.getAuthoridx = function() {
+proto.chainedbft.BlockFetchRespMsg.prototype.getAuthorIdx = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -3048,16 +3048,16 @@ proto.chainedbft.BlockFetchRespMsg.prototype.getAuthoridx = function() {
  * @param {number} value
  * @return {!proto.chainedbft.BlockFetchRespMsg} returns this
  */
-proto.chainedbft.BlockFetchRespMsg.prototype.setAuthoridx = function(value) {
+proto.chainedbft.BlockFetchRespMsg.prototype.setAuthorIdx = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
- * optional uint64 RespID = 4;
+ * optional uint64 resp_id = 4;
  * @return {number}
  */
-proto.chainedbft.BlockFetchRespMsg.prototype.getRespid = function() {
+proto.chainedbft.BlockFetchRespMsg.prototype.getRespId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
@@ -3066,7 +3066,7 @@ proto.chainedbft.BlockFetchRespMsg.prototype.getRespid = function() {
  * @param {number} value
  * @return {!proto.chainedbft.BlockFetchRespMsg} returns this
  */
-proto.chainedbft.BlockFetchRespMsg.prototype.setRespid = function(value) {
+proto.chainedbft.BlockFetchRespMsg.prototype.setRespId = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
 };
 
@@ -3087,10 +3087,10 @@ proto.chainedbft.ConsensusPayload.oneofGroups_ = [[2,3,4,5]];
  */
 proto.chainedbft.ConsensusPayload.DataCase = {
   DATA_NOT_SET: 0,
-  PROPOSALMSG: 2,
-  VOTEMSG: 3,
-  BLOCKFETCHMSG: 4,
-  BLOCKFETCHRESPMSG: 5
+  PROPOSAL_MSG: 2,
+  VOTE_MSG: 3,
+  BLOCK_FETCH_MSG: 4,
+  BLOCK_FETCH_RESP_MSG: 5
 };
 
 /**
@@ -3132,10 +3132,10 @@ proto.chainedbft.ConsensusPayload.prototype.toObject = function(opt_includeInsta
 proto.chainedbft.ConsensusPayload.toObject = function(includeInstance, msg) {
   var f, obj = {
     type: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    proposalmsg: (f = msg.getProposalmsg()) && proto.chainedbft.ProposalMsg.toObject(includeInstance, f),
-    votemsg: (f = msg.getVotemsg()) && proto.chainedbft.VoteMsg.toObject(includeInstance, f),
-    blockfetchmsg: (f = msg.getBlockfetchmsg()) && proto.chainedbft.BlockFetchMsg.toObject(includeInstance, f),
-    blockfetchrespmsg: (f = msg.getBlockfetchrespmsg()) && proto.chainedbft.BlockFetchRespMsg.toObject(includeInstance, f)
+    proposalMsg: (f = msg.getProposalMsg()) && proto.chainedbft.ProposalMsg.toObject(includeInstance, f),
+    voteMsg: (f = msg.getVoteMsg()) && proto.chainedbft.VoteMsg.toObject(includeInstance, f),
+    blockFetchMsg: (f = msg.getBlockFetchMsg()) && proto.chainedbft.BlockFetchMsg.toObject(includeInstance, f),
+    blockFetchRespMsg: (f = msg.getBlockFetchRespMsg()) && proto.chainedbft.BlockFetchRespMsg.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3179,22 +3179,22 @@ proto.chainedbft.ConsensusPayload.deserializeBinaryFromReader = function(msg, re
     case 2:
       var value = new proto.chainedbft.ProposalMsg;
       reader.readMessage(value,proto.chainedbft.ProposalMsg.deserializeBinaryFromReader);
-      msg.setProposalmsg(value);
+      msg.setProposalMsg(value);
       break;
     case 3:
       var value = new proto.chainedbft.VoteMsg;
       reader.readMessage(value,proto.chainedbft.VoteMsg.deserializeBinaryFromReader);
-      msg.setVotemsg(value);
+      msg.setVoteMsg(value);
       break;
     case 4:
       var value = new proto.chainedbft.BlockFetchMsg;
       reader.readMessage(value,proto.chainedbft.BlockFetchMsg.deserializeBinaryFromReader);
-      msg.setBlockfetchmsg(value);
+      msg.setBlockFetchMsg(value);
       break;
     case 5:
       var value = new proto.chainedbft.BlockFetchRespMsg;
       reader.readMessage(value,proto.chainedbft.BlockFetchRespMsg.deserializeBinaryFromReader);
-      msg.setBlockfetchrespmsg(value);
+      msg.setBlockFetchRespMsg(value);
       break;
     default:
       reader.skipField();
@@ -3232,7 +3232,7 @@ proto.chainedbft.ConsensusPayload.serializeBinaryToWriter = function(message, wr
       f
     );
   }
-  f = message.getProposalmsg();
+  f = message.getProposalMsg();
   if (f != null) {
     writer.writeMessage(
       2,
@@ -3240,7 +3240,7 @@ proto.chainedbft.ConsensusPayload.serializeBinaryToWriter = function(message, wr
       proto.chainedbft.ProposalMsg.serializeBinaryToWriter
     );
   }
-  f = message.getVotemsg();
+  f = message.getVoteMsg();
   if (f != null) {
     writer.writeMessage(
       3,
@@ -3248,7 +3248,7 @@ proto.chainedbft.ConsensusPayload.serializeBinaryToWriter = function(message, wr
       proto.chainedbft.VoteMsg.serializeBinaryToWriter
     );
   }
-  f = message.getBlockfetchmsg();
+  f = message.getBlockFetchMsg();
   if (f != null) {
     writer.writeMessage(
       4,
@@ -3256,7 +3256,7 @@ proto.chainedbft.ConsensusPayload.serializeBinaryToWriter = function(message, wr
       proto.chainedbft.BlockFetchMsg.serializeBinaryToWriter
     );
   }
-  f = message.getBlockfetchrespmsg();
+  f = message.getBlockFetchRespMsg();
   if (f != null) {
     writer.writeMessage(
       5,
@@ -3268,7 +3268,7 @@ proto.chainedbft.ConsensusPayload.serializeBinaryToWriter = function(message, wr
 
 
 /**
- * optional MessageType Type = 1;
+ * optional MessageType type = 1;
  * @return {!proto.chainedbft.MessageType}
  */
 proto.chainedbft.ConsensusPayload.prototype.getType = function() {
@@ -3286,10 +3286,10 @@ proto.chainedbft.ConsensusPayload.prototype.setType = function(value) {
 
 
 /**
- * optional ProposalMsg ProposalMsg = 2;
+ * optional ProposalMsg proposal_msg = 2;
  * @return {?proto.chainedbft.ProposalMsg}
  */
-proto.chainedbft.ConsensusPayload.prototype.getProposalmsg = function() {
+proto.chainedbft.ConsensusPayload.prototype.getProposalMsg = function() {
   return /** @type{?proto.chainedbft.ProposalMsg} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.ProposalMsg, 2));
 };
@@ -3299,7 +3299,7 @@ proto.chainedbft.ConsensusPayload.prototype.getProposalmsg = function() {
  * @param {?proto.chainedbft.ProposalMsg|undefined} value
  * @return {!proto.chainedbft.ConsensusPayload} returns this
 */
-proto.chainedbft.ConsensusPayload.prototype.setProposalmsg = function(value) {
+proto.chainedbft.ConsensusPayload.prototype.setProposalMsg = function(value) {
   return jspb.Message.setOneofWrapperField(this, 2, proto.chainedbft.ConsensusPayload.oneofGroups_[0], value);
 };
 
@@ -3308,8 +3308,8 @@ proto.chainedbft.ConsensusPayload.prototype.setProposalmsg = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.ConsensusPayload} returns this
  */
-proto.chainedbft.ConsensusPayload.prototype.clearProposalmsg = function() {
-  return this.setProposalmsg(undefined);
+proto.chainedbft.ConsensusPayload.prototype.clearProposalMsg = function() {
+  return this.setProposalMsg(undefined);
 };
 
 
@@ -3317,16 +3317,16 @@ proto.chainedbft.ConsensusPayload.prototype.clearProposalmsg = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.ConsensusPayload.prototype.hasProposalmsg = function() {
+proto.chainedbft.ConsensusPayload.prototype.hasProposalMsg = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
 
 /**
- * optional VoteMsg VoteMsg = 3;
+ * optional VoteMsg vote_msg = 3;
  * @return {?proto.chainedbft.VoteMsg}
  */
-proto.chainedbft.ConsensusPayload.prototype.getVotemsg = function() {
+proto.chainedbft.ConsensusPayload.prototype.getVoteMsg = function() {
   return /** @type{?proto.chainedbft.VoteMsg} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.VoteMsg, 3));
 };
@@ -3336,7 +3336,7 @@ proto.chainedbft.ConsensusPayload.prototype.getVotemsg = function() {
  * @param {?proto.chainedbft.VoteMsg|undefined} value
  * @return {!proto.chainedbft.ConsensusPayload} returns this
 */
-proto.chainedbft.ConsensusPayload.prototype.setVotemsg = function(value) {
+proto.chainedbft.ConsensusPayload.prototype.setVoteMsg = function(value) {
   return jspb.Message.setOneofWrapperField(this, 3, proto.chainedbft.ConsensusPayload.oneofGroups_[0], value);
 };
 
@@ -3345,8 +3345,8 @@ proto.chainedbft.ConsensusPayload.prototype.setVotemsg = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.ConsensusPayload} returns this
  */
-proto.chainedbft.ConsensusPayload.prototype.clearVotemsg = function() {
-  return this.setVotemsg(undefined);
+proto.chainedbft.ConsensusPayload.prototype.clearVoteMsg = function() {
+  return this.setVoteMsg(undefined);
 };
 
 
@@ -3354,16 +3354,16 @@ proto.chainedbft.ConsensusPayload.prototype.clearVotemsg = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.ConsensusPayload.prototype.hasVotemsg = function() {
+proto.chainedbft.ConsensusPayload.prototype.hasVoteMsg = function() {
   return jspb.Message.getField(this, 3) != null;
 };
 
 
 /**
- * optional BlockFetchMsg BlockFetchMsg = 4;
+ * optional BlockFetchMsg block_fetch_msg = 4;
  * @return {?proto.chainedbft.BlockFetchMsg}
  */
-proto.chainedbft.ConsensusPayload.prototype.getBlockfetchmsg = function() {
+proto.chainedbft.ConsensusPayload.prototype.getBlockFetchMsg = function() {
   return /** @type{?proto.chainedbft.BlockFetchMsg} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.BlockFetchMsg, 4));
 };
@@ -3373,7 +3373,7 @@ proto.chainedbft.ConsensusPayload.prototype.getBlockfetchmsg = function() {
  * @param {?proto.chainedbft.BlockFetchMsg|undefined} value
  * @return {!proto.chainedbft.ConsensusPayload} returns this
 */
-proto.chainedbft.ConsensusPayload.prototype.setBlockfetchmsg = function(value) {
+proto.chainedbft.ConsensusPayload.prototype.setBlockFetchMsg = function(value) {
   return jspb.Message.setOneofWrapperField(this, 4, proto.chainedbft.ConsensusPayload.oneofGroups_[0], value);
 };
 
@@ -3382,8 +3382,8 @@ proto.chainedbft.ConsensusPayload.prototype.setBlockfetchmsg = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.ConsensusPayload} returns this
  */
-proto.chainedbft.ConsensusPayload.prototype.clearBlockfetchmsg = function() {
-  return this.setBlockfetchmsg(undefined);
+proto.chainedbft.ConsensusPayload.prototype.clearBlockFetchMsg = function() {
+  return this.setBlockFetchMsg(undefined);
 };
 
 
@@ -3391,16 +3391,16 @@ proto.chainedbft.ConsensusPayload.prototype.clearBlockfetchmsg = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.ConsensusPayload.prototype.hasBlockfetchmsg = function() {
+proto.chainedbft.ConsensusPayload.prototype.hasBlockFetchMsg = function() {
   return jspb.Message.getField(this, 4) != null;
 };
 
 
 /**
- * optional BlockFetchRespMsg BlockFetchRespMsg = 5;
+ * optional BlockFetchRespMsg block_fetch_resp_msg = 5;
  * @return {?proto.chainedbft.BlockFetchRespMsg}
  */
-proto.chainedbft.ConsensusPayload.prototype.getBlockfetchrespmsg = function() {
+proto.chainedbft.ConsensusPayload.prototype.getBlockFetchRespMsg = function() {
   return /** @type{?proto.chainedbft.BlockFetchRespMsg} */ (
     jspb.Message.getWrapperField(this, proto.chainedbft.BlockFetchRespMsg, 5));
 };
@@ -3410,7 +3410,7 @@ proto.chainedbft.ConsensusPayload.prototype.getBlockfetchrespmsg = function() {
  * @param {?proto.chainedbft.BlockFetchRespMsg|undefined} value
  * @return {!proto.chainedbft.ConsensusPayload} returns this
 */
-proto.chainedbft.ConsensusPayload.prototype.setBlockfetchrespmsg = function(value) {
+proto.chainedbft.ConsensusPayload.prototype.setBlockFetchRespMsg = function(value) {
   return jspb.Message.setOneofWrapperField(this, 5, proto.chainedbft.ConsensusPayload.oneofGroups_[0], value);
 };
 
@@ -3419,8 +3419,8 @@ proto.chainedbft.ConsensusPayload.prototype.setBlockfetchrespmsg = function(valu
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.ConsensusPayload} returns this
  */
-proto.chainedbft.ConsensusPayload.prototype.clearBlockfetchrespmsg = function() {
-  return this.setBlockfetchrespmsg(undefined);
+proto.chainedbft.ConsensusPayload.prototype.clearBlockFetchRespMsg = function() {
+  return this.setBlockFetchRespMsg(undefined);
 };
 
 
@@ -3428,7 +3428,7 @@ proto.chainedbft.ConsensusPayload.prototype.clearBlockfetchrespmsg = function() 
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.ConsensusPayload.prototype.hasBlockfetchrespmsg = function() {
+proto.chainedbft.ConsensusPayload.prototype.hasBlockFetchRespMsg = function() {
   return jspb.Message.getField(this, 5) != null;
 };
 
@@ -3466,7 +3466,7 @@ proto.chainedbft.ConsensusMsg.prototype.toObject = function(opt_includeInstance)
 proto.chainedbft.ConsensusMsg.toObject = function(includeInstance, msg) {
   var f, obj = {
     payload: (f = msg.getPayload()) && proto.chainedbft.ConsensusPayload.toObject(includeInstance, f),
-    signentry: (f = msg.getSignentry()) && common_request_pb.EndorsementEntry.toObject(includeInstance, f)
+    signEntry: (f = msg.getSignEntry()) && common_request_pb.EndorsementEntry.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3511,7 +3511,7 @@ proto.chainedbft.ConsensusMsg.deserializeBinaryFromReader = function(msg, reader
     case 2:
       var value = new common_request_pb.EndorsementEntry;
       reader.readMessage(value,common_request_pb.EndorsementEntry.deserializeBinaryFromReader);
-      msg.setSignentry(value);
+      msg.setSignEntry(value);
       break;
     default:
       reader.skipField();
@@ -3550,7 +3550,7 @@ proto.chainedbft.ConsensusMsg.serializeBinaryToWriter = function(message, writer
       proto.chainedbft.ConsensusPayload.serializeBinaryToWriter
     );
   }
-  f = message.getSignentry();
+  f = message.getSignEntry();
   if (f != null) {
     writer.writeMessage(
       2,
@@ -3599,10 +3599,10 @@ proto.chainedbft.ConsensusMsg.prototype.hasPayload = function() {
 
 
 /**
- * optional common.EndorsementEntry SignEntry = 2;
+ * optional common.EndorsementEntry sign_entry = 2;
  * @return {?proto.common.EndorsementEntry}
  */
-proto.chainedbft.ConsensusMsg.prototype.getSignentry = function() {
+proto.chainedbft.ConsensusMsg.prototype.getSignEntry = function() {
   return /** @type{?proto.common.EndorsementEntry} */ (
     jspb.Message.getWrapperField(this, common_request_pb.EndorsementEntry, 2));
 };
@@ -3612,7 +3612,7 @@ proto.chainedbft.ConsensusMsg.prototype.getSignentry = function() {
  * @param {?proto.common.EndorsementEntry|undefined} value
  * @return {!proto.chainedbft.ConsensusMsg} returns this
 */
-proto.chainedbft.ConsensusMsg.prototype.setSignentry = function(value) {
+proto.chainedbft.ConsensusMsg.prototype.setSignEntry = function(value) {
   return jspb.Message.setWrapperField(this, 2, value);
 };
 
@@ -3621,8 +3621,8 @@ proto.chainedbft.ConsensusMsg.prototype.setSignentry = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.chainedbft.ConsensusMsg} returns this
  */
-proto.chainedbft.ConsensusMsg.prototype.clearSignentry = function() {
-  return this.setSignentry(undefined);
+proto.chainedbft.ConsensusMsg.prototype.clearSignEntry = function() {
+  return this.setSignEntry(undefined);
 };
 
 
@@ -3630,7 +3630,7 @@ proto.chainedbft.ConsensusMsg.prototype.clearSignentry = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.chainedbft.ConsensusMsg.prototype.hasSignentry = function() {
+proto.chainedbft.ConsensusMsg.prototype.hasSignEntry = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
@@ -3668,8 +3668,8 @@ proto.chainedbft.BuildProposal.prototype.toObject = function(opt_includeInstance
 proto.chainedbft.BuildProposal.toObject = function(includeInstance, msg) {
   var f, obj = {
     height: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    prehash: msg.getPrehash_asB64(),
-    isproposer: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
+    preHash: msg.getPreHash_asB64(),
+    isProposer: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -3712,11 +3712,11 @@ proto.chainedbft.BuildProposal.deserializeBinaryFromReader = function(msg, reade
       break;
     case 2:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setPrehash(value);
+      msg.setPreHash(value);
       break;
     case 3:
       var value = /** @type {boolean} */ (reader.readBool());
-      msg.setIsproposer(value);
+      msg.setIsProposer(value);
       break;
     default:
       reader.skipField();
@@ -3754,14 +3754,14 @@ proto.chainedbft.BuildProposal.serializeBinaryToWriter = function(message, write
       f
     );
   }
-  f = message.getPrehash_asU8();
+  f = message.getPreHash_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       2,
       f
     );
   }
-  f = message.getIsproposer();
+  f = message.getIsProposer();
   if (f) {
     writer.writeBool(
       3,
@@ -3772,7 +3772,7 @@ proto.chainedbft.BuildProposal.serializeBinaryToWriter = function(message, write
 
 
 /**
- * optional uint64 Height = 1;
+ * optional uint64 height = 1;
  * @return {number}
  */
 proto.chainedbft.BuildProposal.prototype.getHeight = function() {
@@ -3790,35 +3790,35 @@ proto.chainedbft.BuildProposal.prototype.setHeight = function(value) {
 
 
 /**
- * optional bytes PreHash = 2;
+ * optional bytes pre_hash = 2;
  * @return {!(string|Uint8Array)}
  */
-proto.chainedbft.BuildProposal.prototype.getPrehash = function() {
+proto.chainedbft.BuildProposal.prototype.getPreHash = function() {
   return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /**
- * optional bytes PreHash = 2;
- * This is a type-conversion wrapper around `getPrehash()`
+ * optional bytes pre_hash = 2;
+ * This is a type-conversion wrapper around `getPreHash()`
  * @return {string}
  */
-proto.chainedbft.BuildProposal.prototype.getPrehash_asB64 = function() {
+proto.chainedbft.BuildProposal.prototype.getPreHash_asB64 = function() {
   return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getPrehash()));
+      this.getPreHash()));
 };
 
 
 /**
- * optional bytes PreHash = 2;
+ * optional bytes pre_hash = 2;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getPrehash()`
+ * This is a type-conversion wrapper around `getPreHash()`
  * @return {!Uint8Array}
  */
-proto.chainedbft.BuildProposal.prototype.getPrehash_asU8 = function() {
+proto.chainedbft.BuildProposal.prototype.getPreHash_asU8 = function() {
   return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getPrehash()));
+      this.getPreHash()));
 };
 
 
@@ -3826,16 +3826,16 @@ proto.chainedbft.BuildProposal.prototype.getPrehash_asU8 = function() {
  * @param {!(string|Uint8Array)} value
  * @return {!proto.chainedbft.BuildProposal} returns this
  */
-proto.chainedbft.BuildProposal.prototype.setPrehash = function(value) {
+proto.chainedbft.BuildProposal.prototype.setPreHash = function(value) {
   return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
 /**
- * optional bool IsProposer = 3;
+ * optional bool is_proposer = 3;
  * @return {boolean}
  */
-proto.chainedbft.BuildProposal.prototype.getIsproposer = function() {
+proto.chainedbft.BuildProposal.prototype.getIsProposer = function() {
   return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
 };
 
@@ -3844,7 +3844,7 @@ proto.chainedbft.BuildProposal.prototype.getIsproposer = function() {
  * @param {boolean} value
  * @return {!proto.chainedbft.BuildProposal} returns this
  */
-proto.chainedbft.BuildProposal.prototype.setIsproposer = function(value) {
+proto.chainedbft.BuildProposal.prototype.setIsProposer = function(value) {
   return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
@@ -3882,8 +3882,8 @@ proto.chainedbft.WalEntry.prototype.toObject = function(opt_includeInstance) {
 proto.chainedbft.WalEntry.toObject = function(includeInstance, msg) {
   var f, obj = {
     msg: (f = msg.getMsg()) && proto.chainedbft.ConsensusMsg.toObject(includeInstance, f),
-    msgtype: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    lastsnapshotindex: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    msgType: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    lastSnapshotIndex: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -3927,11 +3927,11 @@ proto.chainedbft.WalEntry.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {!proto.chainedbft.MessageType} */ (reader.readEnum());
-      msg.setMsgtype(value);
+      msg.setMsgType(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint64());
-      msg.setLastsnapshotindex(value);
+      msg.setLastSnapshotIndex(value);
       break;
     default:
       reader.skipField();
@@ -3970,14 +3970,14 @@ proto.chainedbft.WalEntry.serializeBinaryToWriter = function(message, writer) {
       proto.chainedbft.ConsensusMsg.serializeBinaryToWriter
     );
   }
-  f = message.getMsgtype();
+  f = message.getMsgType();
   if (f !== 0.0) {
     writer.writeEnum(
       2,
       f
     );
   }
-  f = message.getLastsnapshotindex();
+  f = message.getLastSnapshotIndex();
   if (f !== 0) {
     writer.writeUint64(
       3,
@@ -3988,7 +3988,7 @@ proto.chainedbft.WalEntry.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional ConsensusMsg Msg = 1;
+ * optional ConsensusMsg msg = 1;
  * @return {?proto.chainedbft.ConsensusMsg}
  */
 proto.chainedbft.WalEntry.prototype.getMsg = function() {
@@ -4025,10 +4025,10 @@ proto.chainedbft.WalEntry.prototype.hasMsg = function() {
 
 
 /**
- * optional MessageType MsgType = 2;
+ * optional MessageType msg_type = 2;
  * @return {!proto.chainedbft.MessageType}
  */
-proto.chainedbft.WalEntry.prototype.getMsgtype = function() {
+proto.chainedbft.WalEntry.prototype.getMsgType = function() {
   return /** @type {!proto.chainedbft.MessageType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -4037,16 +4037,16 @@ proto.chainedbft.WalEntry.prototype.getMsgtype = function() {
  * @param {!proto.chainedbft.MessageType} value
  * @return {!proto.chainedbft.WalEntry} returns this
  */
-proto.chainedbft.WalEntry.prototype.setMsgtype = function(value) {
+proto.chainedbft.WalEntry.prototype.setMsgType = function(value) {
   return jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
 /**
- * optional uint64 LastSnapshotIndex = 3;
+ * optional uint64 last_snapshot_index = 3;
  * @return {number}
  */
-proto.chainedbft.WalEntry.prototype.getLastsnapshotindex = function() {
+proto.chainedbft.WalEntry.prototype.getLastSnapshotIndex = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -4055,7 +4055,7 @@ proto.chainedbft.WalEntry.prototype.getLastsnapshotindex = function() {
  * @param {number} value
  * @return {!proto.chainedbft.WalEntry} returns this
  */
-proto.chainedbft.WalEntry.prototype.setLastsnapshotindex = function(value) {
+proto.chainedbft.WalEntry.prototype.setLastSnapshotIndex = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
@@ -4065,16 +4065,15 @@ proto.chainedbft.WalEntry.prototype.setLastsnapshotindex = function(value) {
  */
 proto.chainedbft.BlockFetchStatus = {
   SUCCEEDED: 0,
-  IDNOTFOUND: 1,
-  NOTENOUGHBLOCKS: 2
+  NOT_ENOUGH_BLOCKS: 1
 };
 
 /**
  * @enum {number}
  */
 proto.chainedbft.ConsStateType = {
-  NEWHEIGHT: 0,
-  NEWLEVEL: 1,
+  NEW_HEIGHT: 0,
+  NEW_LEVEL: 1,
   PROPOSE: 2,
   VOTE: 3,
   PACEMAKER: 4
@@ -4084,10 +4083,10 @@ proto.chainedbft.ConsStateType = {
  * @enum {number}
  */
 proto.chainedbft.MessageType = {
-  PROPOSALMESSAGE: 0,
-  VOTEMESSAGE: 1,
-  BLOCKFETCHMESSAGE: 2,
-  BLOCKFETCHRESPMESSAGE: 3
+  PROPOSAL_MESSAGE: 0,
+  VOTE_MESSAGE: 1,
+  BLOCK_FETCH_MESSAGE: 2,
+  BLOCK_FETCH_RESP_MESSAGE: 3
 };
 
 goog.object.extend(exports, proto.chainedbft);

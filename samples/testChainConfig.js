@@ -302,4 +302,4 @@ const test = async (type) => {
   }
 };
 
-test('getChainConfigSequence');
+test('getChainConfig');

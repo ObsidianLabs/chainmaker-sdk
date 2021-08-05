@@ -94,8 +94,8 @@ proto.txpool.TxPoolSignal.prototype.toObject = function(opt_includeInstance) {
  */
 proto.txpool.TxPoolSignal.toObject = function(includeInstance, msg) {
   var f, obj = {
-    signaltype: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    chainid: jspb.Message.getFieldWithDefault(msg, 3, "")
+    signalType: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    chainId: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -132,13 +132,13 @@ proto.txpool.TxPoolSignal.deserializeBinaryFromReader = function(msg, reader) {
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 2:
+    case 1:
       var value = /** @type {!proto.txpool.SignalType} */ (reader.readEnum());
-      msg.setSignaltype(value);
+      msg.setSignalType(value);
       break;
-    case 3:
+    case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setChainid(value);
+      msg.setChainId(value);
       break;
     default:
       reader.skipField();
@@ -169,17 +169,17 @@ proto.txpool.TxPoolSignal.prototype.serializeBinary = function() {
  */
 proto.txpool.TxPoolSignal.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getSignaltype();
+  f = message.getSignalType();
   if (f !== 0.0) {
     writer.writeEnum(
-      2,
+      1,
       f
     );
   }
-  f = message.getChainid();
+  f = message.getChainId();
   if (f.length > 0) {
     writer.writeString(
-      3,
+      2,
       f
     );
   }
@@ -187,11 +187,11 @@ proto.txpool.TxPoolSignal.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional SignalType signalType = 2;
+ * optional SignalType signal_type = 1;
  * @return {!proto.txpool.SignalType}
  */
-proto.txpool.TxPoolSignal.prototype.getSignaltype = function() {
-  return /** @type {!proto.txpool.SignalType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+proto.txpool.TxPoolSignal.prototype.getSignalType = function() {
+  return /** @type {!proto.txpool.SignalType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
@@ -199,17 +199,17 @@ proto.txpool.TxPoolSignal.prototype.getSignaltype = function() {
  * @param {!proto.txpool.SignalType} value
  * @return {!proto.txpool.TxPoolSignal} returns this
  */
-proto.txpool.TxPoolSignal.prototype.setSignaltype = function(value) {
-  return jspb.Message.setProto3EnumField(this, 2, value);
+proto.txpool.TxPoolSignal.prototype.setSignalType = function(value) {
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
 /**
- * optional string chainId = 3;
+ * optional string chain_id = 2;
  * @return {string}
  */
-proto.txpool.TxPoolSignal.prototype.getChainid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+proto.txpool.TxPoolSignal.prototype.getChainId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -217,8 +217,8 @@ proto.txpool.TxPoolSignal.prototype.getChainid = function() {
  * @param {string} value
  * @return {!proto.txpool.TxPoolSignal} returns this
  */
-proto.txpool.TxPoolSignal.prototype.setChainid = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+proto.txpool.TxPoolSignal.prototype.setChainId = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -261,12 +261,12 @@ proto.txpool.TxBatch.prototype.toObject = function(opt_includeInstance) {
  */
 proto.txpool.TxBatch.toObject = function(includeInstance, msg) {
   var f, obj = {
-    batchid: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    nodeid: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    batchId: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    nodeId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     size: jspb.Message.getFieldWithDefault(msg, 3, 0),
     txsList: jspb.Message.toObjectList(msg.getTxsList(),
     common_transaction_pb.Transaction.toObject, includeInstance),
-    txidsmapMap: (f = msg.getTxidsmapMap()) ? f.toObject(includeInstance, undefined) : []
+    txIdsMapMap: (f = msg.getTxIdsMapMap()) ? f.toObject(includeInstance, undefined) : []
   };
 
   if (includeInstance) {
@@ -305,11 +305,11 @@ proto.txpool.TxBatch.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setBatchid(value);
+      msg.setBatchId(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setNodeid(value);
+      msg.setNodeId(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readInt32());
@@ -321,7 +321,7 @@ proto.txpool.TxBatch.deserializeBinaryFromReader = function(msg, reader) {
       msg.addTxs(value);
       break;
     case 5:
-      var value = msg.getTxidsmapMap();
+      var value = msg.getTxIdsMapMap();
       reader.readMessage(value, function(message, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt32, null, "", 0);
          });
@@ -355,14 +355,14 @@ proto.txpool.TxBatch.prototype.serializeBinary = function() {
  */
 proto.txpool.TxBatch.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getBatchid();
+  f = message.getBatchId();
   if (f !== 0) {
     writer.writeInt32(
       1,
       f
     );
   }
-  f = message.getNodeid();
+  f = message.getNodeId();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -384,7 +384,7 @@ proto.txpool.TxBatch.serializeBinaryToWriter = function(message, writer) {
       common_transaction_pb.Transaction.serializeBinaryToWriter
     );
   }
-  f = message.getTxidsmapMap(true);
+  f = message.getTxIdsMapMap(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(5, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeInt32);
   }
@@ -392,10 +392,10 @@ proto.txpool.TxBatch.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int32 batchId = 1;
+ * optional int32 batch_id = 1;
  * @return {number}
  */
-proto.txpool.TxBatch.prototype.getBatchid = function() {
+proto.txpool.TxBatch.prototype.getBatchId = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -404,16 +404,16 @@ proto.txpool.TxBatch.prototype.getBatchid = function() {
  * @param {number} value
  * @return {!proto.txpool.TxBatch} returns this
  */
-proto.txpool.TxBatch.prototype.setBatchid = function(value) {
+proto.txpool.TxBatch.prototype.setBatchId = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
 /**
- * optional string nodeId = 2;
+ * optional string node_id = 2;
  * @return {string}
  */
-proto.txpool.TxBatch.prototype.getNodeid = function() {
+proto.txpool.TxBatch.prototype.getNodeId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -422,7 +422,7 @@ proto.txpool.TxBatch.prototype.getNodeid = function() {
  * @param {string} value
  * @return {!proto.txpool.TxBatch} returns this
  */
-proto.txpool.TxBatch.prototype.setNodeid = function(value) {
+proto.txpool.TxBatch.prototype.setNodeId = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -484,12 +484,12 @@ proto.txpool.TxBatch.prototype.clearTxsList = function() {
 
 
 /**
- * map<string, int32> txIdsMap = 5;
+ * map<string, int32> tx_ids_map = 5;
  * @param {boolean=} opt_noLazyCreate Do not create the map if
  * empty, instead returning `undefined`
  * @return {!jspb.Map<string,number>}
  */
-proto.txpool.TxBatch.prototype.getTxidsmapMap = function(opt_noLazyCreate) {
+proto.txpool.TxBatch.prototype.getTxIdsMapMap = function(opt_noLazyCreate) {
   return /** @type {!jspb.Map<string,number>} */ (
       jspb.Message.getMapField(this, 5, opt_noLazyCreate,
       null));
@@ -500,8 +500,8 @@ proto.txpool.TxBatch.prototype.getTxidsmapMap = function(opt_noLazyCreate) {
  * Clears values from the map. The map will be non-null.
  * @return {!proto.txpool.TxBatch} returns this
  */
-proto.txpool.TxBatch.prototype.clearTxidsmapMap = function() {
-  this.getTxidsmapMap().clear();
+proto.txpool.TxBatch.prototype.clearTxIdsMapMap = function() {
+  this.getTxIdsMapMap().clear();
   return this;};
 
 

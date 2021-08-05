@@ -2143,7 +2143,7 @@ proto.config.CoreConfig.prototype.setTxSchedulerValidateTimeout = function(value
  * @private {!Array<number>}
  * @const
  */
-proto.config.ConsensusConfig.repeatedFields_ = [2,3];
+proto.config.ConsensusConfig.repeatedFields_ = [2,3,4];
 
 
 
@@ -2180,6 +2180,8 @@ proto.config.ConsensusConfig.toObject = function(includeInstance, msg) {
     nodesList: jspb.Message.toObjectList(msg.getNodesList(),
     proto.config.OrgConfig.toObject, includeInstance),
     extConfigList: jspb.Message.toObjectList(msg.getExtConfigList(),
+    common_request_pb.KeyValuePair.toObject, includeInstance),
+    dposConfigList: jspb.Message.toObjectList(msg.getDposConfigList(),
     common_request_pb.KeyValuePair.toObject, includeInstance)
   };
 
@@ -2231,6 +2233,11 @@ proto.config.ConsensusConfig.deserializeBinaryFromReader = function(msg, reader)
       reader.readMessage(value,common_request_pb.KeyValuePair.deserializeBinaryFromReader);
       msg.addExtConfig(value);
       break;
+    case 4:
+      var value = new common_request_pb.KeyValuePair;
+      reader.readMessage(value,common_request_pb.KeyValuePair.deserializeBinaryFromReader);
+      msg.addDposConfig(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2279,6 +2286,14 @@ proto.config.ConsensusConfig.serializeBinaryToWriter = function(message, writer)
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       3,
+      f,
+      common_request_pb.KeyValuePair.serializeBinaryToWriter
+    );
+  }
+  f = message.getDposConfigList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      4,
       f,
       common_request_pb.KeyValuePair.serializeBinaryToWriter
     );
@@ -2377,6 +2392,44 @@ proto.config.ConsensusConfig.prototype.addExtConfig = function(opt_value, opt_in
  */
 proto.config.ConsensusConfig.prototype.clearExtConfigList = function() {
   return this.setExtConfigList([]);
+};
+
+
+/**
+ * repeated common.KeyValuePair dpos_config = 4;
+ * @return {!Array<!proto.common.KeyValuePair>}
+ */
+proto.config.ConsensusConfig.prototype.getDposConfigList = function() {
+  return /** @type{!Array<!proto.common.KeyValuePair>} */ (
+    jspb.Message.getRepeatedWrapperField(this, common_request_pb.KeyValuePair, 4));
+};
+
+
+/**
+ * @param {!Array<!proto.common.KeyValuePair>} value
+ * @return {!proto.config.ConsensusConfig} returns this
+*/
+proto.config.ConsensusConfig.prototype.setDposConfigList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 4, value);
+};
+
+
+/**
+ * @param {!proto.common.KeyValuePair=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.common.KeyValuePair}
+ */
+proto.config.ConsensusConfig.prototype.addDposConfig = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.common.KeyValuePair, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.config.ConsensusConfig} returns this
+ */
+proto.config.ConsensusConfig.prototype.clearDposConfigList = function() {
+  return this.setDposConfigList([]);
 };
 
 

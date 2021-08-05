@@ -15,14 +15,17 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-var common_transaction_pb = require('../common/transaction_pb.js');
-goog.object.extend(proto, common_transaction_pb);
+var accesscontrol_member_pb = require('../accesscontrol/member_pb.js');
+goog.object.extend(proto, accesscontrol_member_pb);
 var common_rwset_pb = require('../common/rwset_pb.js');
 goog.object.extend(proto, common_rwset_pb);
+var common_transaction_pb = require('../common/transaction_pb.js');
+goog.object.extend(proto, common_transaction_pb);
 goog.exportSymbol('proto.common.AdditionalData', null, global);
 goog.exportSymbol('proto.common.Block', null, global);
 goog.exportSymbol('proto.common.BlockHeader', null, global);
 goog.exportSymbol('proto.common.BlockInfo', null, global);
+goog.exportSymbol('proto.common.BlockType', null, global);
 goog.exportSymbol('proto.common.DAG', null, global);
 goog.exportSymbol('proto.common.DAG.Neighbor', null, global);
 /**
@@ -840,19 +843,20 @@ proto.common.BlockHeader.prototype.toObject = function(opt_includeInstance) {
  */
 proto.common.BlockHeader.toObject = function(includeInstance, msg) {
   var f, obj = {
-    chainId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    blockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    preBlockHash: msg.getPreBlockHash_asB64(),
+    blockVersion: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    blockType: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    chainId: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    blockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
     blockHash: msg.getBlockHash_asB64(),
-    preConfHeight: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    blockVersion: msg.getBlockVersion_asB64(),
+    preBlockHash: msg.getPreBlockHash_asB64(),
+    preConfHeight: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    txCount: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    txRoot: msg.getTxRoot_asB64(),
     dagHash: msg.getDagHash_asB64(),
     rwSetRoot: msg.getRwSetRoot_asB64(),
-    txRoot: msg.getTxRoot_asB64(),
-    blockTimestamp: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    proposer: msg.getProposer_asB64(),
+    blockTimestamp: jspb.Message.getFieldWithDefault(msg, 13, 0),
     consensusArgs: msg.getConsensusArgs_asB64(),
-    txCount: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    proposer: (f = msg.getProposer()) && accesscontrol_member_pb.Member.toObject(includeInstance, f),
     signature: msg.getSignature_asB64()
   };
 
@@ -891,58 +895,63 @@ proto.common.BlockHeader.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setBlockVersion(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.common.BlockType} */ (reader.readEnum());
+      msg.setBlockType(value);
+      break;
+    case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setChainId(value);
       break;
-    case 2:
-      var value = /** @type {number} */ (reader.readInt64());
+    case 4:
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setBlockHeight(value);
       break;
-    case 3:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setPreBlockHash(value);
-      break;
-    case 4:
+    case 5:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setBlockHash(value);
       break;
-    case 5:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setPreConfHeight(value);
-      break;
-    case 6:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setBlockVersion(value);
-      break;
     case 7:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setDagHash(value);
+      msg.setPreBlockHash(value);
       break;
     case 8:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setRwSetRoot(value);
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setPreConfHeight(value);
       break;
     case 9:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setTxCount(value);
+      break;
+    case 10:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setTxRoot(value);
       break;
-    case 10:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setBlockTimestamp(value);
-      break;
     case 11:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setProposer(value);
+      msg.setDagHash(value);
       break;
     case 12:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setConsensusArgs(value);
+      msg.setRwSetRoot(value);
       break;
     case 13:
       var value = /** @type {number} */ (reader.readInt64());
-      msg.setTxCount(value);
+      msg.setBlockTimestamp(value);
       break;
     case 14:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setConsensusArgs(value);
+      break;
+    case 15:
+      var value = new accesscontrol_member_pb.Member;
+      reader.readMessage(value,accesscontrol_member_pb.Member.deserializeBinaryFromReader);
+      msg.setProposer(value);
+      break;
+    case 16:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setSignature(value);
       break;
@@ -975,101 +984,109 @@ proto.common.BlockHeader.prototype.serializeBinary = function() {
  */
 proto.common.BlockHeader.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getBlockVersion();
+  if (f !== 0) {
+    writer.writeUint32(
+      1,
+      f
+    );
+  }
+  f = message.getBlockType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
   f = message.getChainId();
   if (f.length > 0) {
     writer.writeString(
-      1,
+      3,
       f
     );
   }
   f = message.getBlockHeight();
   if (f !== 0) {
-    writer.writeInt64(
-      2,
-      f
-    );
-  }
-  f = message.getPreBlockHash_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
-      3,
+    writer.writeUint64(
+      4,
       f
     );
   }
   f = message.getBlockHash_asU8();
   if (f.length > 0) {
     writer.writeBytes(
-      4,
-      f
-    );
-  }
-  f = message.getPreConfHeight();
-  if (f !== 0) {
-    writer.writeInt64(
       5,
       f
     );
   }
-  f = message.getBlockVersion_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
-      6,
-      f
-    );
-  }
-  f = message.getDagHash_asU8();
+  f = message.getPreBlockHash_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       7,
       f
     );
   }
-  f = message.getRwSetRoot_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
+  f = message.getPreConfHeight();
+  if (f !== 0) {
+    writer.writeUint64(
       8,
+      f
+    );
+  }
+  f = message.getTxCount();
+  if (f !== 0) {
+    writer.writeUint32(
+      9,
       f
     );
   }
   f = message.getTxRoot_asU8();
   if (f.length > 0) {
     writer.writeBytes(
-      9,
-      f
-    );
-  }
-  f = message.getBlockTimestamp();
-  if (f !== 0) {
-    writer.writeInt64(
       10,
       f
     );
   }
-  f = message.getProposer_asU8();
+  f = message.getDagHash_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       11,
       f
     );
   }
-  f = message.getConsensusArgs_asU8();
+  f = message.getRwSetRoot_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       12,
       f
     );
   }
-  f = message.getTxCount();
+  f = message.getBlockTimestamp();
   if (f !== 0) {
     writer.writeInt64(
       13,
       f
     );
   }
-  f = message.getSignature_asU8();
+  f = message.getConsensusArgs_asU8();
   if (f.length > 0) {
     writer.writeBytes(
       14,
+      f
+    );
+  }
+  f = message.getProposer();
+  if (f != null) {
+    writer.writeMessage(
+      15,
+      f,
+      accesscontrol_member_pb.Member.serializeBinaryToWriter
+    );
+  }
+  f = message.getSignature_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      16,
       f
     );
   }
@@ -1077,11 +1094,47 @@ proto.common.BlockHeader.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string chain_id = 1;
+ * optional uint32 block_version = 1;
+ * @return {number}
+ */
+proto.common.BlockHeader.prototype.getBlockVersion = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.common.BlockHeader} returns this
+ */
+proto.common.BlockHeader.prototype.setBlockVersion = function(value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional BlockType block_type = 2;
+ * @return {!proto.common.BlockType}
+ */
+proto.common.BlockHeader.prototype.getBlockType = function() {
+  return /** @type {!proto.common.BlockType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {!proto.common.BlockType} value
+ * @return {!proto.common.BlockHeader} returns this
+ */
+proto.common.BlockHeader.prototype.setBlockType = function(value) {
+  return jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional string chain_id = 3;
  * @return {string}
  */
 proto.common.BlockHeader.prototype.getChainId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -1090,16 +1143,16 @@ proto.common.BlockHeader.prototype.getChainId = function() {
  * @return {!proto.common.BlockHeader} returns this
  */
 proto.common.BlockHeader.prototype.setChainId = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional int64 block_height = 2;
+ * optional uint64 block_height = 4;
  * @return {number}
  */
 proto.common.BlockHeader.prototype.getBlockHeight = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
@@ -1108,63 +1161,21 @@ proto.common.BlockHeader.prototype.getBlockHeight = function() {
  * @return {!proto.common.BlockHeader} returns this
  */
 proto.common.BlockHeader.prototype.setBlockHeight = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional bytes pre_block_hash = 3;
- * @return {!(string|Uint8Array)}
- */
-proto.common.BlockHeader.prototype.getPreBlockHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/**
- * optional bytes pre_block_hash = 3;
- * This is a type-conversion wrapper around `getPreBlockHash()`
- * @return {string}
- */
-proto.common.BlockHeader.prototype.getPreBlockHash_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getPreBlockHash()));
-};
-
-
-/**
- * optional bytes pre_block_hash = 3;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getPreBlockHash()`
- * @return {!Uint8Array}
- */
-proto.common.BlockHeader.prototype.getPreBlockHash_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getPreBlockHash()));
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
- * @return {!proto.common.BlockHeader} returns this
- */
-proto.common.BlockHeader.prototype.setPreBlockHash = function(value) {
-  return jspb.Message.setProto3BytesField(this, 3, value);
-};
-
-
-/**
- * optional bytes block_hash = 4;
+ * optional bytes block_hash = 5;
  * @return {!(string|Uint8Array)}
  */
 proto.common.BlockHeader.prototype.getBlockHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
 /**
- * optional bytes block_hash = 4;
+ * optional bytes block_hash = 5;
  * This is a type-conversion wrapper around `getBlockHash()`
  * @return {string}
  */
@@ -1175,7 +1186,7 @@ proto.common.BlockHeader.prototype.getBlockHash_asB64 = function() {
 
 
 /**
- * optional bytes block_hash = 4;
+ * optional bytes block_hash = 5;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getBlockHash()`
@@ -1192,16 +1203,58 @@ proto.common.BlockHeader.prototype.getBlockHash_asU8 = function() {
  * @return {!proto.common.BlockHeader} returns this
  */
 proto.common.BlockHeader.prototype.setBlockHash = function(value) {
-  return jspb.Message.setProto3BytesField(this, 4, value);
+  return jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
 /**
- * optional int64 pre_conf_height = 5;
+ * optional bytes pre_block_hash = 7;
+ * @return {!(string|Uint8Array)}
+ */
+proto.common.BlockHeader.prototype.getPreBlockHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * optional bytes pre_block_hash = 7;
+ * This is a type-conversion wrapper around `getPreBlockHash()`
+ * @return {string}
+ */
+proto.common.BlockHeader.prototype.getPreBlockHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPreBlockHash()));
+};
+
+
+/**
+ * optional bytes pre_block_hash = 7;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPreBlockHash()`
+ * @return {!Uint8Array}
+ */
+proto.common.BlockHeader.prototype.getPreBlockHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPreBlockHash()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.common.BlockHeader} returns this
+ */
+proto.common.BlockHeader.prototype.setPreBlockHash = function(value) {
+  return jspb.Message.setProto3BytesField(this, 7, value);
+};
+
+
+/**
+ * optional uint64 pre_conf_height = 8;
  * @return {number}
  */
 proto.common.BlockHeader.prototype.getPreConfHeight = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
 };
 
 
@@ -1210,147 +1263,39 @@ proto.common.BlockHeader.prototype.getPreConfHeight = function() {
  * @return {!proto.common.BlockHeader} returns this
  */
 proto.common.BlockHeader.prototype.setPreConfHeight = function(value) {
-  return jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
 /**
- * optional bytes block_version = 6;
- * @return {!(string|Uint8Array)}
+ * optional uint32 tx_count = 9;
+ * @return {number}
  */
-proto.common.BlockHeader.prototype.getBlockVersion = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+proto.common.BlockHeader.prototype.getTxCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
 };
 
 
 /**
- * optional bytes block_version = 6;
- * This is a type-conversion wrapper around `getBlockVersion()`
- * @return {string}
- */
-proto.common.BlockHeader.prototype.getBlockVersion_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getBlockVersion()));
-};
-
-
-/**
- * optional bytes block_version = 6;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getBlockVersion()`
- * @return {!Uint8Array}
- */
-proto.common.BlockHeader.prototype.getBlockVersion_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getBlockVersion()));
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
+ * @param {number} value
  * @return {!proto.common.BlockHeader} returns this
  */
-proto.common.BlockHeader.prototype.setBlockVersion = function(value) {
-  return jspb.Message.setProto3BytesField(this, 6, value);
+proto.common.BlockHeader.prototype.setTxCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
 /**
- * optional bytes dag_hash = 7;
- * @return {!(string|Uint8Array)}
- */
-proto.common.BlockHeader.prototype.getDagHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
-};
-
-
-/**
- * optional bytes dag_hash = 7;
- * This is a type-conversion wrapper around `getDagHash()`
- * @return {string}
- */
-proto.common.BlockHeader.prototype.getDagHash_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getDagHash()));
-};
-
-
-/**
- * optional bytes dag_hash = 7;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getDagHash()`
- * @return {!Uint8Array}
- */
-proto.common.BlockHeader.prototype.getDagHash_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getDagHash()));
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
- * @return {!proto.common.BlockHeader} returns this
- */
-proto.common.BlockHeader.prototype.setDagHash = function(value) {
-  return jspb.Message.setProto3BytesField(this, 7, value);
-};
-
-
-/**
- * optional bytes rw_set_root = 8;
- * @return {!(string|Uint8Array)}
- */
-proto.common.BlockHeader.prototype.getRwSetRoot = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/**
- * optional bytes rw_set_root = 8;
- * This is a type-conversion wrapper around `getRwSetRoot()`
- * @return {string}
- */
-proto.common.BlockHeader.prototype.getRwSetRoot_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getRwSetRoot()));
-};
-
-
-/**
- * optional bytes rw_set_root = 8;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getRwSetRoot()`
- * @return {!Uint8Array}
- */
-proto.common.BlockHeader.prototype.getRwSetRoot_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getRwSetRoot()));
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
- * @return {!proto.common.BlockHeader} returns this
- */
-proto.common.BlockHeader.prototype.setRwSetRoot = function(value) {
-  return jspb.Message.setProto3BytesField(this, 8, value);
-};
-
-
-/**
- * optional bytes tx_root = 9;
+ * optional bytes tx_root = 10;
  * @return {!(string|Uint8Array)}
  */
 proto.common.BlockHeader.prototype.getTxRoot = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
 };
 
 
 /**
- * optional bytes tx_root = 9;
+ * optional bytes tx_root = 10;
  * This is a type-conversion wrapper around `getTxRoot()`
  * @return {string}
  */
@@ -1361,7 +1306,7 @@ proto.common.BlockHeader.prototype.getTxRoot_asB64 = function() {
 
 
 /**
- * optional bytes tx_root = 9;
+ * optional bytes tx_root = 10;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getTxRoot()`
@@ -1378,16 +1323,100 @@ proto.common.BlockHeader.prototype.getTxRoot_asU8 = function() {
  * @return {!proto.common.BlockHeader} returns this
  */
 proto.common.BlockHeader.prototype.setTxRoot = function(value) {
-  return jspb.Message.setProto3BytesField(this, 9, value);
+  return jspb.Message.setProto3BytesField(this, 10, value);
 };
 
 
 /**
- * optional int64 block_timestamp = 10;
+ * optional bytes dag_hash = 11;
+ * @return {!(string|Uint8Array)}
+ */
+proto.common.BlockHeader.prototype.getDagHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/**
+ * optional bytes dag_hash = 11;
+ * This is a type-conversion wrapper around `getDagHash()`
+ * @return {string}
+ */
+proto.common.BlockHeader.prototype.getDagHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getDagHash()));
+};
+
+
+/**
+ * optional bytes dag_hash = 11;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getDagHash()`
+ * @return {!Uint8Array}
+ */
+proto.common.BlockHeader.prototype.getDagHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getDagHash()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.common.BlockHeader} returns this
+ */
+proto.common.BlockHeader.prototype.setDagHash = function(value) {
+  return jspb.Message.setProto3BytesField(this, 11, value);
+};
+
+
+/**
+ * optional bytes rw_set_root = 12;
+ * @return {!(string|Uint8Array)}
+ */
+proto.common.BlockHeader.prototype.getRwSetRoot = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/**
+ * optional bytes rw_set_root = 12;
+ * This is a type-conversion wrapper around `getRwSetRoot()`
+ * @return {string}
+ */
+proto.common.BlockHeader.prototype.getRwSetRoot_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getRwSetRoot()));
+};
+
+
+/**
+ * optional bytes rw_set_root = 12;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getRwSetRoot()`
+ * @return {!Uint8Array}
+ */
+proto.common.BlockHeader.prototype.getRwSetRoot_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getRwSetRoot()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.common.BlockHeader} returns this
+ */
+proto.common.BlockHeader.prototype.setRwSetRoot = function(value) {
+  return jspb.Message.setProto3BytesField(this, 12, value);
+};
+
+
+/**
+ * optional int64 block_timestamp = 13;
  * @return {number}
  */
 proto.common.BlockHeader.prototype.getBlockTimestamp = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
 };
 
 
@@ -1396,63 +1425,21 @@ proto.common.BlockHeader.prototype.getBlockTimestamp = function() {
  * @return {!proto.common.BlockHeader} returns this
  */
 proto.common.BlockHeader.prototype.setBlockTimestamp = function(value) {
-  return jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
 /**
- * optional bytes proposer = 11;
- * @return {!(string|Uint8Array)}
- */
-proto.common.BlockHeader.prototype.getProposer = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
-};
-
-
-/**
- * optional bytes proposer = 11;
- * This is a type-conversion wrapper around `getProposer()`
- * @return {string}
- */
-proto.common.BlockHeader.prototype.getProposer_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getProposer()));
-};
-
-
-/**
- * optional bytes proposer = 11;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getProposer()`
- * @return {!Uint8Array}
- */
-proto.common.BlockHeader.prototype.getProposer_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getProposer()));
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
- * @return {!proto.common.BlockHeader} returns this
- */
-proto.common.BlockHeader.prototype.setProposer = function(value) {
-  return jspb.Message.setProto3BytesField(this, 11, value);
-};
-
-
-/**
- * optional bytes consensus_args = 12;
+ * optional bytes consensus_args = 14;
  * @return {!(string|Uint8Array)}
  */
 proto.common.BlockHeader.prototype.getConsensusArgs = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
 };
 
 
 /**
- * optional bytes consensus_args = 12;
+ * optional bytes consensus_args = 14;
  * This is a type-conversion wrapper around `getConsensusArgs()`
  * @return {string}
  */
@@ -1463,7 +1450,7 @@ proto.common.BlockHeader.prototype.getConsensusArgs_asB64 = function() {
 
 
 /**
- * optional bytes consensus_args = 12;
+ * optional bytes consensus_args = 14;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getConsensusArgs()`
@@ -1480,39 +1467,58 @@ proto.common.BlockHeader.prototype.getConsensusArgs_asU8 = function() {
  * @return {!proto.common.BlockHeader} returns this
  */
 proto.common.BlockHeader.prototype.setConsensusArgs = function(value) {
-  return jspb.Message.setProto3BytesField(this, 12, value);
+  return jspb.Message.setProto3BytesField(this, 14, value);
 };
 
 
 /**
- * optional int64 tx_count = 13;
- * @return {number}
+ * optional accesscontrol.Member proposer = 15;
+ * @return {?proto.accesscontrol.Member}
  */
-proto.common.BlockHeader.prototype.getTxCount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+proto.common.BlockHeader.prototype.getProposer = function() {
+  return /** @type{?proto.accesscontrol.Member} */ (
+    jspb.Message.getWrapperField(this, accesscontrol_member_pb.Member, 15));
 };
 
 
 /**
- * @param {number} value
+ * @param {?proto.accesscontrol.Member|undefined} value
+ * @return {!proto.common.BlockHeader} returns this
+*/
+proto.common.BlockHeader.prototype.setProposer = function(value) {
+  return jspb.Message.setWrapperField(this, 15, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
  * @return {!proto.common.BlockHeader} returns this
  */
-proto.common.BlockHeader.prototype.setTxCount = function(value) {
-  return jspb.Message.setProto3IntField(this, 13, value);
+proto.common.BlockHeader.prototype.clearProposer = function() {
+  return this.setProposer(undefined);
 };
 
 
 /**
- * optional bytes signature = 14;
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.common.BlockHeader.prototype.hasProposer = function() {
+  return jspb.Message.getField(this, 15) != null;
+};
+
+
+/**
+ * optional bytes signature = 16;
  * @return {!(string|Uint8Array)}
  */
 proto.common.BlockHeader.prototype.getSignature = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 16, ""));
 };
 
 
 /**
- * optional bytes signature = 14;
+ * optional bytes signature = 16;
  * This is a type-conversion wrapper around `getSignature()`
  * @return {string}
  */
@@ -1523,7 +1529,7 @@ proto.common.BlockHeader.prototype.getSignature_asB64 = function() {
 
 
 /**
- * optional bytes signature = 14;
+ * optional bytes signature = 16;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getSignature()`
@@ -1540,7 +1546,7 @@ proto.common.BlockHeader.prototype.getSignature_asU8 = function() {
  * @return {!proto.common.BlockHeader} returns this
  */
 proto.common.BlockHeader.prototype.setSignature = function(value) {
-  return jspb.Message.setProto3BytesField(this, 14, value);
+  return jspb.Message.setProto3BytesField(this, 16, value);
 };
 
 
@@ -1743,7 +1749,7 @@ proto.common.DAG.Neighbor.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedInt32() : [reader.readInt32()]);
+      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
       for (var i = 0; i < values.length; i++) {
         msg.addNeighbors(values[i]);
       }
@@ -1779,7 +1785,7 @@ proto.common.DAG.Neighbor.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getNeighborsList();
   if (f.length > 0) {
-    writer.writePackedInt32(
+    writer.writePackedUint32(
       1,
       f
     );
@@ -1788,7 +1794,7 @@ proto.common.DAG.Neighbor.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * repeated int32 neighbors = 1;
+ * repeated uint32 neighbors = 1;
  * @return {!Array<number>}
  */
 proto.common.DAG.Neighbor.prototype.getNeighborsList = function() {
@@ -1861,5 +1867,15 @@ proto.common.DAG.prototype.clearVertexesList = function() {
   return this.setVertexesList([]);
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.common.BlockType = {
+  NORMAL_BLOCK: 0,
+  CONFIG_BLOCK: 1,
+  CONTRACT_MGR_BLOCK: 2,
+  HAS_COINBASE: 4
+};
 
 goog.object.extend(exports, proto.common);

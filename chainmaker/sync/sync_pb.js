@@ -416,11 +416,11 @@ proto.sync.BlockHeightBCM.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setBlockHeight(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setArchivedHeight(value);
       break;
     default:
@@ -454,14 +454,14 @@ proto.sync.BlockHeightBCM.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getBlockHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       1,
       f
     );
   }
   f = message.getArchivedHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       2,
       f
     );
@@ -470,7 +470,7 @@ proto.sync.BlockHeightBCM.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int64 block_height = 1;
+ * optional uint64 block_height = 1;
  * @return {number}
  */
 proto.sync.BlockHeightBCM.prototype.getBlockHeight = function() {
@@ -488,7 +488,7 @@ proto.sync.BlockHeightBCM.prototype.setBlockHeight = function(value) {
 
 
 /**
- * optional int64 archived_height = 2;
+ * optional uint64 archived_height = 2;
  * @return {number}
  */
 proto.sync.BlockHeightBCM.prototype.getArchivedHeight = function() {
@@ -538,7 +538,7 @@ proto.sync.BlockSyncReq.prototype.toObject = function(opt_includeInstance) {
 proto.sync.BlockSyncReq.toObject = function(includeInstance, msg) {
   var f, obj = {
     blockHeight: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    batchsize: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    batchSize: jspb.Message.getFieldWithDefault(msg, 2, 0),
     withRwset: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
   };
 
@@ -577,12 +577,12 @@ proto.sync.BlockSyncReq.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readUint64());
       msg.setBlockHeight(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setBatchsize(value);
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setBatchSize(value);
       break;
     case 3:
       var value = /** @type {boolean} */ (reader.readBool());
@@ -619,14 +619,14 @@ proto.sync.BlockSyncReq.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getBlockHeight();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       1,
       f
     );
   }
-  f = message.getBatchsize();
+  f = message.getBatchSize();
   if (f !== 0) {
-    writer.writeInt64(
+    writer.writeUint64(
       2,
       f
     );
@@ -642,7 +642,7 @@ proto.sync.BlockSyncReq.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional int64 block_height = 1;
+ * optional uint64 block_height = 1;
  * @return {number}
  */
 proto.sync.BlockSyncReq.prototype.getBlockHeight = function() {
@@ -660,10 +660,10 @@ proto.sync.BlockSyncReq.prototype.setBlockHeight = function(value) {
 
 
 /**
- * optional int64 batchSize = 2;
+ * optional uint64 batch_size = 2;
  * @return {number}
  */
-proto.sync.BlockSyncReq.prototype.getBatchsize = function() {
+proto.sync.BlockSyncReq.prototype.getBatchSize = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -672,7 +672,7 @@ proto.sync.BlockSyncReq.prototype.getBatchsize = function() {
  * @param {number} value
  * @return {!proto.sync.BlockSyncReq} returns this
  */
-proto.sync.BlockSyncReq.prototype.setBatchsize = function(value) {
+proto.sync.BlockSyncReq.prototype.setBatchSize = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -734,7 +734,7 @@ proto.sync.BlockBatch.prototype.toObject = function(opt_includeInstance) {
  */
 proto.sync.BlockBatch.toObject = function(includeInstance, msg) {
   var f, obj = {
-    batchsList: jspb.Message.toObjectList(msg.getBatchsList(),
+    batchesList: jspb.Message.toObjectList(msg.getBatchesList(),
     common_block_pb.Block.toObject, includeInstance)
   };
 
@@ -775,7 +775,7 @@ proto.sync.BlockBatch.deserializeBinaryFromReader = function(msg, reader) {
     case 1:
       var value = new common_block_pb.Block;
       reader.readMessage(value,common_block_pb.Block.deserializeBinaryFromReader);
-      msg.addBatchs(value);
+      msg.addBatches(value);
       break;
     default:
       reader.skipField();
@@ -806,7 +806,7 @@ proto.sync.BlockBatch.prototype.serializeBinary = function() {
  */
 proto.sync.BlockBatch.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getBatchsList();
+  f = message.getBatchesList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       1,
@@ -818,10 +818,10 @@ proto.sync.BlockBatch.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * repeated common.Block batchs = 1;
+ * repeated common.Block batches = 1;
  * @return {!Array<!proto.common.Block>}
  */
-proto.sync.BlockBatch.prototype.getBatchsList = function() {
+proto.sync.BlockBatch.prototype.getBatchesList = function() {
   return /** @type{!Array<!proto.common.Block>} */ (
     jspb.Message.getRepeatedWrapperField(this, common_block_pb.Block, 1));
 };
@@ -831,7 +831,7 @@ proto.sync.BlockBatch.prototype.getBatchsList = function() {
  * @param {!Array<!proto.common.Block>} value
  * @return {!proto.sync.BlockBatch} returns this
 */
-proto.sync.BlockBatch.prototype.setBatchsList = function(value) {
+proto.sync.BlockBatch.prototype.setBatchesList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
@@ -841,7 +841,7 @@ proto.sync.BlockBatch.prototype.setBatchsList = function(value) {
  * @param {number=} opt_index
  * @return {!proto.common.Block}
  */
-proto.sync.BlockBatch.prototype.addBatchs = function(opt_value, opt_index) {
+proto.sync.BlockBatch.prototype.addBatches = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.common.Block, opt_index);
 };
 
@@ -850,8 +850,8 @@ proto.sync.BlockBatch.prototype.addBatchs = function(opt_value, opt_index) {
  * Clears the list making it empty but non-null.
  * @return {!proto.sync.BlockBatch} returns this
  */
-proto.sync.BlockBatch.prototype.clearBatchsList = function() {
-  return this.setBatchsList([]);
+proto.sync.BlockBatch.prototype.clearBatchesList = function() {
+  return this.setBatchesList([]);
 };
 
 
