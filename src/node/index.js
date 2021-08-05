@@ -101,13 +101,14 @@ class Node {
     });
   }
 
-  async sendPayload(userInfo, payload, srcRes = false, nodeAddr) {
+  async sendPayload(userInfo, payload, srcRes = false, endorsements = [], nodeAddr) {
     const request = utils.newRequest(
       userInfo.orgID,
       userInfo.userSignCertBytes,
       userInfo.isFullCert,
       payload,
       userInfo.userSignKeyBytes,
+      endorsements,
     );
     // console.log(JSON.stringify(request.toObject(), null, 4));
     const result = await this.sendRequest(request, srcRes, nodeAddr);

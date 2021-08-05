@@ -44,19 +44,23 @@ class ChainConfig {
 
   // return promise
   async getChainConfigByBlockHeight(blockHeight) {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_CHAIN_CONFIG),
-      method: utils.enum2str(utils.common.ConfigFunction, utils.common.ConfigFunction.GET_CHAIN_CONFIG_AT),
-      params: {
-        block_height: `${blockHeight}`,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyChainConfigContractBlockHeight] = Buffer.from(`${blockHeight}`);
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      txType: utils.common.TxType.QUERY_CONTRACT,
+      method: utils.enum2str(
+        utils.sysContract.ChainConfigFunction,
+        utils.sysContract.ChainConfigFunction.GET_CHAIN_CONFIG_AT,
+      ),
+      sequence: cv.DEFAULT_SEQUENCE,
     });
     const response = await this.sendPayload(
-      payloadBytes,
-      utils.common.TxType.QUERY_SYSTEM_CONTRACT,
+      payload,
       cv.NEED_SRC_RESPONSE,
     );
-    response.result = utils.common.TxResponse(response.result).toObject();
+    response.result = utils.config.ChainConfig.deserializeBinary(response.result).toObject();
     return response;
   }
 

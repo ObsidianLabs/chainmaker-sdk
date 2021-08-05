@@ -116,7 +116,7 @@ const test = async (type) => {
         res = await testGetChainConfig(sdk);
         break;
       case 'getChainConfigByBlockHeight':
-        res = await testGetChainConfigByBlockHeight(sdk, 2);
+        res = await testGetChainConfigByBlockHeight(sdk, 1);
         break;
       case 'getChainConfigSequence':
         res = await testGetChainConfigSequence(sdk);
@@ -302,4 +302,4 @@ const test = async (type) => {
   }
 };
 
-test('getChainConfig');
+test('getChainConfigByBlockHeight');

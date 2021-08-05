@@ -249,24 +249,28 @@ const buildPayload = (config) => {
   }
   kv.timestamp = Date.now() / 1000 | 0;
   kv.expirationTime = 0;
-  const payload = new common.Payload();
+  let payload = new common.Payload();
+  if (kv.parameters) {
+    payload = buildKeyValuePair(payload, kv.parameters);
+    delete kv.parameters;
+  }
   Object.keys(kv).forEach((key) => {
     if (PAYLOAD_KEY.includes(key)) {
+      console.log(PAYLOAD_KEY_METHOD[key], kv[key]);
       payload[PAYLOAD_KEY_METHOD[key]](kv[key]);
     }
   });
   return payload;
 };
 
-const buildKeyValuePair = (kv) => {
-  const result = [];
+const buildKeyValuePair = (payload, kv) => {
   Object.keys(kv).forEach((key) => {
     const param = new common.KeyValuePair();
     param.setKey(key);
     if (kv[key] !== '') param.setValue(kv[key]);
-    result.push(param);
+    payload.addParameters(param);
   });
-  return result;
+  return payload;
 };
 
 module.exports = {
