@@ -14,88 +14,106 @@ class CallSystemContract {
       chainId: this.chainID,
       txType: utils.common.TxType.QUERY_CONTRACT,
       contractName: utils.enum2str(utils.sysContract.SystemContract, utils.sysContract.SystemContract.CHAIN_QUERY),
+      sequence: cv.DEFAULT_SEQUENCE,
     };
   }
 
   // return promise
   getTxByTxId(txId) {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_TX_BY_TX_ID),
-      params: {
-        txId,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyBlockContractTxId] = txId;
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_TX_BY_TX_ID,
+      ),
     });
-    return this.sendSystemContractPayload(payloadBytes);
+    return this.sendSystemContractPayload(payload);
   }
 
   // return promise
   async getBlockByHeight(blockHeight, withRWSet) {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_BLOCK_BY_HEIGHT),
-      params: {
-        blockHeight: `${blockHeight}`,
-        withRWSet,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyBlockContractBlockHeight] = blockHeight;
+    parameters[cv.keys.KeyBlockContractWithRWSet] = withRWSet;
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_BLOCK_BY_HEIGHT,
+      ),
     });
-    const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE);
+    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
     return response;
   }
 
   // return promise
   async getFullBlockByHeight(blockHeight) {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_FULL_BLOCK_BY_HEIGHT),
-      params: {
-        blockHeight: `${blockHeight}`,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyBlockContractBlockHeight] = blockHeight;
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_FULL_BLOCK_BY_HEIGHT,
+      ),
     });
-    const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE);
+    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
     return response;
   }
 
   // return promise
   async getBlockByHash(blockHash, withRWSet) {
-    const convertBlockHash = Buffer.from(blockHash, 'base64').toString('hex');
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_BLOCK_BY_HASH),
-      params: {
-        blockHash: convertBlockHash,
-        withRWSet,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyBlockContractBlockHash] = Buffer.from(blockHash, 'base64').toString('hex');
+    parameters[cv.keys.KeyBlockContractWithRWSet] = withRWSet;
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_BLOCK_BY_HASH,
+      ),
     });
-    const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE);
+    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
     return response;
   }
 
   async getLastBlock(withRWSet) {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_LAST_BLOCK),
-      params: {
-        withRWSet,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyBlockContractWithRWSet] = withRWSet;
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_LAST_BLOCK,
+      ),
     });
-    const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE);
+    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
     return response;
   }
 
   async getBlockHeaderByHeight(blockHeight) {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_BLOCK_HEADER_BY_HEIGHT),
-      params: {
-        blockHeight: `${blockHeight}`,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyBlockContractBlockHeight] = blockHeight;
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_BLOCK_HEADER_BY_HEIGHT,
+      ),
     });
-    const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE);
+    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.common.BlockHeader.deserializeBinary(response.result).toObject();
     return response;
   }
@@ -120,34 +138,38 @@ class CallSystemContract {
 
   async getBlockHeight({ txId, blockHash }) {
     let method;
-    let params;
+    const parameters = {};
     if (txId) {
-      method = utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_BLOCK_HEIGHT_BY_TX_ID);
-      params = {
-        txId,
-      };
+      method = utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_BLOCK_HEIGHT_BY_TX_ID,
+      );
+      parameters[cv.keys.KeyBlockContractTxId] = txId;
     } else if (blockHash) {
-      method = utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_BLOCK_HEIGHT_BY_HASH);
-      params = {
-        blockHash,
-      };
+      method = utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_BLOCK_HEIGHT_BY_HASH,
+      );
+      parameters[cv.keys.KeyBlockContractBlockHash] = blockHash;
     } else {
-      method = utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_ARCHIVED_BLOCK_HEIGHT);
-      params = {};
+      method = utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_ARCHIVED_BLOCK_HEIGHT,
+      );
     }
-    const payloadBytes = this.createQueryPayload({
+    const payload = utils.buildPayload({
+      parameters,
       method,
-      params,
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
+      ...this.commonObj,
     });
-    const response = await this.sendSystemContractPayload(payloadBytes);
+    const response = await this.sendSystemContractPayload(payload);
     return response;
   }
 
   // return promise
   async getBlockByTxId(txId, withRWSet) {
     const parameters = {};
-    parameters[cv.keys.KeyBlockContractTxId] = txId,
+    parameters[cv.keys.KeyBlockContractTxId] = txId;
     parameters[cv.keys.KeyBlockContractWithRWSet] = withRWSet;
     const payload = utils.buildPayload({
       parameters,
@@ -156,7 +178,6 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction,
         utils.sysContract.ChainQueryFunction.GET_BLOCK_BY_TX_ID,
       ),
-      sequence: cv.DEFAULT_SEQUENCE,
     });
     const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
@@ -165,14 +186,17 @@ class CallSystemContract {
 
   // return promise
   async getLastConfigBlock(withRWSet) {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_LAST_CONFIG_BLOCK),
-      params: {
-        withRWSet,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyBlockContractWithRWSet] = withRWSet;
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_LAST_CONFIG_BLOCK,
+      ),
     });
-    const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE);
+    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
     return response;
   }
@@ -180,12 +204,15 @@ class CallSystemContract {
   // return promise
   async getNodeChainList(nodeAddr) {
     if (this.node.client[nodeAddr]) {
-      const payloadBytes = this.createQueryPayload({
-        contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-        method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_NODE_CHAIN_LIST),
-        params: {},
+      const payload = utils.buildPayload({
+        parameters: {},
+        ...this.commonObj,
+        method: utils.enum2str(
+          utils.sysContract.ChainQueryFunction,
+          utils.sysContract.ChainQueryFunction.GET_NODE_CHAIN_LIST,
+        ),
       });
-      const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE, nodeAddr);
+      const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE, nodeAddr);
       response.result = utils.discovery.ChainList.deserializeBinary(response.result).toObject();
       return response;
     }
@@ -194,29 +221,17 @@ class CallSystemContract {
 
   // return promise
   async getChainInfo() {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_CHAIN_INFO),
-      params: {},
+    const payload = utils.buildPayload({
+      parameters: {},
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_CHAIN_INFO,
+      ),
     });
-    const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE);
+    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.discovery.ChainInfo.deserializeBinary(response.result).toObject();
     return response;
-  }
-
-  createQueryPayload({ contractName, method, params }) {
-    const payload = new utils.common.QueryPayload();
-    payload.setContractName(contractName);
-    payload.setMethod(method);
-    Object.keys(params).forEach((key) => {
-      const param = new utils.common.KeyValuePair();
-      param.setKey(key);
-      param.setValue(params[key]);
-      payload.addParameters(param);
-    });
-    // console.log(JSON.stringify(payload.toObject(), 4, null));
-    const payloadBytes = payload.serializeBinary();
-    return payloadBytes;
   }
 
   // return promise
@@ -225,6 +240,7 @@ class CallSystemContract {
       this.userInfo,
       payload,
       srcRes,
+      [],
       nodeAddr,
     );
   }

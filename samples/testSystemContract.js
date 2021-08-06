@@ -82,13 +82,13 @@ const test = async (type) => {
   try {
     switch (type) {
       case 'getTxBytxId':
-        res = await testGetTxByTxId(sdk, '682d3b548d8a4737bda26f30807b53ee0995c79039a04b64955106e0e953e8f71');
+        res = await testGetTxByTxId(sdk, '70699b3a12fe468fb958b96c39ea21222ed8d4b797894d28bf8f0357c9833bb6');
         break;
       case 'getBlockByHeight':
         res = await testGetBlockByHeight(sdk, 2, true);
         break;
       case 'getBlockByHash':
-        res = await testGetBlockByHash(sdk, 'sqUq4gjRbFL2jHO9CYi1Hw2RizJvMmi3d//HFZqsLz8=', true);
+        res = await testGetBlockByHash(sdk, 'UlWykkKLwSd2Y1fNolYPtTXbNkirGCe3pe46mtwXBCw=', true);
         break;
       case 'getBlockByTxId':
         res = await testGetBlockByTxId(sdk, '70699b3a12fe468fb958b96c39ea21222ed8d4b797894d28bf8f0357c9833bb6', true);
@@ -112,10 +112,10 @@ const test = async (type) => {
         res = await testGetArchivedBlockHeight(sdk, true);
         break;
       case 'getBlockHeightByTxId':
-        res = await testGetBlockHeightByTxId(sdk, 'b7fa8fbfc64f40c7a731942267c9ee111a5fc02c2ac747ae9c866837a401fbde');
+        res = await testGetBlockHeightByTxId(sdk, '70699b3a12fe468fb958b96c39ea21222ed8d4b797894d28bf8f0357c9833bb6');
         break;
       case 'getBlockHeightByHash':
-        res = await testGetBlockHeightByHash(sdk, 'sqUq4gjRbFL2jHO9CYi1Hw2RizJvMmi3d//HFZqsLz8=');
+        res = await testGetBlockHeightByHash(sdk, 'UlWykkKLwSd2Y1fNolYPtTXbNkirGCe3pe46mtwXBCw=');
         break;
       case 'getCurrentBlockHeight':
         res = await testGetCurrentBlockHeight(sdk);
@@ -131,4 +131,4 @@ const test = async (type) => {
   }
 };
 
-test('getBlockByTxId');
+test('getChainInfo');
