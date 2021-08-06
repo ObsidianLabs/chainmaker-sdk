@@ -71,6 +71,7 @@ const keys = {
   KeyTxSchedulerValidateTimeout: 'tx_scheduler_validate_timeout',
 
   // BlockConfig keys
+  KeyTxTimestampVerify: 'tx_timestamp_verify',
   KeyTxTimeOut: 'tx_timeout',
   KeyBlockTxCapacity: 'block_tx_capacity',
   KeyBlockSize: 'block_size',

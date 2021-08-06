@@ -32,7 +32,11 @@ describe('chain config', async () => {
       blockTxCapacity: 101,
       blockSize: 11,
       blockInterval: 2001,
-      userInfoList: [sdk.userInfo],
+      userInfoList: [
+        sdk.userInfo,
+        user2,
+        user3,
+      ],
     });
     await sleep(5);
     const chainConfig = await sdk.chainConfig.getChainConfig();

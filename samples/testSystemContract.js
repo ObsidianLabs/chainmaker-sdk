@@ -91,7 +91,7 @@ const test = async (type) => {
         res = await testGetBlockByHash(sdk, 'sqUq4gjRbFL2jHO9CYi1Hw2RizJvMmi3d//HFZqsLz8=', true);
         break;
       case 'getBlockByTxId':
-        res = await testGetBlockByTxId(sdk, 'b7fa8fbfc64f40c7a731942267c9ee111a5fc02c2ac747ae9c866837a401fbde', true);
+        res = await testGetBlockByTxId(sdk, '70699b3a12fe468fb958b96c39ea21222ed8d4b797894d28bf8f0357c9833bb6', true);
         break;
       case 'getLastConfigBlock':
         res = await testGetLastConfigBlock(sdk, true);
@@ -131,4 +131,4 @@ const test = async (type) => {
   }
 };
 
-test('getTxBytxId');
+test('getBlockByTxId');

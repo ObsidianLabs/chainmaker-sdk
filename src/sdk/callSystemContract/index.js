@@ -10,6 +10,11 @@ class CallSystemContract {
     this.node = node;
     this.userInfo = userInfo;
     this.chainID = chainID;
+    this.commonObj = {
+      chainId: this.chainID,
+      txType: utils.common.TxType.QUERY_CONTRACT,
+      contractName: utils.enum2str(utils.sysContract.SystemContract, utils.sysContract.SystemContract.CHAIN_QUERY),
+    };
   }
 
   // return promise
@@ -141,15 +146,19 @@ class CallSystemContract {
 
   // return promise
   async getBlockByTxId(txId, withRWSet) {
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_QUERY),
-      method: utils.enum2str(utils.common.QueryFunction, utils.common.QueryFunction.GET_BLOCK_BY_TX_ID),
-      params: {
-        txId,
-        withRWSet,
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyBlockContractTxId] = txId,
+    parameters[cv.keys.KeyBlockContractWithRWSet] = withRWSet;
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ChainQueryFunction,
+        utils.sysContract.ChainQueryFunction.GET_BLOCK_BY_TX_ID,
+      ),
+      sequence: cv.DEFAULT_SEQUENCE,
     });
-    const response = await this.sendSystemContractPayload(payloadBytes, cv.NEED_SRC_RESPONSE);
+    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
     response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
     return response;
   }
@@ -211,12 +220,10 @@ class CallSystemContract {
   }
 
   // return promise
-  async sendSystemContractPayload(payloadBytes, srcRes = false, nodeAddr) {
+  async sendSystemContractPayload(payload, srcRes = false, nodeAddr) {
     return this.node.sendPayload(
       this.userInfo,
-      this.chainID,
-      payloadBytes,
-      utils.common.TxType.QUERY_SYSTEM_CONTRACT,
+      payload,
       srcRes,
       nodeAddr,
     );

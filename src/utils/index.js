@@ -54,6 +54,7 @@ const common = {
 const sysContract = {
   ...require('../../chainmaker/syscontract/chain_config_pb'),
   ...require('../../chainmaker/syscontract/system_contract_pb'),
+  ...require('../../chainmaker/syscontract/chain_query_pb'),
 };
 
 const accesscontrol = {
@@ -172,7 +173,12 @@ const mergeContractMgmtPayload = (payloadByteList, enumType) => {
 const newRequest = (orgID, userCertBytes, isFullCert, payload, userPrivateKey, endorsements = []) => {
   const request = new common.TxRequest();
   request.setPayload(payload);
-  if (endorsements.length) require.setEndorsementList(endorsements);
+  if (endorsements.length) {
+    endorsements.forEach((endorsememt) => {
+      request.addEndorsers(endorsememt);
+    });
+    // require.setEndorsementList(endorsements);
+  }
   request.setSender(newEndorsement(orgID, isFullCert, userCertBytes, payload, userPrivateKey));
 
   return request;
@@ -267,7 +273,7 @@ const buildKeyValuePair = (payload, kv) => {
   Object.keys(kv).forEach((key) => {
     const param = new common.KeyValuePair();
     param.setKey(key);
-    if (kv[key] !== '') param.setValue(kv[key]);
+    if (kv[key] !== '') param.setValue(Buffer.from(`${kv[key]}`));
     payload.addParameters(param);
   });
   return payload;
@@ -295,4 +301,5 @@ module.exports = {
   sleep,
   buildPayload,
   buildKeyValuePair,
+  newEndorsement,
 };

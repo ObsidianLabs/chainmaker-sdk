@@ -127,12 +127,16 @@ const test = async (type) => {
           blockTxCapacity: 101,
           blockSize: 11,
           blockInterval: 2001,
-          userInfoList: [sdk.userInfo],
+          userInfoList: [
+            sdk.userInfo,
+            user2,
+            user3,
+          ],
         });
         break;
       case 'chainConfigCoreUpdate':
         res = await testChainConfigCoreUpdate(sdk, {
-          txSchedulerTimeout: 11,
+          txSchedulerTimeout: 12,
           txSchedulerValidateTimeout: 11,
           userInfoList: [
             sdk.userInfo,
@@ -144,7 +148,7 @@ const test = async (type) => {
       case 'chainConfigTrustRootAdd':
         res = await testChainConfigTrustRootAdd(sdk, {
           orgId: 'wx-org5.chainmaker.org',
-          root: fs.readFileSync(path.join(__dirname, './wx-org5.chainmaker.org.ca.crt')).toString(),
+          root: fs.readFileSync(path.join(__dirname, '../test/testFile/wx-org5.chainmaker.org/ca/ca.crt')).toString(),
           userInfoList: [
             sdk.userInfo,
             user2,
@@ -156,11 +160,13 @@ const test = async (type) => {
         sdk.userInfo = user5;
         res = await testChainConfigTrustRootUpdate(sdk, {
           orgId: 'wx-org5.chainmaker.org',
-          root: fs.readFileSync(path.join(__dirname, './wx-org6.chainmaker.org.ca.crt')).toString(),
+          root: fs.readFileSync(path.join(__dirname, '../test/testFile/wx-org6.chainmaker.org/ca/ca.crt')).toString(),
           userInfoList: [
+            // user5,
             sdk.userInfo,
             user2,
             user3,
+            user4,
           ],
         });
         break;
@@ -218,14 +224,14 @@ const test = async (type) => {
         ]);
         break;
       case 'chainConfigConsensusNodeIdUpdate':
-        res = await testChainConfigConsensusNodeIdUpdate(sdk, sdk.userInfo.orgID, 'QmQVkTSF6aWzRSddT4rro6Ve33jhKpsHFaQoVxHKMWzhuN', 'QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH', [
+        res = await testChainConfigConsensusNodeIdUpdate(sdk, sdk.userInfo.orgID, 'QmQVkTSF6aWzRSddT3rro6Ve33jhKpsHFaQoVxHKMWzhuN', 'QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH', [
           sdk.userInfo,
           user2,
           user3,
         ]);
         break;
       case 'chainConfigConsensusNodeIdDelete':
-        res = await testChainConfigConsensusNodeIdDelete(sdk, sdk.userInfo.orgID, 'QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH', [
+        res = await testChainConfigConsensusNodeIdDelete(sdk, sdk.userInfo.orgID, 'QmQVkTSF6aWzRSddT3rro6Ve33jhKpsHFaQoVxHKMWzhuN', [
           sdk.userInfo,
           user2,
           user3,
@@ -234,7 +240,7 @@ const test = async (type) => {
       case 'chainConfigConsensusNodeOrgAdd':
         res = await testChainConfigTrustRootAdd(sdk, {
           orgId: 'wx-org5.chainmaker.org',
-          root: fs.readFileSync(path.join(__dirname, './wx-org5.chainmaker.org.ca.crt')).toString(),
+          root: fs.readFileSync(path.join(__dirname, '../test/testFile/wx-org5.chainmaker.org/ca/ca.crt')).toString(),
           userInfoList: [
             sdk.userInfo,
             user2,
@@ -302,4 +308,4 @@ const test = async (type) => {
   }
 };
 
-test('getChainConfigByBlockHeight');
+test('getChainConfig');
