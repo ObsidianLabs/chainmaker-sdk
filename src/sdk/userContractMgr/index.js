@@ -4,7 +4,6 @@
  */
 const utils = require('../../utils');
 const cv = require('../../utils/constValue');
-const _ = require('loadsh');
 const fs = require('fs');
 
 class UserContract {
@@ -13,12 +12,17 @@ class UserContract {
     this.userInfo = userInfo;
     this.node = node;
     this.callSystemContract = callSystemContract;
+    this.commonObj = {
+      chainId: this.chainID,
+      txType: utils.common.TxType.INVOKE_CONTRACT,
+      contractName: utils.enum2str(utils.sysContract.SystemContract, utils.sysContract.SystemContract.CONTRACT_MANAGE),
+    };
   }
 
   checkParam(method, contractName, contractVersion, runtimeType, contractFilePath, params) {
     switch (method) {
-      case utils.common.ManageUserContractFunction.INIT_CONTRACT:
-      case utils.common.ManageUserContractFunction.UPGRADE_CONTRACT:
+      case utils.sysContract.ContractManageFunction.INIT_CONTRACT:
+      case utils.sysContract.ContractManageFunction.UPGRADE_CONTRACT:
         // 先做个简单的验证，后续再进行更加严格的验证
         if (method === undefined || !contractName || !contractVersion || runtimeType === undefined
           || !contractFilePath || params === undefined) {
@@ -31,9 +35,9 @@ class UserContract {
           throw new Error(`method: Unsupported value: ${method}`);
         }
         break;
-	    case utils.common.ManageUserContractFunction.FREEZE_CONTRACT:
-      case utils.common.ManageUserContractFunction.UNFREEZE_CONTRACT:
-      case utils.common.ManageUserContractFunction.REVOKE_CONTRACT:
+	    case utils.sysContract.ContractManageFunction.FREEZE_CONTRACT:
+      case utils.sysContract.ContractManageFunction.UNFREEZE_CONTRACT:
+      case utils.sysContract.ContractManageFunction.REVOKE_CONTRACT:
         // 先做个简单的验证，后续再进行更加严格的验证
         if (method === undefined || !contractName) {
           throw new Error('createUserContract: Parameter error');
@@ -45,7 +49,7 @@ class UserContract {
   }
 
   createContractCreatePayload({ contractName, contractVersion, runtimeType, contractFilePath, params }) {
-    const method = utils.common.ManageUserContractFunction.INIT_CONTRACT;
+    const method = utils.sysContract.ContractManageFunction.INIT_CONTRACT;
     this.checkParam(method, contractName, contractVersion, runtimeType, contractFilePath, params);
     return this.createUserContractPayload({
       method, contractName, contractVersion,
@@ -53,17 +57,24 @@ class UserContract {
     });
   }
   // return promise
-  createUserContract({ contractName, contractVersion, runtimeType, contractFilePath, params, withSyncResult = false }) {
+  createUserContract({
+    contractName,
+    contractVersion,
+    runtimeType,
+    contractFilePath,
+    params,
+    userInfoList,
+    withSyncResult = false }) {
     const payload = this.createContractCreatePayload({
       contractName, contractVersion,
       runtimeType, contractFilePath, params,
     });
-    const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
+    const endorsers = this.getEndorsements(payload, userInfoList);
+    return this.sendContractManageRequest(payload, endorsers, withSyncResult);
   }
 
   createContractUpgradePayload({ contractName, contractVersion, runtimeType, contractFilePath, params }) {
-    const method = utils.common.ManageUserContractFunction.UPGRADE_CONTRACT;
+    const method = utils.sysContract.ContractManageFunction.UPGRADE_CONTRACT;
     this.checkParam(method, contractName, contractVersion, runtimeType, contractFilePath, params);
     return this.createUserContractPayload({
       method, contractName, contractVersion,
@@ -77,62 +88,63 @@ class UserContract {
     runtimeType,
     contractFilePath,
     params,
+    userInfoList,
     withSyncResult = false,
   }) {
     const payload = this.createContractUpgradePayload({
       contractName, contractVersion,
       runtimeType, contractFilePath, params,
     });
-    const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
+    const endorsers = this.getEndorsements(payload, userInfoList);
+    return this.sendContractManageRequest(payload, endorsers, withSyncResult);
   }
 
   createContractFreezePayload({ contractName }) {
-    const method = utils.common.ManageUserContractFunction.FREEZE_CONTRACT;
+    const method = utils.sysContract.ContractManageFunction.FREEZE_CONTRACT;
     this.checkParam(method, contractName);
     return this.createUserContractPayload({
       method, contractName,
     });
   }
   // return promise
-  freezeUserContract({ contractName, withSyncResult = false }) {
+  freezeUserContract({ contractName, userInfoList, withSyncResult = false }) {
     const payload = this.createContractFreezePayload({
       contractName,
     });
-    const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
+    const endorsers = this.getEndorsements(payload, userInfoList);
+    return this.sendContractManageRequest(payload, endorsers, withSyncResult);
   }
 
   createContractUnfreezePayload({ contractName }) {
-    const method = utils.common.ManageUserContractFunction.UNFREEZE_CONTRACT;
+    const method = utils.sysContract.ContractManageFunction.UNFREEZE_CONTRACT;
     this.checkParam(method, contractName);
     return this.createUserContractPayload({
       method, contractName,
     });
   }
   // return promise
-  unFreezeUserContract({ contractName, withSyncResult = false }) {
+  unFreezeUserContract({ contractName, userInfoList, withSyncResult = false }) {
     const payload = this.createContractUnfreezePayload({
       contractName,
     });
-    const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
+    const endorsers = this.getEndorsements(payload, userInfoList);
+    return this.sendContractManageRequest(payload, endorsers, withSyncResult);
   }
 
   createContractRevokePayload({ contractName }) {
-    const method = utils.common.ManageUserContractFunction.REVOKE_CONTRACT;
+    const method = utils.sysContract.ContractManageFunction.REVOKE_CONTRACT;
     this.checkParam(method, contractName);
     return this.createUserContractPayload({
       method, contractName,
     });
   }
   // return promise
-  revokeUserContract({ contractName, withSyncResult = false }) {
+  revokeUserContract({ contractName, userInfoList, withSyncResult = false }) {
     const payload = this.createContractRevokePayload({
       contractName,
     });
-    const signedPayloadBytesArray = this.signContractManagePayload(payload, [this.userInfo]);
-    return this.sendRequest(signedPayloadBytesArray, withSyncResult);
+    const endorsers = this.getEndorsements(payload, userInfoList);
+    return this.sendContractManageRequest(payload, endorsers, withSyncResult);
   }
 
   /* user contract ...
@@ -141,32 +153,23 @@ class UserContract {
   createUserContractPayload({ method, contractName, contractVersion, runtimeType, contractFilePath, params }) {
     this.checkParam(method, contractName, contractVersion, runtimeType, contractFilePath, params);
 
-    // contract_id
-    const contractId = new utils.common.ContractId();
-    contractId.setContractName(contractName);
-
     // ContractMgmtPayload
     let contractBytesRaw;
-    const payload = new utils.common.ContractMgmtPayload();
+    let parameters = {};
 
-    payload.setMethod(utils.enum2str(utils.common.ManageUserContractFunction, method));
+    parameters[cv.keys.KeyInitContractName] = contractName;
     switch (method) {
-      case utils.common.ManageUserContractFunction.INIT_CONTRACT:
-      case utils.common.ManageUserContractFunction.UPGRADE_CONTRACT:
-        contractId.setContractVersion(contractVersion);
-        contractId.setRuntimeType(runtimeType);
+      case utils.sysContract.ContractManageFunction.INIT_CONTRACT:
+      case utils.sysContract.ContractManageFunction.UPGRADE_CONTRACT:
         contractBytesRaw = fs.readFileSync(contractFilePath);
-        payload.setByteCode(contractBytesRaw);
-        Object.keys(params).forEach((key) => {
-          const param = new utils.common.KeyValuePair();
-          param.setKey(key);
-          param.setValue(params[key]);
-          payload.addParameters(param);
-        });
+        parameters = Object.assign({}, params);
+        parameters[cv.keys.KeyInitContractVersion] = contractVersion;
+        parameters[cv.keys.KeyInitContractRuntimeType] = runtimeType;
+        parameters[cv.keys.KeyInitContractBytecode] = contractBytesRaw;
         break;
-	    case utils.common.ManageUserContractFunction.FREEZE_CONTRACT:
-      case utils.common.ManageUserContractFunction.UNFREEZE_CONTRACT:
-      case utils.common.ManageUserContractFunction.REVOKE_CONTRACT:
+	    case utils.sysContract.ContractManageFunction.FREEZE_CONTRACT:
+      case utils.sysContract.ContractManageFunction.UNFREEZE_CONTRACT:
+      case utils.sysContract.ContractManageFunction.REVOKE_CONTRACT:
         // Do nothing
         break;
       default:
@@ -174,40 +177,46 @@ class UserContract {
         break;
     }
 
-    payload.setChainId(this.chainID);
-    payload.setContractId(contractId);
     // console.log(JSON.stringify(payload.toObject(), 4, null));
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ContractManageFunction,
+        method,
+      ),
+    });
     return payload;
   }
 
-  signContractManagePayload(payload, userInfoList) {
-    // return utils.signPayload(
-    //   payload, this.userInfo.userSignKeyBytes,
-    //   this.userInfo.userSignCertBytes, this.userInfo.orgID,
-    // );
-    const signedPayloadBytesArray = [];
-    for (let i = 0; i < userInfoList.length; i++) {
-      signedPayloadBytesArray.push(utils.signPayload(
-        _.cloneDeep(payload), userInfoList[i].userSignKeyBytes,
-        userInfoList[i].userSignCertBytes, userInfoList[i].orgID, this.userInfo.isFullCert,
+  signContractManagePayload(payload) {
+    utils.newEndorsement(
+      this.userInfo.orgID,
+      this.userInfo.isFullCert,
+      this.userInfo.userSignCertBytes,
+      payload, this.userInfo.userSignKeyBytes,
+    );
+  }
+
+  getEndorsements(payload, userInfoList) {
+    const endorsers = [];
+    userInfoList.forEach((userInfo) => {
+      endorsers.push(utils.newEndorsement(
+        userInfo.orgID,
+        userInfo.isFullCert,
+        userInfo.userSignCertBytes,
+        payload, userInfo.userSignKeyBytes,
       ));
-    }
-    return signedPayloadBytesArray;
+    });
+    return endorsers;
   }
 
-  mergeContractManageSignedPayload(signedPayloadBytesArray) {
-    if (!Array.isArray(signedPayloadBytesArray)) {
-      throw new Error('sendUserContractPayload: signedPayloadBytesArray mast be array');
-    }
-    return utils.mergeContractMgmtPayload(signedPayloadBytesArray, utils.common.ContractMgmtPayload);
-  }
-
-  async sendContractManageRequest(mergedPayload, withSyncResult = false) {
+  async sendContractManageRequest(payload, endorsers, withSyncResult = false) {
     const result =  await this.node.sendPayload(
       this.userInfo,
-      this.chainID,
-      mergedPayload.serializeBinary(),
-      utils.common.TxType.MANAGE_USER_CONTRACT,
+      payload,
+      false,
+      endorsers,
     );
     if (withSyncResult) {
       const res = await this.callSystemContract.getSyncResult(result.txId);
@@ -215,16 +224,6 @@ class UserContract {
       return result;
     }
     return result;
-  }
-
-  // return promise
-  async sendRequest(signedPayloadBytesArray, withSyncResult = false) {
-    const mergedPayload = this.mergeContractManageSignedPayload(
-      signedPayloadBytesArray,
-      utils.common.ContractMgmtPayload,
-    );
-
-    return this.sendContractManageRequest(mergedPayload, withSyncResult);
   }
 }
 

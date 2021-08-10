@@ -10,7 +10,7 @@ const contractName = 'go_ctx_004';
 const createContractName = 'go_ctx_002';
 const contractVersion = 'v1.0.0';
 const contractUpGradeVersion = 'v1.0.1';
-const contractFilePath = path.join(__dirname, './testFile/go_ctx.wasm');
+const contractFilePath = path.join(__dirname, './testFile/rust-fact-2.0.0.wasm');
 
 const { sdk, ['Utils']: utils } = sdkInit();
 

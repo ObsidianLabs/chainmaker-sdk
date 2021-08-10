@@ -30,7 +30,16 @@ const userContractMgrMethod = [0, 1, 2, 3, 4];
 // DOCKER_GO = 6;
 // vm-docker, language-java
 // DOCKER_JAVA = 7;
-const runtimeType = [0, 1, 2, 3, 4, 5, 6, 7];
+const runtimeType = [
+  'INVALID',
+  'NATIVE',
+  'WASMER',
+  'WXVM',
+  'GASM',
+  'EVM',
+  'DOCKER_GO',
+  'DOCKER_JAVA',
+];
 
 const NEED_SRC_RESPONSE = true;
 
@@ -81,6 +90,10 @@ const keys = {
   KeyCertHashes: 'cert_hashes',
   KeyCerts: 'certs',
   KeyCertCrl: 'cert_crl',
+  KeyInitContractName: 'CONTRACT_NAME',
+  KeyInitContractRuntimeType: 'CONTRACT_RUNTIME_TYPE',
+  KeyInitContractVersion: 'CONTRACT_VERSION',
+  KeyInitContractBytecode: 'CONTRACT_BYTECODE',
 
   // PrivateCompute keys
   KeyOrderId: 'order_id',

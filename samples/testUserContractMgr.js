@@ -3,52 +3,58 @@
    SPDX-License-Identifier: Apache-2.0
  */
 const sdkInit = require('./sdkInit');
-const { sdk, ['Utils']: utils } = sdkInit();
+const { sdk, user2, user3, user4 } = sdkInit();
 const path = require('path');
 
-const testCreateUserContract = async (sdk, contractName, contractVersion, contractFilePath) => {
+const testCreateUserContract = async (sdk, contractName, contractVersion, contractFilePath, userInfoList) => {
   const response = await sdk.userContractMgr.createUserContract({
     contractName,
     contractVersion,
     contractFilePath,
-    runtimeType: utils.common.RuntimeType.GASM,
-    params: {
-      key1: 'value1',
-      key2: 'value2',
-    },
+    runtimeType: 'WASMER',
+    params: {},
     withSyncResult: true,
+    userInfoList,
   });
   return response;
 };
 
-const testUpgradeUserContract = async (sdk, contractName, contractVersion, contractFilePath) => {
+const testUpgradeUserContract = async (sdk, contractName, contractVersion, contractFilePath, userInfoList) => {
   const response = await sdk.userContractMgr.upgradeUserContract({
     contractName,
     contractVersion,
     contractFilePath,
-    runtimeType: utils.common.RuntimeType.GASM,
+    runtimeType: 'WASMER',
     params: {},
+    withSyncResult: true,
+    userInfoList,
   });
   return response;
 };
 
-const testFreezeUserContract = async (sdk, contractName) => {
+const testFreezeUserContract = async (sdk, contractName, userInfoList) => {
   const response = await sdk.userContractMgr.freezeUserContract({
     contractName,
+    withSyncResult: true,
+    userInfoList,
   });
   return response;
 };
 
-const testUnFreezeUserContract = async (sdk, contractName) => {
+const testUnFreezeUserContract = async (sdk, contractName, userInfoList) => {
   const response = await sdk.userContractMgr.unFreezeUserContract({
     contractName,
+    withSyncResult: true,
+    userInfoList,
   });
   return response;
 };
 
-const testRevokeUserContract = async (sdk, contractName) => {
+const testRevokeUserContract = async (sdk, contractName, userInfoList) => {
   const response = await sdk.userContractMgr.revokeUserContract({
     contractName,
+    withSyncResult: true,
+    userInfoList,
   });
   return response;
 };
@@ -58,6 +64,7 @@ const testInvokeUserContract = async (sdk, contractName) => {
     contractName, method: 'save', params: {
       file_hash: '1234567890',
       file_name: 'test.txt',
+      time: Date.now() / 1000 | 0,
     },
     withSyncResult: true,
   });
@@ -77,24 +84,50 @@ const testQueryUserContract = async (sdk, contractName) => {
 const test = async (type) => {
   const contractName = 'go_ctx_010';
   const contractVersion = 'v1.0.0';
-  const contractFilePath = path.join(__dirname, '../test/testFile/go_ctx.wasm');
+  const updateVersion = 'v2.0.1';
+  const contractFilePath = path.join(__dirname, '../test/testFile/rust-fact-2.0.0.wasm');
   let res;
   try {
     switch (type) {
       case 'create':
-        res = await testCreateUserContract(sdk, contractName, contractVersion, contractFilePath);
+        res = await testCreateUserContract(sdk, contractName, contractVersion, contractFilePath, [
+          sdk.userInfo,
+          user2,
+          user3,
+          user4,
+        ]);
         break;
       case 'upgrade':
-        res = await testUpgradeUserContract(sdk, contractName, contractVersion, contractFilePath);
+        res = await testUpgradeUserContract(sdk, contractName, updateVersion, contractFilePath, [
+          sdk.userInfo,
+          user2,
+          user3,
+          user4,
+        ]);
         break;
       case 'freeze':
-        res = await testFreezeUserContract(sdk, contractName);
+        res = await testFreezeUserContract(sdk, contractName, [
+          sdk.userInfo,
+          user2,
+          user3,
+          user4,
+        ]);
         break;
       case 'unfreeze':
-        res = await testUnFreezeUserContract(sdk, contractName);
+        res = await testUnFreezeUserContract(sdk, contractName, [
+          sdk.userInfo,
+          user2,
+          user3,
+          user4,
+        ]);
         break;
       case 'revoke':
-        res = await testRevokeUserContract(sdk, contractName);
+        res = await testRevokeUserContract(sdk, contractName, [
+          sdk.userInfo,
+          user2,
+          user3,
+          user4,
+        ]);
         break;
       case 'invoke':
         res = await testInvokeUserContract(sdk, contractName);

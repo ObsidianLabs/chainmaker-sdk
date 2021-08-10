@@ -10,58 +10,42 @@ class CallUserContract {
     this.userInfo = userInfo;
     this.node = node;
     this.callSystemContract = callSystemContract;
+    this.commonObj = {
+      chainId: this.chainID,
+    };
   }
 
   // return promise
   invokeUserContract({ contractName, method, params, withSyncResult = false }) {
-    const payloadBytes = this.createTransactPayload({ contractName, method, params });
-    return this.sendUserContractPayload(payloadBytes, utils.common.TxType.INVOKE_USER_CONTRACT, withSyncResult);
+    const payload = utils.buildPayload({
+      contractName,
+      method,
+      ...this.commonObj,
+      txType: utils.common.TxType.INVOKE_CONTRACT,
+      parameters: params,
+    });
+    return this.sendContractRequest(payload, [], withSyncResult);
   }
 
   // return promise
   queryContract({ contractName, method, params }) {
-    const payloadBytes = this.createQueryPayload({ contractName, method, params });
-    return this.sendUserContractPayload(payloadBytes, utils.common.TxType.QUERY_USER_CONTRACT);
-  }
-
-  createTransactPayload({ contractName, method, params }) {
-    const payload = new utils.common.TransactPayload();
-    payload.setContractName(contractName);
-    payload.setMethod(method);
-    Object.keys(params).forEach((key) => {
-      const param = new utils.common.KeyValuePair();
-      param.setKey(key);
-      param.setValue(params[key]);
-      payload.addParameters(param);
+    const payload = utils.buildPayload({
+      contractName,
+      method,
+      ...this.commonObj,
+      txType: utils.common.TxType.QUERY_CONTRACT,
+      parameters: params,
     });
-
-    const payloadBytes = payload.serializeBinary();
-    return payloadBytes;
-  }
-
-  createQueryPayload({ contractName, method, params }) {
-    const payload = new utils.common.QueryPayload();
-    payload.setContractName(contractName);
-    payload.setMethod(method);
-    Object.keys(params).forEach((key) => {
-      const param = new utils.common.KeyValuePair();
-      param.setKey(key);
-      param.setValue(params[key]);
-      payload.addParameters(param);
-    });
-    // console.log(JSON.stringify(payload.toObject(), 4, null));
-    const payloadBytes = payload.serializeBinary();
-    return payloadBytes;
+    return this.sendContractRequest(payload);
   }
 
   // return promise
-  async sendUserContractPayload(payloadBytes, txType, withSyncResult = false) {
-    const result = await this.node.sendPayload(
+  async sendContractRequest(payload, endorsers = [], withSyncResult = false) {
+    const result =  await this.node.sendPayload(
       this.userInfo,
-      this.chainID,
-      payloadBytes,
-      txType,
+      payload,
       false,
+      endorsers,
     );
     if (withSyncResult) {
       const res = await this.callSystemContract.getSyncResult(result.txId);
@@ -71,20 +55,23 @@ class CallUserContract {
     return result;
   }
 
-  getTxRequest(contractName, method, params) {
-    const payloadBytes = this.createTransactPayload({ contractName, method, params });
-    const txId = utils.newTxID();
+  getTxRequest(contractName, method, params, endorsers = []) {
+    const payload = utils.buildPayload({
+      contractName,
+      method,
+      ...this.commonObj,
+      txType: utils.common.TxType.INVOKE_CONTRACT,
+      parameters: params,
+    });
     const request = utils.newRequest(
-      txId,
-      this.chainID,
-      utils.common.TxType.INVOKE_USER_CONTRACT,
       this.userInfo.orgID,
       this.userInfo.userSignCertBytes,
       this.userInfo.isFullCert,
-      payloadBytes,
+      payload,
       this.userInfo.userSignKeyBytes,
+      endorsers,
     );
-    return { request, txId };
+    return { request, txId: payload.getTxId() };
   }
 
   async sendTxRequest(request, txId, withSyncResult = false) {

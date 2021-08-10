@@ -55,6 +55,7 @@ const sysContract = {
   ...require('../../chainmaker/syscontract/chain_config_pb'),
   ...require('../../chainmaker/syscontract/system_contract_pb'),
   ...require('../../chainmaker/syscontract/chain_query_pb'),
+  ...require('../../chainmaker/syscontract/contract_manage_pb'),
 };
 
 const accesscontrol = {
@@ -273,7 +274,13 @@ const buildKeyValuePair = (payload, kv) => {
   Object.keys(kv).forEach((key) => {
     const param = new common.KeyValuePair();
     param.setKey(key);
-    if (kv[key] !== '') param.setValue(Buffer.from(`${kv[key]}`));
+    if (kv[key] !== '') {
+      if (Buffer.isBuffer(kv[key])) {
+        param.setValue(kv[key]);
+      } else {
+        param.setValue(Buffer.from(`${kv[key]}`));
+      }
+    }
     payload.addParameters(param);
   });
   return payload;

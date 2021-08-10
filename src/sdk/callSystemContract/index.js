@@ -19,7 +19,7 @@ class CallSystemContract {
   }
 
   // return promise
-  getTxByTxId(txId) {
+  async getTxByTxId(txId) {
     const parameters = {};
     parameters[cv.keys.KeyBlockContractTxId] = txId;
     const payload = utils.buildPayload({
@@ -30,7 +30,9 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_TX_BY_TX_ID,
       ),
     });
-    return this.sendSystemContractPayload(payload);
+    const response = await this.sendSystemContractPayload(payload, true);
+    response.result = utils.common.TransactionInfo.deserializeBinary(response.result).toObject();
+    return response;
   }
 
   // return promise
@@ -254,9 +256,12 @@ class CallSystemContract {
         try {
           tx = await this.getTxByTxId(txId);
         } catch {}
-        if (tx && tx.result) {
+        if (tx
+          && tx.result.transaction
+          && tx.result.transaction.result
+          && tx.result.transaction.result.contractResult) {
           clearInterval(interval);
-          resolve(tx.result.contractResult);
+          resolve(tx.result.transaction.result.contractResult);
         }
         if (count === 0) {
           clearInterval(interval);

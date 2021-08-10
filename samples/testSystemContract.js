@@ -82,7 +82,7 @@ const test = async (type) => {
   try {
     switch (type) {
       case 'getTxBytxId':
-        res = await testGetTxByTxId(sdk, '70699b3a12fe468fb958b96c39ea21222ed8d4b797894d28bf8f0357c9833bb6');
+        res = await testGetTxByTxId(sdk, 'b65888090ef4480da79e24d052fdf9d14402083209fa449e80005a70c3344605');
         break;
       case 'getBlockByHeight':
         res = await testGetBlockByHeight(sdk, 2, true);
@@ -91,7 +91,7 @@ const test = async (type) => {
         res = await testGetBlockByHash(sdk, 'UlWykkKLwSd2Y1fNolYPtTXbNkirGCe3pe46mtwXBCw=', true);
         break;
       case 'getBlockByTxId':
-        res = await testGetBlockByTxId(sdk, '70699b3a12fe468fb958b96c39ea21222ed8d4b797894d28bf8f0357c9833bb6', true);
+        res = await testGetBlockByTxId(sdk, '73d7d5f7ab6a40f4b4c090da4a63d4b84f1e2e8a5d8a4b929aa2cc1a51caf340', true);
         break;
       case 'getLastConfigBlock':
         res = await testGetLastConfigBlock(sdk, true);
@@ -131,4 +131,4 @@ const test = async (type) => {
   }
 };
 
-test('getChainInfo');
+test('getTxBytxId');
