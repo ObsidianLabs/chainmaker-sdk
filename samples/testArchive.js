@@ -37,25 +37,30 @@ const testGetArchivedTxByTxId = async (sdk, txId) => {
 
 const test = async (type) => {
   let res;
+  let block;
   try {
     switch (type) {
       case 'archiveBlock':
-        res = await testArchiveBlock(sdk, 2);
+        res = await testArchiveBlock(sdk, 3);
         break;
       case 'getArchivedFullBlockByHeight':
-        res = await testGetArchivedFullBlockByHeight(sdk, 0);
+        res = await testGetArchivedFullBlockByHeight(sdk, 1);
         break;
       case 'getArchivedBlockByHeight':
-        res = await testGetArchivedBlockByHeight(sdk, 0, false);
+        res = await testGetArchivedBlockByHeight(sdk, 1, false);
         break;
       case 'getArchivedBlockByTxId':
-        res = await testGetArchivedBlockByTxId(sdk, 'ce6c57b969e84054b7c87bfe5113f615ce6c57b969e84054b7c87bfe5113f615', false);
+        res = await testGetArchivedBlockByTxId(sdk, '67e3e3b205b0402ea2eb8d489c419c7f80ab29e3fa984132a4e38c56207abbaa', false);
         break;
       case 'getArchivedBlockByHash':
-        res = await testGetArchivedBlockByHash(sdk, 'sqUq4gjRbFL2jHO9CYi1Hw2RizJvMmi3d//HFZqsLz8=', false);
+        res = await testGetArchivedBlockByHash(sdk, '17zIG4JD+Uu0FrVfug+FlUpnmpTgmGOEWyXgfHuvGok=', false);
         break;
       case 'getArchivedTxByTxId':
-        res = await testGetArchivedTxByTxId(sdk, 'ce6c57b969e84054b7c87bfe5113f615ce6c57b969e84054b7c87bfe5113f615', false);
+        res = await testGetArchivedTxByTxId(sdk, '67e3e3b205b0402ea2eb8d489c419c7f80ab29e3fa984132a4e38c56207abbaa', false);
+        break;
+      case 'restoreBlock':
+        block = await sdk.archive.getFullBlock(1);
+        res = await sdk.archive.restoreBlock(Buffer.from(block));
         break;
     }
     sdk.stop();

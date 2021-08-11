@@ -58,6 +58,7 @@ const sysContract = {
   ...require('../../chainmaker/syscontract/contract_manage_pb'),
   ...require('../../chainmaker/syscontract/cert_manage_pb'),
   ...require('../../chainmaker/syscontract/subscribe_pb'),
+  ...require('../../chainmaker/syscontract/archive_pb'),
 };
 
 const accesscontrol = {

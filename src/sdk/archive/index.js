@@ -4,6 +4,7 @@
  */
 const utils = require('../../utils');
 const MysqlTool = require('../../utils/mysql');
+const cv = require('../../utils/constValue');
 
 const mysqlDBNamePrefix = 'cm_archived_chain';
 const	mysqlTableNamePrefix = 't_block_info';
@@ -28,26 +29,47 @@ class Archive extends MysqlTool {
     this.config = {};
     this.config.type = type;
     this.callSystemContract = callSystemContract;
+    this.commonObj = {
+      chainId: this.chainID,
+      txType: utils.common.TxType.ARCHIVE,
+      contractName: utils.enum2str(utils.sysContract.SystemContract, utils.sysContract.SystemContract.ARCHIVE_MANAGE),
+    };
   }
 
   createArchiveBlockPayload(targetBlockHeight) {
-    const payload = new utils.common.ArchiveBlockPayload();
-    payload.setBlockHeight(targetBlockHeight);
-    return payload.serializeBinary();
+    const parameters = {};
+    parameters[cv.keys.KeyArchiveBlockHeight] = utils.uint64ToBuffer(targetBlockHeight);
+
+    return utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ArchiveFunction,
+        utils.sysContract.ArchiveFunction.ARCHIVE_BLOCK,
+      ),
+    });
   }
 
   createRestoreBlockPayload(fullBlock) {
-    const payload = new utils.common.RestoreBlockPayload();
-    payload.setFullBlock(fullBlock);
-    return payload.serializeBinary();
+    const parameters = {};
+    parameters[cv.keys.KeyArchiveFullBlock] = fullBlock;
+
+    return utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.ArchiveFunction,
+        utils.sysContract.ArchiveFunction.RESTORE_BLOCK,
+      ),
+    });
   }
 
-  signArchivePayload(payloadBytes) {
-    return payloadBytes;
+  signArchivePayload(payload) {
+    return payload;
   }
 
-  sendArchiveBlockRequest(mergeSignedPayloadBytes) {
-    return this.sendPayload(mergeSignedPayloadBytes, utils.common.TxType.ARCHIVE_FULL_BLOCK);
+  sendArchiveBlockRequest(signPayload) {
+    return this.sendPayload(signPayload);
   }
 
   archiveBlock(targetBlockHeight) {
@@ -56,8 +78,8 @@ class Archive extends MysqlTool {
     return this.sendArchiveBlockRequest(signPayload);
   }
 
-  sendRestoreBlockRequest(mergeSignedPayloadBytes) {
-    return this.sendPayload(mergeSignedPayloadBytes, utils.common.TxType.RESTORE_FULL_BLOCK);
+  sendRestoreBlockRequest(signPayload) {
+    return this.sendPayload(signPayload);
   }
 
   restoreBlock(fullBlock) {
@@ -112,8 +134,8 @@ class Archive extends MysqlTool {
   }
 
   // return promise
-  async sendPayload(payloadBytes, txType, srcRes = false) {
-    return this.node.sendPayload(this.userInfo, this.chainID, payloadBytes, txType, srcRes);
+  async sendPayload(payload, srcRes = false) {
+    return this.node.sendPayload(this.userInfo, payload, srcRes);
   }
 }
 

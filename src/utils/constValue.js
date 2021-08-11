@@ -97,6 +97,9 @@ const keys = {
   KeySubTxIds: 'TX_IDS',
   KeySubTopic: 'TOPIC',
 
+  KeyArchiveBlockHeight: 'BLOCK_HEIGHT',
+  KeyArchiveFullBlock: 'FULL_BLOCK',
+
   // CertManage keys
   KeyCertHashes: 'cert_hashes',
   KeyCerts: 'certs',

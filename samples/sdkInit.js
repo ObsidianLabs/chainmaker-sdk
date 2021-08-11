@@ -30,7 +30,7 @@ const nodeConfigArray = [
 ];
 
 const archiveConfig = {
-  // dbHost: '127.0.0.1', dbPort: '3306', dbUsername: 'root', dbPassword: '123456',
+  dbHost: '127.0.0.1', dbPort: '3306', dbUsername: 'root', dbPassword: '123456',
 };
 
 const orgID2 = 'wx-org2.chainmaker.org';
