@@ -39,7 +39,7 @@ class Sdk {
 
     this.chainConfig = new ChainConfig(chainID, this.userInfo, this.node);
 
-    this.certMgr = new CertMgr(this.chainConfig, chainID, this.userInfo, this.node);
+    this.certMgr = new CertMgr(this.chainConfig, this.callSystemContract, chainID, this.userInfo, this.node);
 
     this.subscribe = new Subscribe(chainID, this.userInfo, this.node);
 

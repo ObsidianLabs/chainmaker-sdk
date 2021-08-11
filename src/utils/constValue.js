@@ -41,6 +41,8 @@ const runtimeType = [
   'DOCKER_JAVA',
 ];
 
+const SUCCESS = 0;
+
 const NEED_SRC_RESPONSE = true;
 
 const DEFAULT_SEQUENCE = 0;
@@ -122,5 +124,5 @@ const keys = {
 
 module.exports = {
   userContractMgrMethod, runtimeType, NEED_SRC_RESPONSE, DEFAULT_SEQUENCE, PAYLOAD_KEY_METHOD, PAYLOAD_KEY,
-  keys,
+  keys, SUCCESS,
 };

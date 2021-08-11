@@ -4,14 +4,19 @@
  */
 const utils  = require('../../utils');
 const cv = require('../../utils/constValue');
-const _ = require('loadsh');
 
 class CertMgr {
-  constructor(chainConfig, chainID, userInfo, node) {
+  constructor(chainConfig, callSystemContract, chainID, userInfo, node) {
     this.chainConfig = chainConfig;
     this.node = node;
     this.userInfo = userInfo;
     this.chainID = chainID;
+    this.callSystemContract = callSystemContract;
+    this.commonObj = {
+      chainId: this.chainID,
+      contractName: utils.enum2str(utils.sysContract.SystemContract, utils.sysContract.SystemContract.CERT_MANAGE),
+      sequence: cv.DEFAULT_SEQUENCE,
+    };
   }
 
   async getCertHash() {
@@ -21,18 +26,16 @@ class CertMgr {
     return utils.getCertHash(this.userInfo.userSignCertBytes, hashType);
   }
 
-  async addCert() {
+  async addCert(withSyncResult) {
     const certHash = await this.getCertHash();
-    const payload = await this.createSystemContractPayload({
-      chainID: '',
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_CERT_MANAGE),
-      method: utils.enum2str(utils.common.CertManageFunction, utils.common.CertManageFunction.CERT_ADD),
-      params: {},
-    });
-    const response = await this.sendPayload(payload.serializeBinary(), utils.common.TxType.INVOKE_SYSTEM_CONTRACT);
+    const payload = await this.createCertManagePayload(
+      utils.sysContract.CertManageFunction.CERT_ADD,
+      {},
+    );
+    const response = await this.sendPayload(payload, false, withSyncResult);
     response.ContractResult = {
-      Code: utils.common.ContractResultCode.OK,
-      Message: `${utils.common.ContractResultCode.OK}`,
+      Code: cv.SUCCESS,
+      Message: `${cv.SUCCESS}`,
       Result: certHash,
     };
     return response;
@@ -40,162 +43,151 @@ class CertMgr {
 
   async queryCert(certHashes) {
     if (!Array.isArray(certHashes)) throw new Error('[certHashes] mast be array');
-    const payloadBytes = this.createQueryPayload({
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_CERT_MANAGE),
-      method: utils.enum2str(utils.common.CertManageFunction, utils.common.CertManageFunction.CERTS_QUERY),
-      params: {
-        cert_hashes: certHashes.join(','),
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyCertHashes] = certHashes.join(',');
+    const payload = utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      txType: utils.common.TxType.QUERY_CONTRACT,
+      method: utils.enum2str(
+        utils.sysContract.CertManageFunction,
+        utils.sysContract.CertManageFunction.CERTS_QUERY,
+      ),
     });
-    const response = await this.sendPayload(
-      payloadBytes,
-      utils.common.TxType.QUERY_SYSTEM_CONTRACT,
-      cv.NEED_SRC_RESPONSE,
-    );
+    const response = await this.sendPayload(payload, true);
     response.result = utils.common.CertInfos.deserializeBinary(response.result).toObject();
     return response;
   }
 
-  async deleteCert(certHashes) {
+  async deleteCert(certHashes, userInfoList, withSyncResult = false) {
     if (!Array.isArray(certHashes)) throw new Error('[certHashes] mast be array');
-    const payload = await this.createSystemContractPayload({
-      chainID: '',
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_CERT_MANAGE),
-      method: utils.enum2str(utils.common.CertManageFunction, utils.common.CertManageFunction.CERTS_DELETE),
-      params: {
-        cert_hashes: certHashes.join(','),
-      },
+    const parameters = {};
+    parameters[cv.keys.KeyCertHashes] = certHashes.join(',');
+    const payload = await this.createCertManagePayload(
+      utils.sysContract.CertManageFunction.CERTS_DELETE,
+      parameters,
+    );
+    const endorsers = [];
+    userInfoList.forEach((userInfo) => {
+      endorsers.push(utils.newEndorsement(
+        userInfo.orgID,
+        userInfo.isFullCert,
+        userInfo.userSignCertBytes,
+        payload, userInfo.userSignKeyBytes,
+      ));
     });
-    const response = await this.sendPayload(payload.serializeBinary(), utils.common.TxType.INVOKE_SYSTEM_CONTRACT);
+    const response = await this.sendPayload(payload, false, withSyncResult, endorsers);
 
     response.ContractResult = {
-      Code: utils.common.ContractResultCode.OK,
-      Message: `${utils.common.ContractResultCode.OK}`,
+      Code: cv.SUCCESS,
+      Message: `${cv.SUCCESS}`,
     };
     return response;
   }
 
-  async createCertManagePayload(method, params) {
-    const payload = await this.createSystemContractPayload({
-      method,
-      params,
-      chainID: this.chainID,
-      contractName: utils.enum2str(utils.common.ContractName, utils.common.ContractName.SYSTEM_CONTRACT_CERT_MANAGE),
-      noSequence: true,
+  async createCertManagePayload(method, parameters) {
+    return utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      txType: utils.common.TxType.INVOKE_CONTRACT,
+      method: utils.enum2str(
+        utils.sysContract.CertManageFunction,
+        method,
+      ),
     });
-    return payload;
   }
 
   createCertManageFrozenPayload(certs) {
+    const param = {};
+    param[cv.keys.KeyCerts] = certs.join(',');
     return this.createCertManagePayload(
-      utils.enum2str(utils.common.CertManageFunction, utils.common.CertManageFunction.CERTS_FREEZE),
-      {
-        certs: certs.join(','),
-      },
+      utils.sysContract.CertManageFunction.CERTS_FREEZE,
+      param,
     );
   }
 
-  async certManageFrozen(certs) {
+  async certManageFrozen(certs, userInfoList, withSyncResult = false) {
     const payload = await this.createCertManageFrozenPayload(certs);
-    const signPayloadBytes = await this.signCertManagePayload(payload);
-    return this.sendCertManageRequest(signPayloadBytes);
+    const endorsers = [];
+    userInfoList.forEach((userInfo) => {
+      endorsers.push(utils.newEndorsement(
+        userInfo.orgID,
+        userInfo.isFullCert,
+        userInfo.userSignCertBytes,
+        payload, userInfo.userSignKeyBytes,
+      ));
+    });
+    return this.sendCertManageRequest(payload, false, withSyncResult, endorsers);
   }
 
   createCertManageUnfrozenPayload(certs) {
+    const param = {};
+    param[cv.keys.KeyCerts] = certs.join(',');
     return this.createCertManagePayload(
-      utils.enum2str(utils.common.CertManageFunction, utils.common.CertManageFunction.CERTS_UNFREEZE),
-      {
-        certs: certs.join(','),
-      },
+      utils.sysContract.CertManageFunction.CERTS_UNFREEZE,
+      param,
     );
   }
 
-  async certManageUnfrozen(certs) {
+  async certManageUnfrozen(certs, userInfoList, withSyncResult = false) {
     const payload = await this.createCertManageUnfrozenPayload(certs);
-    const signPayloadBytes = await this.signCertManagePayload(payload);
-    return this.sendCertManageRequest(signPayloadBytes);
+    const endorsers = [];
+    userInfoList.forEach((userInfo) => {
+      endorsers.push(utils.newEndorsement(
+        userInfo.orgID,
+        userInfo.isFullCert,
+        userInfo.userSignCertBytes,
+        payload, userInfo.userSignKeyBytes,
+      ));
+    });
+    return this.sendCertManageRequest(payload, false, withSyncResult, endorsers);
   }
 
   createCertManageRevocationPayload(certCrl) {
+    const param = {};
+    param[cv.keys.KeyCertCrl] = certCrl;
     return this.createCertManagePayload(
-      utils.enum2str(utils.common.CertManageFunction, utils.common.CertManageFunction.CERTS_REVOKE),
-      {
-        cert_crl: certCrl,
-      },
+      utils.sysContract.CertManageFunction.CERTS_REVOKE,
+      param,
     );
   }
 
-  async certManageRevoke(certCrl) {
+  async certManageRevoke(certCrl, userInfoList, withSyncResult = false) {
     const payload = await this.createCertManageRevocationPayload(certCrl);
-    const signPayloadBytes = await this.signCertManagePayload(payload);
-    return this.sendCertManageRequest(signPayloadBytes);
+    const endorsers = [];
+    userInfoList.forEach((userInfo) => {
+      endorsers.push(utils.newEndorsement(
+        userInfo.orgID,
+        userInfo.isFullCert,
+        userInfo.userSignCertBytes,
+        payload, userInfo.userSignKeyBytes,
+      ));
+    });
+    return this.sendCertManageRequest(payload, false, withSyncResult, endorsers);
   }
 
   // userInfoList: class orgInfo list
   signCertManagePayload(payload) {
-    const signedPayloadBytesArray = [];
-    const userInfoList = [this.userInfo];
-    for (let i = 0; i < userInfoList.length; i++) {
-      signedPayloadBytesArray.push(utils.signPayload(
-        _.cloneDeep(payload), userInfoList[i].userSignKeyBytes,
-        userInfoList[i].userSignCertBytes, userInfoList[i].orgID,
-      ));
-    }
-    return signedPayloadBytesArray[0];
+    return utils.newEndorsement(
+      this.userInfo.orgID,
+      this.userInfo.isFullCert,
+      this.userInfo.userSignCertBytes,
+      payload, this.userInfo.userSignKeyBytes,
+    );
   }
 
-  mergeCertManageSignedPayload(signedPayloadBytesArray) {
-    if (!Array.isArray(signedPayloadBytesArray)) {
-      throw new Error('[signedPayloadBytesArray] mast be array');
-    }
-    let mergedPayload = utils.mergeContractMgmtPayload(signedPayloadBytesArray, utils.common.SystemContractPayload);
-    mergedPayload = mergedPayload.serializeBinary();
-    return mergedPayload;
-  }
-
-  sendCertManageRequest(payloadBytes, srcRes = false, withSyncResult = false) {
-    return this.sendPayload(payloadBytes, utils.common.TxType.INVOKE_SYSTEM_CONTRACT, srcRes, withSyncResult);
-  }
-
-  createQueryPayload({ contractName, method, params }) {
-    const payload = new utils.common.QueryPayload();
-    payload.setContractName(contractName);
-    payload.setMethod(method);
-    Object.keys(params).forEach((key) => {
-      const param = new utils.common.KeyValuePair();
-      param.setKey(key);
-      param.setValue(params[key]);
-      payload.addParameters(param);
-    });
-    // console.log(JSON.stringify(payload.toObject(), 4, null));
-    const payloadBytes = payload.serializeBinary();
-    return payloadBytes;
-  }
-
-  async createSystemContractPayload({ chainID, contractName, method, params, noSequence }) {
-    const payload = new utils.common.SystemContractPayload();
-
-    payload.setChainId(chainID);
-    payload.setContractName(contractName);
-    payload.setMethod(method);
-    Object.keys(params).forEach((key) => {
-      const param = new utils.common.KeyValuePair();
-      param.setKey(key);
-      if (params[key] !== '') param.setValue(params[key]);
-      payload.addParameters(param);
-    });
-
-    if (!noSequence) {
-      let sequence = await this.chainConfig.getChainConfigSequence();
-      sequence = parseInt(sequence, 10) + 1;
-      payload.setSequence(sequence);
-    }
-    return payload;
+  sendCertManageRequest(payload, srcRes = false, withSyncResult = false, endorsers = []) {
+    return this.sendPayload(payload, srcRes, withSyncResult, endorsers);
   }
 
   // return promise
-  async sendPayload(payloadBytes, txType, srcRes = false, withSyncResult = false) {
-    const result = await this.node.sendPayload(this.userInfo, this.chainID, payloadBytes, txType, srcRes);
+  async sendPayload(payload, srcRes = false, withSyncResult = false, endorsers = []) {
+    const result = await this.node.sendPayload(
+      this.userInfo,
+      payload,
+      srcRes,
+      endorsers,
+    );
     if (withSyncResult) {
       const res = await this.callSystemContract.getSyncResult(result.txId);
       result.result.contractResult = res;
