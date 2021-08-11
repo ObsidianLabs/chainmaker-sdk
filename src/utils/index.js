@@ -57,6 +57,7 @@ const sysContract = {
   ...require('../../chainmaker/syscontract/chain_query_pb'),
   ...require('../../chainmaker/syscontract/contract_manage_pb'),
   ...require('../../chainmaker/syscontract/cert_manage_pb'),
+  ...require('../../chainmaker/syscontract/subscribe_pb'),
 };
 
 const accesscontrol = {
@@ -287,6 +288,23 @@ const buildKeyValuePair = (payload, kv) => {
   return payload;
 };
 
+// writeUIntLE这个方法目前只支持48位无符号整数
+// 虽然使用writeUInt32LE两次写入可以做到写入64位无符号整数
+// 但是用户依旧无法输入64位无符号整数，所以暂时只能这样做，看看是不是可以让用户自己拼一个64位无符号整数buffer出来
+const uint64ToBuffer = (value) => {
+  const buf = Buffer(8);
+  buf.fill(0);
+  // 小端对齐
+  if (value === -1) {
+    // -1是这样的[255, 255, 255, 255, 255, 255, 255, 255]
+    buf.writeUInt32LE(0xFFFFFFFF, 0);
+    buf.writeUInt32LE(0xFFFFFFFF, 4);
+  } else {
+    buf.writeUIntLE(value, 0, 2);
+  }
+  return buf;
+};
+
 module.exports = {
   common,
   sysContract,
@@ -310,4 +328,5 @@ module.exports = {
   buildPayload,
   buildKeyValuePair,
   newEndorsement,
+  uint64ToBuffer,
 };

@@ -66,7 +66,7 @@ const testInvokeUserContract = async (sdk, contractName) => {
       file_name: 'test.txt',
       time: Date.now() / 1000 | 0,
     },
-    withSyncResult: true,
+    withSyncResult: false,
   });
   return response;
 };
@@ -82,7 +82,7 @@ const testQueryUserContract = async (sdk, contractName) => {
 
 
 const test = async (type) => {
-  const contractName = 'go_ctx_010';
+  const contractName = 'go_ctx_003';
   const contractVersion = 'v1.0.0';
   const updateVersion = 'v2.0.1';
   const contractFilePath = path.join(__dirname, '../test/testFile/rust-fact-2.0.0.wasm');
@@ -138,10 +138,10 @@ const test = async (type) => {
     }
 
     sdk.stop();
-    console.log(type, ':', res);
+    console.log(type, ':', JSON.stringify(res));
   } catch (err) {
     console.log(type, ':', err);
   }
 };
 
-test('query');
+test('invoke');

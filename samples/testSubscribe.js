@@ -6,8 +6,8 @@ const sdkInit = require('./sdkInit');
 
 const { sdk } = sdkInit();
 
-const testSubscribeBlock = async (sdk, startBlock, endBlock, withRwSet) => {
-  const response = await sdk.subscribe.subscribeBlock(startBlock, endBlock, withRwSet, (block, err) => {
+const testSubscribeBlock = async (sdk, startBlock, endBlock, onlyHeader, withRwSet) => {
+  const response = await sdk.subscribe.subscribeBlock(startBlock, endBlock, withRwSet, onlyHeader, (block, err) => {
     console.log(block);
     console.log(err);
   });
@@ -22,8 +22,8 @@ const testSubscribeContractEvent = async (sdk, topic, contractName) => {
   return response;
 };
 
-const testSubscribeTx = async (sdk, startBlock, endBlock, txType, txIds) => {
-  const response = await sdk.subscribe.subscribeTx(startBlock, endBlock, txType, txIds, (tx, err) => {
+const testSubscribeTx = async (sdk, startBlock, endBlock, contractName, txIds) => {
+  const response = await sdk.subscribe.subscribeTx(startBlock, endBlock, contractName, txIds, (tx, err) => {
     console.log(tx);
     console.log(err);
   });
@@ -35,13 +35,13 @@ const test = async (type) => {
   try {
     switch (type) {
       case 'subscribeBlock':
-        res = testSubscribeBlock(sdk, 0, 200, true);
+        res = testSubscribeBlock(sdk, 10, 12, true, true);
         break;
       case 'subscribeContractEvent':
-        res = testSubscribeContractEvent(sdk, 'topic_vx', 'go_ctx_001');
+        res = testSubscribeContractEvent(sdk, 'topic_vx', 'go_ctx_003');
         break;
       case 'subscribeTx':
-        res = testSubscribeTx(sdk, -1, -1, -1, null);
+        res = testSubscribeTx(sdk, -1, -1, null, null);
         break;
     }
     console.log(type, ':', res);

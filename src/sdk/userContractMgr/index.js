@@ -155,14 +155,13 @@ class UserContract {
 
     // ContractMgmtPayload
     let contractBytesRaw;
-    let parameters = {};
+    const parameters = {};
 
     parameters[cv.keys.KeyInitContractName] = contractName;
     switch (method) {
       case utils.sysContract.ContractManageFunction.INIT_CONTRACT:
       case utils.sysContract.ContractManageFunction.UPGRADE_CONTRACT:
         contractBytesRaw = fs.readFileSync(contractFilePath);
-        parameters = Object.assign({}, params);
         parameters[cv.keys.KeyInitContractVersion] = contractVersion;
         parameters[cv.keys.KeyInitContractRuntimeType] = runtimeType;
         parameters[cv.keys.KeyInitContractBytecode] = contractBytesRaw;

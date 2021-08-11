@@ -88,6 +88,15 @@ const keys = {
   KeyBlockSize: 'block_size',
   KeyBlockInterval: 'block_interval',
 
+  // subscribe
+  KeySubStrartBlock: 'START_BLOCK',
+  KeySubEndBlock: 'END_BLOCK',
+  KeySubWithRwset: 'WITH_RWSET',
+  KeySubOnlyHeader: 'ONLY_HEADER',
+  KeySubContractName: 'CONTRACT_NAME',
+  KeySubTxIds: 'TX_IDS',
+  KeySubTopic: 'TOPIC',
+
   // CertManage keys
   KeyCertHashes: 'cert_hashes',
   KeyCerts: 'certs',

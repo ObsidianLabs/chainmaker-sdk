@@ -3,47 +3,60 @@
    SPDX-License-Identifier: Apache-2.0
  */
 const utils = require('../../utils');
+const cv = require('../../utils/constValue');
 
 class Subscribe {
   constructor(chainID, userInfo, node) {
     this.node = node;
     this.userInfo = userInfo;
     this.chainID = chainID;
+    this.commonObj = {
+      chainId: this.chainID,
+      txType: utils.common.TxType.SUBSCRIBE,
+      contractName: utils.enum2str(utils.sysContract.SystemContract, utils.sysContract.SystemContract.SUBSCRIBE_MANAGE),
+      sequence: cv.DEFAULT_SEQUENCE,
+    };
   }
 
-  subscribeBlock(startBlock, endBlock, withRwSet, callBack) {
-    const payloadBytes = this.constructSubscribeBlockPayload(startBlock, endBlock, withRwSet);
-    const response = this.subscribe(payloadBytes, utils.common.TxType.SUBSCRIBE_BLOCK_INFO, callBack);
+  subscribeBlock(startBlock, endBlock, withRwSet, onlyHeader, callBack) {
+    const payload = this.constructSubscribeBlockPayload(startBlock, endBlock, withRwSet, onlyHeader);
+    const response = this.subscribe(payload, utils.sysContract.SubscribeFunction.SUBSCRIBE_BLOCK, onlyHeader, callBack);
     return response;
   }
 
   subscribeContractEvent(topic, contractName, callBack) {
     const payloadBytes = this.constructSubscribeContractEventPayload(topic, contractName);
-    const response = this.subscribe(payloadBytes, utils.common.TxType.CONTRACT_EVENT_INFO, callBack);
+    const response = this.subscribe(
+      payloadBytes,
+      utils.sysContract.SubscribeFunction.SUBSCRIBE_CONTRACT_EVENT,
+      false,
+      callBack,
+    );
     return response;
   }
 
-  subscribeTx(startBlock, endBlock, txType, txIds, callBack) {
-    const payloadBytes = this.constructSubscribeTxPayload(startBlock, endBlock, txType, txIds);
-    const response = this.subscribe(payloadBytes, utils.common.TxType.SUBSCRIBE_TX_INFO, callBack);
+  subscribeTx(startBlock, endBlock, contractName, txIds, callBack) {
+    const payload = this.constructSubscribeTxPayload(startBlock, endBlock, contractName, txIds);
+    const response = this.subscribe(payload, utils.sysContract.SubscribeFunction.SUBSCRIBE_TX, false, callBack);
     return response;
   }
 
-  subscribe(payloadBytes, txType, callBack) {
-    const response = this.sendSubscribe(payloadBytes, txType);
+  subscribe(payload, method, onlyHeader, callBack) {
+    const response = this.sendSubscribe(payload);
     response.on('data', (block) => {
-      switch (txType) {
-        case utils.common.TxType.SUBSCRIBE_BLOCK_INFO:
-          callBack(utils.common.BlockInfo.deserializeBinary(block.toObject().data).toObject(), null);
+      switch (method) {
+        case utils.sysContract.SubscribeFunction.SUBSCRIBE_BLOCK:
+          if (onlyHeader) callBack(utils.common.BlockHeader.deserializeBinary(block.getData()).toObject(), null);
+          else callBack(utils.common.BlockInfo.deserializeBinary(block.getData()).toObject(), null);
           break;
-        case utils.common.TxType.CONTRACT_EVENT_INFO:
-          callBack(utils.common.ContractEventInfoList.deserializeBinary(block.toObject().data).toObject(), null);
+        case utils.sysContract.SubscribeFunction.SUBSCRIBE_CONTRACT_EVENT:
+          callBack(utils.common.ContractEventInfoList.deserializeBinary(block.getData()).toObject(), null);
           break;
-        case utils.common.TxType.SUBSCRIBE_TX_INFO:
-          callBack(utils.common.Transaction.deserializeBinary(block.toObject().data).toObject(), null);
+        case utils.sysContract.SubscribeFunction.SUBSCRIBE_TX:
+          callBack(utils.common.ContractEventInfo.deserializeBinary(block.getData()).toObject(), null);
           break;
         default:
-          throw new Error(`[txType] ${txType} unsupported`);
+          throw new Error(`[txType] ${method} unsupported`);
       }
     });
     response.on('error', (error) => {
@@ -55,44 +68,65 @@ class Subscribe {
     return response;
   }
 
-  constructSubscribeBlockPayload(startBlock, endBlock, withRwSet) {
-    const payload = new utils.common.SubscribeBlockPayload();
-    payload.setStartBlock(startBlock);
-    payload.setEndBlock(endBlock);
-    payload.setWithRwSet(withRwSet);
-    return payload.serializeBinary();
+  constructSubscribeBlockPayload(startBlock, endBlock, withRwSet, onlyHeader) {
+    const parameters = {};
+    parameters[cv.keys.KeySubStrartBlock] = utils.uint64ToBuffer(startBlock);
+    parameters[cv.keys.KeySubEndBlock] = utils.uint64ToBuffer(endBlock);
+    parameters[cv.keys.KeySubWithRwset] = withRwSet;
+    parameters[cv.keys.KeySubOnlyHeader] = onlyHeader;
+
+    return utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.SubscribeFunction,
+        utils.sysContract.SubscribeFunction.SUBSCRIBE_BLOCK,
+      ),
+    });
   }
 
   constructSubscribeContractEventPayload(topic, contractName) {
-    const payload = new utils.common.SubscribeContractEventPayload();
-    payload.setTopic(topic);
-    payload.setContractname(contractName);
-    return payload.serializeBinary();
+    const parameters = {};
+    parameters[cv.keys.KeySubContractName] = contractName;
+    parameters[cv.keys.KeySubTopic] = topic;
+
+    return utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.SubscribeFunction,
+        utils.sysContract.SubscribeFunction.SUBSCRIBE_CONTRACT_EVENT,
+      ),
+    });
   }
 
-  constructSubscribeTxPayload(startBlock, endBlock, txType, txIds) {
-    const payload = new utils.common.SubscribeTxPayload();
-    payload.setStartBlock(startBlock);
-    payload.setEndBlock(endBlock);
-    payload.setTxType(txType);
-    payload.setTxIdsList(txIds);
-    return payload.serializeBinary();
+  constructSubscribeTxPayload(startBlock, endBlock, contractName, txIds) {
+    const parameters = {};
+    parameters[cv.keys.KeySubStrartBlock] = utils.uint64ToBuffer(startBlock);
+    parameters[cv.keys.KeySubEndBlock] = utils.uint64ToBuffer(endBlock);
+    parameters[cv.keys.KeySubContractName] = contractName ? contractName : '';
+    parameters[cv.keys.KeySubTxIds] = txIds ? txIds : '';
+
+    return utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      method: utils.enum2str(
+        utils.sysContract.SubscribeFunction,
+        utils.sysContract.SubscribeFunction.SUBSCRIBE_TX,
+      ),
+    });
   }
 
-  sendSubscribe(payloadBytes, txType, srcRes = false) {
-    const txId = utils.newTxID();
+  sendSubscribe(payload) {
     const request = utils.newRequest(
-      txId,
-      this.chainID,
-      txType,
       this.userInfo.orgID,
       this.userInfo.userSignCertBytes,
       this.userInfo.isFullCert,
-      payloadBytes,
+      payload,
       this.userInfo.userSignKeyBytes,
     );
     // console.log(JSON.stringify(request.toObject(), null, 4));
-    return this.node.subscribe(request, srcRes);
+    return this.node.subscribe(request);
   }
 }
 
