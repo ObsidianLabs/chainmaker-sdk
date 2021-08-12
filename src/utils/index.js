@@ -266,7 +266,7 @@ const buildPayload = (config) => {
   }
   Object.keys(kv).forEach((key) => {
     if (PAYLOAD_KEY.includes(key)) {
-      console.log(PAYLOAD_KEY_METHOD[key], kv[key]);
+      logger.debug(PAYLOAD_KEY_METHOD[key], kv[key]);
       payload[PAYLOAD_KEY_METHOD[key]](kv[key]);
     }
   });

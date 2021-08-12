@@ -10,10 +10,11 @@ const { sdk } = sdkInit();
 
 describe('system contract', async () => {
   it('getTxByTxId', async () => {
-    const block = await sdk.callSystemContract.getBlockByHeight(5, false);
-    const res = await sdk.callSystemContract.getTxByTxId(block.result.block.txsList[0].header.txId);
-    assert.strictEqual(0, res.result.code);
-    assert.strictEqual(0, res.result.contractResult.code);
+    const block = await sdk.callSystemContract.getBlockByHeight(2, false);
+    const res = await sdk.callSystemContract.getTxByTxId(block.result.block.txsList[0].payload.txId);
+    console.log(res);
+    // assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.result.transaction.result.code);
   });
 
   it('getBlockByHeight', async () => {
@@ -29,14 +30,14 @@ describe('system contract', async () => {
 
   it('getBlockByTxId', async () => {
     const block = await sdk.callSystemContract.getBlockByHeight(2, false);
-    const res = await sdk.callSystemContract.getBlockByTxId(block.result.block.txsList[0].header.txId, false);
+    const res = await sdk.callSystemContract.getBlockByTxId(block.result.block.txsList[0].payload.txId, false);
     assert.strictEqual(2, res.result.block.header.blockHeight);
   });
 
   it('getLastConfigBlock', async () => {
     const res = await sdk.callSystemContract.getLastConfigBlock(false);
-    assert.strictEqual(true, Buffer.from(res.result.block.txsList[0].requestPayload, 'base64').toString()
-      .indexOf('SYSTEM_CONTRACT_CHAIN_CONFIG') > -1);
+    console.log(JSON.stringify(res.result));
+    assert.strictEqual(1, res.result.block.header.blockType);
   });
 
   it('getNodeChainList', async () => {
@@ -67,7 +68,7 @@ describe('system contract', async () => {
 
   it('getBlockHeightByTxId', async () => {
     const block = await sdk.callSystemContract.getBlockByHeight(2, false);
-    const res = await sdk.callSystemContract.getBlockHeightByTxId(block.result.block.txsList[0].header.txId);
+    const res = await sdk.callSystemContract.getBlockHeightByTxId(block.result.block.txsList[0].payload.txId);
     assert.strictEqual(2, parseInt(Buffer.from(res.result.contractResult.result, 'base64').toString(), 10));
   });
 

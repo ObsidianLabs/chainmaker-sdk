@@ -12,7 +12,7 @@ const contractVersion = 'v1.0.0';
 const contractUpGradeVersion = 'v1.0.1';
 const contractFilePath = path.join(__dirname, './testFile/rust-fact-2.0.0.wasm');
 
-const { sdk, ['Utils']: utils } = sdkInit();
+const { sdk, ['Utils']: utils, user2, user3, user4 } = sdkInit();
 
 describe('user contract manager', async () => {
   // this.timeout(6000);
@@ -21,11 +21,17 @@ describe('user contract manager', async () => {
       contractName,
       contractVersion,
       contractFilePath,
-      runtimeType: utils.common.RuntimeType.GASM,
+      runtimeType: 'WASMER',
       params: {
         key1: 'value1',
         key2: 'value2',
       },
+      userInfoList: [
+        sdk.userInfo,
+        user2,
+        user3,
+        user4,
+      ],
     });
   });
 
@@ -34,11 +40,17 @@ describe('user contract manager', async () => {
       contractVersion,
       contractFilePath,
       contractName: createContractName,
-      runtimeType: utils.common.RuntimeType.GASM,
+      runtimeType: 'WASMER',
       params: {
         key1: 'value1',
         key2: 'value2',
       },
+      userInfoList: [
+        sdk.userInfo,
+        user2,
+        user3,
+        user4,
+      ],
     });
     assert.strictEqual(0, res.result.code);
   });
@@ -49,8 +61,14 @@ describe('user contract manager', async () => {
       contractName,
       contractFilePath,
       contractVersion: contractUpGradeVersion,
-      runtimeType: utils.common.RuntimeType.GASM,
+      runtimeType: 'WASMER',
       params: {},
+      userInfoList: [
+        sdk.userInfo,
+        user2,
+        user3,
+        user4,
+      ],
     });
     assert.strictEqual(0, res.result.code);
   });
@@ -59,6 +77,12 @@ describe('user contract manager', async () => {
     await sleep(4);
     const res = await sdk.userContractMgr.freezeUserContract({
       contractName,
+      userInfoList: [
+        sdk.userInfo,
+        user2,
+        user3,
+        user4,
+      ],
     });
     assert.strictEqual(0, res.result.code);
   });
@@ -67,6 +91,12 @@ describe('user contract manager', async () => {
     await sleep(4);
     const res = await sdk.userContractMgr.unFreezeUserContract({
       contractName,
+      userInfoList: [
+        sdk.userInfo,
+        user2,
+        user3,
+        user4,
+      ],
     });
     assert.strictEqual(0, res.result.code);
   });
@@ -78,6 +108,12 @@ describe('user contract manager', async () => {
         file_hash: '1234567890',
         file_name: 'test.txt',
       },
+      userInfoList: [
+        sdk.userInfo,
+        user2,
+        user3,
+        user4,
+      ],
     });
     assert.strictEqual(0, res.result.code);
   });

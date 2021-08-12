@@ -125,10 +125,10 @@ const test = async (type) => {
         break;
     }
     sdk.stop();
-    console.log(type, ':', JSON.stringify(res));
+    console.log(type, ':', JSON.stringify(res.result.block.header, null, 4));
   } catch (err) {
     console.log(type, ':', err);
   }
 };
 
-test('getTxBytxId');
+test('getLastConfigBlock');
