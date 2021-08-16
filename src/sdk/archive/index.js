@@ -109,17 +109,17 @@ class Archive extends MysqlTool {
 
   async getArchivedBlockByTxId(txId, withRWSet) {
     const blockHeight = await this.callSystemContract.getBlockHeightByTxId(txId);
-    return this.getArchivedBlockByHeight(parseInt(Buffer.from(blockHeight.result.contractResult.result, 'base64').toString(), 10), withRWSet);
+    return this.getArchivedBlockByHeight(parseInt(Buffer.from(blockHeight.contractResult.result, 'base64').toString(), 10), withRWSet);
   }
 
   async getArchivedBlockByHash(hash, withRWSet) {
     const blockHeight = await this.callSystemContract.getBlockHeightByHash(hash);
-    return this.getArchivedBlockByHeight(parseInt(Buffer.from(blockHeight.result.contractResult.result, 'base64').toString(), 10), withRWSet);
+    return this.getArchivedBlockByHeight(parseInt(Buffer.from(blockHeight.contractResult.result, 'base64').toString(), 10), withRWSet);
   }
 
   async getArchivedTxByTxId(txId) {
     const blockHeight = await this.callSystemContract.getBlockHeightByTxId(txId);
-    const blockInfo = await this.getArchivedBlockByHeight(parseInt(Buffer.from(blockHeight.result.contractResult.result, 'base64').toString(), 10), false);
+    const blockInfo = await this.getArchivedBlockByHeight(parseInt(Buffer.from(blockHeight.contractResult.result, 'base64').toString(), 10), false);
     for (let i = 0; i < blockInfo.Block.txsList.length; i++) {
       if (txId === blockInfo.Block.txsList[i].header.txId) {
         return {

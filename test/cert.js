@@ -22,20 +22,20 @@ describe('cert manager', async () => {
     const hash = await sdk.certMgr.getCertHash();
     const queryHash = await sdk.certMgr.queryCert([hash]);
     let index = 0;
-    queryHash.result.certInfosList.forEach((cert, i) => {
+    queryHash.certInfosList.forEach((cert, i) => {
       if (cert.hash.indexOf(hash) > -1) index = i;
     });
-    assert.strictEqual(true, queryHash.result.certInfosList[index].cert !== '');
+    assert.strictEqual(true, queryHash.certInfosList[index].cert !== '');
   });
 
   it('query cert', async () => {
     const hash = await sdk.certMgr.getCertHash();
     const queryHash = await sdk.certMgr.queryCert([hash]);
     let index = 0;
-    queryHash.result.certInfosList.forEach((cert, i) => {
+    queryHash.certInfosList.forEach((cert, i) => {
       if (cert.hash.indexOf(hash) > -1) index = i;
     });
-    assert.strictEqual(true, queryHash.result.certInfosList[index].cert !== '');
+    assert.strictEqual(true, queryHash.certInfosList[index].cert !== '');
   });
 
   it('delete cert', async () => {
@@ -47,10 +47,10 @@ describe('cert manager', async () => {
     await sleep(5);
     const queryHash = await sdk.certMgr.queryCert([hash]);
     let index = 0;
-    queryHash.result.certInfosList.forEach((cert, i) => {
+    queryHash.certInfosList.forEach((cert, i) => {
       if (cert.hash.indexOf(hash) > -1) index = i;
     });
-    assert.strictEqual(true, queryHash.result.certInfosList[index].cert === '');
+    assert.strictEqual(true, queryHash.certInfosList[index].cert === '');
   });
 
   it('certManageFrozen', async () => {
@@ -59,7 +59,7 @@ describe('cert manager', async () => {
       sdk.userInfo,
       user2, user3, user4,
     ]);
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   it('certManageUnfrozen', async () => {
@@ -68,7 +68,7 @@ describe('cert manager', async () => {
       sdk.userInfo,
       user2, user3, user4,
     ]);
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   it('certManageRevoke', async () => {
@@ -77,7 +77,7 @@ describe('cert manager', async () => {
       sdk.userInfo,
       user2, user3, user4,
     ]);
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   after('stop sdk', (done) => {

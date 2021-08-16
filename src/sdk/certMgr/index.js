@@ -21,7 +21,7 @@ class CertMgr {
 
   async getCertHash() {
     const chainConfig = await this.chainConfig.getChainConfig();
-    const hashType = chainConfig.result.crypto.hash;
+    const hashType = chainConfig.crypto.hash;
 
     return utils.getCertHash(this.userInfo.userSignCertBytes, hashType);
   }
@@ -54,8 +54,8 @@ class CertMgr {
         utils.sysContract.CertManageFunction.CERTS_QUERY,
       ),
     });
-    const response = await this.sendPayload(payload, true);
-    response.result = utils.common.CertInfos.deserializeBinary(response.result).toObject();
+    let response = await this.sendPayload(payload, true);
+    response = utils.common.CertInfos.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -190,7 +190,7 @@ class CertMgr {
     );
     if (withSyncResult) {
       const res = await this.callSystemContract.getSyncResult(result.txId);
-      result.result.contractResult = res;
+      result.contractResult = res;
       return result;
     }
     return result;

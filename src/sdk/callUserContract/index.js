@@ -49,7 +49,7 @@ class CallUserContract {
     );
     if (withSyncResult) {
       const res = await this.callSystemContract.getSyncResult(result.txId);
-      result.result.contractResult = res;
+      result.contractResult = res;
       return result;
     }
     return result;
@@ -79,9 +79,9 @@ class CallUserContract {
     if (withSyncResult) {
       const res = await this.callSystemContract.getSyncResult(txId);
       result.contractResult = res;
-      return { txId, result };
+      return result;
     }
-    return { txId, result };
+    return result;
   }
 }
 

@@ -27,19 +27,19 @@ class ChainConfig {
       ),
       sequence: cv.DEFAULT_SEQUENCE,
     });
-    const response = await this.sendPayload(
+    let response = await this.sendPayload(
       payload,
       [],
       cv.NEED_SRC_RESPONSE,
     );
-    response.result = utils.config.ChainConfig.deserializeBinary(response.result).toObject();
+    response = utils.config.ChainConfig.deserializeBinary(response).toObject();
     return response;
   }
 
   // return promise
   async getChainConfigSequence() {
     const response = await this.getChainConfig();
-    return response.result.sequence;
+    return response.sequence;
   }
 
   // return promise
@@ -56,12 +56,12 @@ class ChainConfig {
       ),
       sequence: cv.DEFAULT_SEQUENCE,
     });
-    const response = await this.sendPayload(
+    let response = await this.sendPayload(
       payload,
       [],
       cv.NEED_SRC_RESPONSE,
     );
-    response.result = utils.config.ChainConfig.deserializeBinary(response.result).toObject();
+    response = utils.config.ChainConfig.deserializeBinary(response).toObject();
     return response;
   }
 

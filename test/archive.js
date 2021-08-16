@@ -15,7 +15,7 @@ const { sdk } = sdkInit();
 describe('archive', async () => {
   it('archiveBlock', async () => {
     const res = await sdk.archive.archiveBlock(2);
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
   it('getArchivedFullBlockByHeight', async () => {
     const res = await sdk.archive.getArchivedFullBlockByHeight(0);
@@ -49,7 +49,7 @@ describe('archive', async () => {
     const block = await sdk.archive.getFullBlock(2);
     const res = await sdk.archive.restoreBlock(Buffer.from(block));
     console.log(res);
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   after('stop sdk', (done) => {

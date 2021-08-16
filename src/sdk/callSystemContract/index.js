@@ -30,8 +30,8 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_TX_BY_TX_ID,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, true);
-    response.result = utils.common.TransactionInfo.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, true);
+    response = utils.common.TransactionInfo.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -48,8 +48,8 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_BLOCK_BY_HEIGHT,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
-    response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
+    response = utils.common.BlockInfo.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -65,8 +65,8 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_FULL_BLOCK_BY_HEIGHT,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
-    response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
+    response = utils.common.BlockInfo.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -83,8 +83,8 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_BLOCK_BY_HASH,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
-    response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
+    response = utils.common.BlockInfo.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -99,8 +99,8 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_LAST_BLOCK,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
-    response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
+    response = utils.common.BlockInfo.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -115,14 +115,14 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_BLOCK_HEADER_BY_HEIGHT,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
-    response.result = utils.common.BlockHeader.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
+    response = utils.common.BlockHeader.deserializeBinary(response).toObject();
     return response;
   }
 
   async getCurrentBlockHeight() {
     const block = await this.getLastBlock(false);
-    return block.result.block.header.blockHeight;
+    return block.block.header.blockHeight;
   }
 
   getArchivedBlockHeight() {
@@ -181,8 +181,8 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_BLOCK_BY_TX_ID,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
-    response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
+    response = utils.common.BlockInfo.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -198,8 +198,8 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_LAST_CONFIG_BLOCK,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
-    response.result = utils.common.BlockInfo.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
+    response = utils.common.BlockInfo.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -214,8 +214,8 @@ class CallSystemContract {
           utils.sysContract.ChainQueryFunction.GET_NODE_CHAIN_LIST,
         ),
       });
-      const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE, nodeAddr);
-      response.result = utils.discovery.ChainList.deserializeBinary(response.result).toObject();
+      let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE, nodeAddr);
+      response = utils.discovery.ChainList.deserializeBinary(response).toObject();
       return response;
     }
     throw new Error(`no such node: ${nodeAddr}`);
@@ -231,8 +231,8 @@ class CallSystemContract {
         utils.sysContract.ChainQueryFunction.GET_CHAIN_INFO,
       ),
     });
-    const response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
-    response.result = utils.discovery.ChainInfo.deserializeBinary(response.result).toObject();
+    let response = await this.sendSystemContractPayload(payload, cv.NEED_SRC_RESPONSE);
+    response = utils.discovery.ChainInfo.deserializeBinary(response).toObject();
     return response;
   }
 
@@ -257,11 +257,11 @@ class CallSystemContract {
           tx = await this.getTxByTxId(txId);
         } catch {}
         if (tx
-          && tx.result.transaction
-          && tx.result.transaction.result
-          && tx.result.transaction.result.contractResult) {
+          && tx.transaction
+          && tx.transaction.result
+          && tx.transaction.result.contractResult) {
           clearInterval(interval);
-          resolve(tx.result.transaction.result.contractResult);
+          resolve(tx.transaction.result.contractResult);
         }
         if (count === 0) {
           clearInterval(interval);

@@ -52,7 +52,7 @@ describe('user contract manager', async () => {
         user4,
       ],
     });
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   it('upgrade user contract', async () => {
@@ -70,7 +70,7 @@ describe('user contract manager', async () => {
         user4,
       ],
     });
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   it('freeze user contract', async () => {
@@ -84,7 +84,7 @@ describe('user contract manager', async () => {
         user4,
       ],
     });
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   it('unfreeze user contract', async () => {
@@ -98,7 +98,7 @@ describe('user contract manager', async () => {
         user4,
       ],
     });
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   it('invoke user contract', async () => {
@@ -115,7 +115,7 @@ describe('user contract manager', async () => {
         user4,
       ],
     });
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   it('query user contract', async () => {
@@ -125,14 +125,14 @@ describe('user contract manager', async () => {
         file_hash: '1234567890',
       },
     });
-    assert.strictEqual(0, res.result.code);
+    assert.strictEqual(0, res.code);
   });
 
   // it('revoke user contract', async () => {
   //   const res = await sdk.userContractMgr.revokeUserContract({
   //     contractName: createContractName,
   //   });
-  //   assert.strictEqual(0, res.result.code);
+  //   assert.strictEqual(0, res.code);
   // });
 
   after('stop sdk', (done) => {

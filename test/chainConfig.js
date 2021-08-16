@@ -13,12 +13,12 @@ const { sdk, ['Utils']: utils, user2, user3, user4, user5 } = sdkInit();
 describe('chain config', async () => {
   it('getChainConfig', async () => {
     const chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(sdk.chainConfig.chainID, chainConfig.result.chainId);
+    assert.strictEqual(sdk.chainConfig.chainID, chainConfig.chainId);
   });
 
   it('getChainConfigByBlockHeight', async () => {
     const chainConfig = await sdk.chainConfig.getChainConfigByBlockHeight(2);
-    assert.strictEqual(sdk.chainConfig.chainID, chainConfig.result.chainId);
+    assert.strictEqual(sdk.chainConfig.chainID, chainConfig.chainId);
   });
 
   it('getChainConfigSequence', async () => {
@@ -38,12 +38,12 @@ describe('chain config', async () => {
         user3,
       ],
     });
-    await sleep(5);
+    await sleep(10);
     const chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(700, chainConfig.result.block.txTimeout);
-    assert.strictEqual(101, chainConfig.result.block.blockTxCapacity);
-    assert.strictEqual(11, chainConfig.result.block.blockSize);
-    assert.strictEqual(2001, chainConfig.result.block.blockInterval);
+    assert.strictEqual(700, chainConfig.block.txTimeout);
+    assert.strictEqual(101, chainConfig.block.blockTxCapacity);
+    assert.strictEqual(11, chainConfig.block.blockSize);
+    assert.strictEqual(2001, chainConfig.block.blockInterval);
   });
 
   it('chainConfigCoreUpdate', async () => {
@@ -56,10 +56,10 @@ describe('chain config', async () => {
         user3,
       ],
     });
-    await sleep(5);
+    await sleep(10);
     const chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(11, chainConfig.result.core.txSchedulerTimeout);
-    assert.strictEqual(11, chainConfig.result.core.txSchedulerValidateTimeout);
+    assert.strictEqual(11, chainConfig.core.txSchedulerTimeout);
+    assert.strictEqual(11, chainConfig.core.txSchedulerValidateTimeout);
   });
 
   it('chain config trust root manager, chainc onfig consensus node org', async () => {
@@ -72,9 +72,9 @@ describe('chain config', async () => {
         user3,
       ],
     });
-    await sleep(5);
+    await sleep(10);
     let chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(true, JSON.stringify(chainConfig.result.trustRootsList).indexOf('wx-org5.chainmaker.org') > -1);
+    assert.strictEqual(true, JSON.stringify(chainConfig.trustRootsList).indexOf('wx-org5.chainmaker.org') > -1);
 
     const { ['sdk']: sdkUser5 } = sdkInit();
     sdkUser5.userInfo = user5;
@@ -83,28 +83,28 @@ describe('chain config', async () => {
       user2,
       user3,
     ]);
-    await sleep(5);
+    await sleep(10);
     chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(true, JSON.stringify(chainConfig.result.consensus.nodesList).indexOf('QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH') > -1);
+    assert.strictEqual(true, JSON.stringify(chainConfig.consensus.nodesList).indexOf('QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH') > -1);
 
     await sdkUser5.chainConfig.chainConfigConsensusNodeOrgUpdate(user5.orgID, ['QmQVkTSF6aWzRSddT4rro6Ve33jhKpsHFaQoVxHKMWzhuN'], [
       sdk.userInfo,
       user2,
       user3,
     ]);
-    await sleep(5);
+    await sleep(10);
     chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(true, JSON.stringify(chainConfig.result.consensus.nodesList).indexOf('QmQVkTSF6aWzRSddT4rro6Ve33jhKpsHFaQoVxHKMWzhuN') > -1);
-    assert.strictEqual(-1, JSON.stringify(chainConfig.result.consensus.nodesList).indexOf('QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH'));
+    assert.strictEqual(true, JSON.stringify(chainConfig.consensus.nodesList).indexOf('QmQVkTSF6aWzRSddT4rro6Ve33jhKpsHFaQoVxHKMWzhuN') > -1);
+    assert.strictEqual(-1, JSON.stringify(chainConfig.consensus.nodesList).indexOf('QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH'));
 
     await sdkUser5.chainConfig.chainConfigConsensusNodeOrgDelete(user5.orgID, [
       sdk.userInfo,
       user2,
       user3,
     ]);
-    await sleep(5);
+    await sleep(30);
     chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(-1, JSON.stringify(chainConfig.result.consensus.nodesList).indexOf('QmQVkTSF6aWzRSddT4rro6Ve33jhKpsHFaQoVxHKMWzhuN'));
+    assert.strictEqual(-1, JSON.stringify(chainConfig.consensus.nodesList).indexOf('QmQVkTSF6aWzRSddT4rro6Ve33jhKpsHFaQoVxHKMWzhuN'));
 
     await sdkUser5.chainConfig.chainConfigTrustRootUpdate({
       orgId: 'wx-org5.chainmaker.org',
@@ -115,18 +115,18 @@ describe('chain config', async () => {
         user3,
       ],
     });
-    await sleep(5);
+    await sleep(10);
     const chainConfigUpdate = await sdk.chainConfig.getChainConfig();
     let index = 0;
-    for (let i = 0; i < chainConfigUpdate.result.trustRootsList.length; i++) {
-      if (chainConfigUpdate.result.trustRootsList[i] === 'wx-org5.chainmaker.org') {
+    for (let i = 0; i < chainConfigUpdate.trustRootsList.length; i++) {
+      if (chainConfigUpdate.trustRootsList[i] === 'wx-org5.chainmaker.org') {
         index = i;
         break;
       }
     }
     assert.strictEqual(
       true,
-      chainConfigUpdate.result.trustRootsList[index].root === chainConfig.result.trustRootsList[index].root,
+      chainConfigUpdate.trustRootsList[index].root === chainConfig.trustRootsList[index].root,
     );
     sdkUser5.stop();
 
@@ -138,9 +138,9 @@ describe('chain config', async () => {
         user3,
       ],
     });
-    await sleep(5);
+    await sleep(10);
     chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(-1, JSON.stringify(chainConfig.result.trustRootsList).indexOf('wx-org5.chainmaker.org'));
+    assert.strictEqual(-1, JSON.stringify(chainConfig.trustRootsList).indexOf('wx-org5.chainmaker.org'));
   });
 
   it('chain config permission manager', async () => {
@@ -155,9 +155,9 @@ describe('chain config', async () => {
         user3,
       ],
     });
-    await sleep(5);
+    await sleep(30);
     let chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(true, JSON.stringify(chainConfig.result.resourcePoliciesList).indexOf('TEST_PREMISSION') > -1);
+    assert.strictEqual(true, JSON.stringify(chainConfig.resourcePoliciesList).indexOf('TEST_PREMISSION') > -1);
 
     await sdk.chainConfig.chainConfigPermissionUpdate({
       permissionResourceName: 'TEST_PREMISSION',
@@ -170,15 +170,15 @@ describe('chain config', async () => {
         user3,
       ],
     });
-    await sleep(5);
+    await sleep(30);
     chainConfig = await sdk.chainConfig.getChainConfig();
     let index = 0;
-    chainConfig.result.resourcePoliciesList.forEach((police, i) => {
+    chainConfig.resourcePoliciesList.forEach((police, i) => {
       if (police.resourceName === 'TEST_PREMISSION') {
         index = i;
       }
     });
-    assert.strictEqual(Array([user2.orgID, user3.orgID, sdk.userInfo.orgID]).join(','), chainConfig.result.resourcePoliciesList[index].policy.orgListList.join(','));
+    assert.strictEqual(Array([user2.orgID, user3.orgID, sdk.userInfo.orgID]).join(','), chainConfig.resourcePoliciesList[index].policy.orgListList.join(','));
 
     await sdk.chainConfig.chainConfigPermissionDelete({
       permissionResourceName: 'TEST_PREMISSION',
@@ -188,9 +188,9 @@ describe('chain config', async () => {
         user3,
       ],
     });
-    await sleep(5);
+    await sleep(30);
     chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(-1, JSON.stringify(chainConfig.result.resourcePoliciesList).indexOf('TEST_PREMISSION'));
+    assert.strictEqual(-1, JSON.stringify(chainConfig.resourcePoliciesList).indexOf('TEST_PREMISSION'));
   });
 
   it('chain config consensus nodeId manager', async () => {
@@ -201,26 +201,26 @@ describe('chain config', async () => {
     ]);
     await sleep(30);
     let chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(true, JSON.stringify(chainConfig.result.consensus.nodesList).indexOf('QmQVkTSF6aWzRSddT3rro6Ve33jhKpsHFaQoVxHKMWzhuN') > -1);
+    assert.strictEqual(true, JSON.stringify(chainConfig.consensus.nodesList).indexOf('QmQVkTSF6aWzRSddT3rro6Ve33jhKpsHFaQoVxHKMWzhuN') > -1);
 
     await sdk.chainConfig.chainConfigConsensusNodeIdUpdate(sdk.userInfo.orgID, 'QmQVkTSF6aWzRSddT3rro6Ve33jhKpsHFaQoVxHKMWzhuN', 'QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH', [
       sdk.userInfo,
       user2,
       user3,
     ]);
-    await sleep(5);
+    await sleep(10);
     chainConfig = await sdk.chainConfig.getChainConfig();
-    // console.log(chainConfig.result.consensus.nodesList);
-    assert.strictEqual(true, JSON.stringify(chainConfig.result.consensus.nodesList).indexOf('QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH') > -1);
+    // console.log(chainConfig.consensus.nodesList);
+    assert.strictEqual(true, JSON.stringify(chainConfig.consensus.nodesList).indexOf('QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH') > -1);
 
     await sdk.chainConfig.chainConfigConsensusNodeIdDelete(sdk.userInfo.orgID, 'QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH', [
       sdk.userInfo,
       user2,
       user3,
     ]);
-    await sleep(5);
+    await sleep(10);
     chainConfig = await sdk.chainConfig.getChainConfig();
-    assert.strictEqual(-1, JSON.stringify(chainConfig.result.consensus.nodesList).indexOf('QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH'));
+    assert.strictEqual(-1, JSON.stringify(chainConfig.consensus.nodesList).indexOf('QmeyNRs2DwWjcHTpcVHoUSaDAAif4VQZ2wQDQAUNDP33gH'));
   });
 
   after('stop sdk', (done) => {

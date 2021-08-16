@@ -13,7 +13,7 @@ describe('cert Compression', async () => {
     await utils.sleep(4);
     const chainConfig = await sdk.chainConfig.getChainConfig();
 
-    assert.strictEqual(sdk.chainConfig.chainID, chainConfig.result.chainId);
+    assert.strictEqual(sdk.chainConfig.chainID, chainConfig.chainId);
   });
 
   it('disableCertHash', async () => {
@@ -23,7 +23,7 @@ describe('cert Compression', async () => {
     const chainConfig = await sdk.chainConfig.getChainConfig();
 
     assert.strictEqual(true, sdk.userInfo.userSignCertBytes !== hash);
-    assert.strictEqual(sdk.chainConfig.chainID, chainConfig.result.chainId);
+    assert.strictEqual(sdk.chainConfig.chainID, chainConfig.chainId);
   });
 
   after('stop sdk', (done) => {

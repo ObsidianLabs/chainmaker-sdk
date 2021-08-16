@@ -111,8 +111,7 @@ class Node {
       endorsements,
     );
     // console.log(JSON.stringify(request.toObject(), null, 4));
-    const result = await this.sendRequest(request, srcRes, nodeAddr);
-    return { txId: payload.getTxId(), result };
+    return this.sendRequest(request, srcRes, nodeAddr);
   }
 
   subscribe(request) {

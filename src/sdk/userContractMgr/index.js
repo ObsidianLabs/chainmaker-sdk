@@ -219,7 +219,7 @@ class UserContract {
     );
     if (withSyncResult) {
       const res = await this.callSystemContract.getSyncResult(result.txId);
-      result.result.contractResult = res;
+      result.contractResult = res;
       return result;
     }
     return result;

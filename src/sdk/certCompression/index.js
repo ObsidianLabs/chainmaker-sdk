@@ -35,7 +35,7 @@ class CertCompression {
   }
 
   async checkChainCertHash(certHash) {
-    const { result } = await this.certMgr.queryCert([certHash]);
+    const result = await this.certMgr.queryCert([certHash]);
     // 查询链上证书，有返回成功，没有继续处理
     if (result.certInfosList.length) {
       for (let i = 0; i < result.certInfosList.length; i++) {
