@@ -65,7 +65,7 @@ describe('chain config', async () => {
   it('chain config trust root manager, chainc onfig consensus node org', async () => {
     await sdk.chainConfig.chainConfigTrustRootAdd({
       orgId: 'wx-org5.chainmaker.org',
-      root: fs.readFileSync(path.join(__dirname, './testFile/wx-org5.chainmaker.org/ca/ca.crt')).toString(),
+      roots: [fs.readFileSync(path.join(__dirname, './testFile/wx-org5.chainmaker.org/ca/ca.crt')).toString()],
       userInfoList: [
         sdk.userInfo,
         user2,
@@ -108,7 +108,7 @@ describe('chain config', async () => {
 
     await sdkUser5.chainConfig.chainConfigTrustRootUpdate({
       orgId: 'wx-org5.chainmaker.org',
-      root: fs.readFileSync(path.join(__dirname, './testFile/wx-org6.chainmaker.org/ca/ca.crt')).toString(),
+      roots: [fs.readFileSync(path.join(__dirname, './testFile/wx-org6.chainmaker.org/ca/ca.crt')).toString()],
       userInfoList: [
         sdkUser5.userInfo,
         user2,

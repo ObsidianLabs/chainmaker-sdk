@@ -12,7 +12,6 @@ describe('system contract', async () => {
   it('getTxByTxId', async () => {
     const block = await sdk.callSystemContract.getBlockByHeight(2, false);
     const res = await sdk.callSystemContract.getTxByTxId(block.result.block.txsList[0].payload.txId);
-    console.log(res);
     // assert.strictEqual(0, res.result.code);
     assert.strictEqual(0, res.result.transaction.result.code);
   });
@@ -36,7 +35,6 @@ describe('system contract', async () => {
 
   it('getLastConfigBlock', async () => {
     const res = await sdk.callSystemContract.getLastConfigBlock(false);
-    console.log(JSON.stringify(res.result));
     assert.strictEqual(1, res.result.block.header.blockType);
   });
 

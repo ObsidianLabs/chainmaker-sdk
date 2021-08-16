@@ -8,7 +8,7 @@ const path = require('path');
 const assert  = require('assert');
 const { sleep } = require('../src/utils');
 
-const { sdk } = sdkInit();
+const { sdk, user2, user3, user4 } = sdkInit();
 
 describe('cert manager', async () => {
   it('get certHash', async () => {
@@ -40,7 +40,10 @@ describe('cert manager', async () => {
 
   it('delete cert', async () => {
     const hash = await sdk.certMgr.getCertHash();
-    await sdk.certMgr.deleteCert([hash]);
+    await sdk.certMgr.deleteCert([hash], [
+      sdk.userInfo,
+      user2, user3, user4,
+    ]);
     await sleep(5);
     const queryHash = await sdk.certMgr.queryCert([hash]);
     let index = 0;
@@ -52,19 +55,28 @@ describe('cert manager', async () => {
 
   it('certManageFrozen', async () => {
     await sleep(4);
-    const res = await sdk.certMgr.certManageFrozen([fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/user/client1/client1.sign.crt')).toString()]);
+    const res = await sdk.certMgr.certManageFrozen([fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/user/client1/client1.sign.crt')).toString()], [
+      sdk.userInfo,
+      user2, user3, user4,
+    ]);
     assert.strictEqual(0, res.result.code);
   });
 
   it('certManageUnfrozen', async () => {
     await sleep(4);
-    const res = await sdk.certMgr.certManageUnfrozen([fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/user/client1/client1.sign.crt')).toString()]);
+    const res = await sdk.certMgr.certManageUnfrozen([fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/user/client1/client1.sign.crt')).toString()], [
+      sdk.userInfo,
+      user2, user3, user4,
+    ]);
     assert.strictEqual(0, res.result.code);
   });
 
   it('certManageRevoke', async () => {
     await sleep(4);
-    const res = await sdk.certMgr.certManageRevoke(fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/user/client1/client1.sign.crt')).toString());
+    const res = await sdk.certMgr.certManageRevoke(fs.readFileSync(path.join(__dirname, './testFile/crypto-config/wx-org2.chainmaker.org/user/client1/client1.sign.crt')).toString(), [
+      sdk.userInfo,
+      user2, user3, user4,
+    ]);
     assert.strictEqual(0, res.result.code);
   });
 

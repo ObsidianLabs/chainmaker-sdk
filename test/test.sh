@@ -4,10 +4,10 @@ SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 
 mocha -t 100000 $SHELL_FOLDER/userContract.js
 mocha -t 100000 $SHELL_FOLDER/systemContract.js
-mocha -t 100000 $SHELL_FOLDER/chainConfig.js
 mocha -t 100000 $SHELL_FOLDER/cert.js
 mocha -t 100000 $SHELL_FOLDER/certCompression.js
 mocha -t 100000 $SHELL_FOLDER/subscribe.js
+mocha -t 100000 $SHELL_FOLDER/chainConfig.js
 
 # need run
 # ./cmc archive dump --type=mysql --dest=root:123456:127.0.0.1:3306 --target=10 --blocks=2 \

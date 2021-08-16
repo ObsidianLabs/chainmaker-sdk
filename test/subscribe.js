@@ -10,8 +10,8 @@ const { sdk } = sdkInit();
 describe('subscribe', () => {
   it('subscribeBlock', async () => {
     const { err, blockHeight } = await new Promise((resolve) => {
-      sdk.subscribe.subscribeBlock(5, 10, false, (block, err) => {
-        resolve({ err, blockHeight: block.block.header.blockHeight });
+      sdk.subscribe.subscribeBlock(5, 10, false, true, (block, err) => {
+        resolve({ err, blockHeight: block.blockHeight });
       });
     });
     assert.strictEqual(null, err);
