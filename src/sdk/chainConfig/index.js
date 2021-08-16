@@ -151,9 +151,9 @@ class ChainConfig {
     return response;
   }
 
-  async createChainConfigTrustRootAddPayload({ orgId, root }) {
+  async createChainConfigTrustRootAddPayload({ orgId, roots }) {
     const parameters = {};
-    parameters[cv.keys.KeyChainConfigContractRoot] = root;
+    parameters[cv.keys.KeyChainConfigContractRoot] = roots.join(',');
     parameters[cv.keys.KeyChainConfigContractOrgId] = orgId;
 
     return utils.buildPayload({
@@ -169,18 +169,18 @@ class ChainConfig {
   }
 
   async chainConfigTrustRootAdd({
-    orgId, root, userInfoList,
+    orgId, roots, userInfoList,
   }) {
     const payload = await this.createChainConfigTrustRootAddPayload({
-      orgId, root,
+      orgId, roots,
     });
     const response = this.signAndSendRequest(payload, userInfoList);
     return response;
   }
 
-  async createChainConfigTrustRootUpdatePayload({ orgId, root }) {
+  async createChainConfigTrustRootUpdatePayload({ orgId, roots }) {
     const parameters = {};
-    parameters[cv.keys.KeyChainConfigContractRoot] = root;
+    parameters[cv.keys.KeyChainConfigContractRoot] = roots.join(',');
     parameters[cv.keys.KeyChainConfigContractOrgId] = orgId;
 
     return utils.buildPayload({
@@ -196,10 +196,77 @@ class ChainConfig {
   }
 
   async chainConfigTrustRootUpdate({
-    orgId, root, userInfoList,
+    orgId, roots, userInfoList,
   }) {
     const payload = await this.createChainConfigTrustRootUpdatePayload({
-      orgId, root,
+      orgId, roots,
+    });
+    const response = this.signAndSendRequest(payload, userInfoList);
+    return response;
+  }
+
+  async createChainConfigTrustMemberAddPayload({
+    trustMemberOrgId,
+    trustMemberNodeId,
+    trustMemberRole,
+    trustMemberInfo,
+  }) {
+    const parameters = {};
+    parameters[cv.keys.KeyChainConfigContractTrustMemberOrgId] = trustMemberOrgId;
+    parameters[cv.keys.KeyChainConfigContractTrustMemberNodeId] = trustMemberNodeId;
+    parameters[cv.keys.KeyChainConfigContractTrustMemberRole] = trustMemberRole;
+    parameters[cv.keys.KeyChainConfigContractTrustMemberInfo] = trustMemberInfo;
+
+    return utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      txType: utils.common.TxType.INVOKE_CONTRACT,
+      method: utils.enum2str(
+        utils.sysContract.ChainConfigFunction,
+        utils.sysContract.ChainConfigFunction.TRUST_MEMBER_ADD,
+      ),
+      sequence: await this.getChainConfigSequence() + 1,
+    });
+  }
+
+  async chainConfigTrustMemberAdd({
+    trustMemberOrgId,
+    trustMemberNodeId,
+    trustMemberRole,
+    trustMemberInfo,
+    userInfoList = [],
+  }) {
+    const payload = await this.createChainConfigTrustMemberAddPayload({
+      trustMemberOrgId,
+      trustMemberNodeId,
+      trustMemberRole,
+      trustMemberInfo,
+    });
+    const response = this.signAndSendRequest(payload, userInfoList);
+    return response;
+  }
+
+  async createChainConfigTrustMemberDeletePayload(trustMemberInfo) {
+    const parameters = {};
+    parameters[cv.keys.KeyChainConfigContractTrustMemberInfo] = trustMemberInfo;
+    return utils.buildPayload({
+      parameters,
+      ...this.commonObj,
+      txType: utils.common.TxType.INVOKE_CONTRACT,
+      method: utils.enum2str(
+        utils.sysContract.ChainConfigFunction,
+        utils.sysContract.ChainConfigFunction.TRUST_MEMBER_DELETE,
+      ),
+      sequence: await this.getChainConfigSequence() + 1,
+    });
+  }
+
+  async chainConfigTrustMemberDelete({
+    trustMemberInfo,
+    userInfoList = [],
+  }) {
+    const payload = await this.createChainConfigTrustMemberAddPayload({
+      trustMemberInfo,
     });
     const response = this.signAndSendRequest(payload, userInfoList);
     return response;

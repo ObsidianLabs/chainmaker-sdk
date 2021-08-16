@@ -148,7 +148,7 @@ const test = async (type) => {
       case 'chainConfigTrustRootAdd':
         res = await testChainConfigTrustRootAdd(sdk, {
           orgId: 'wx-org5.chainmaker.org',
-          root: fs.readFileSync(path.join(__dirname, '../test/testFile/wx-org5.chainmaker.org/ca/ca.crt')).toString(),
+          roots: [fs.readFileSync(path.join(__dirname, '../test/testFile/wx-org5.chainmaker.org/ca/ca.crt')).toString()],
           userInfoList: [
             sdk.userInfo,
             user2,
@@ -160,7 +160,7 @@ const test = async (type) => {
         sdk.userInfo = user5;
         res = await testChainConfigTrustRootUpdate(sdk, {
           orgId: 'wx-org5.chainmaker.org',
-          root: fs.readFileSync(path.join(__dirname, '../test/testFile/wx-org6.chainmaker.org/ca/ca.crt')).toString(),
+          roots: [fs.readFileSync(path.join(__dirname, '../test/testFile/wx-org6.chainmaker.org/ca/ca.crt')).toString()],
           userInfoList: [
             // user5,
             sdk.userInfo,

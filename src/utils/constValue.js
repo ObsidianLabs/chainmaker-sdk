@@ -76,6 +76,10 @@ const keys = {
   KeyChainConfigContractNewNodeId: 'new_node_id',
   KeyChainConfigContractNodeIds: 'node_ids',
   KeyChainConfigContractBlockHeight: 'block_height',
+  KeyChainConfigContractTrustMemberOrgId: 'org_id',
+  KeyChainConfigContractTrustMemberInfo: 'member_info',
+  KeyChainConfigContractTrustMemberNodeId: 'node_id',
+  KeyChainConfigContractTrustMemberRole: 'role',
 
   // CoreConfig keys
   KeyTxSchedulerTimeout: 'tx_scheduler_timeout',
