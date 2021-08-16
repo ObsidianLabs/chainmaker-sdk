@@ -397,9 +397,9 @@
 
   类型：k-v Object对象
   - orgId: 组织Id(string)
-  - root: 根证书(string)
+  - roots: 根证书数组(string)
 ```javascript
-  async createChainConfigTrustRootAddPayload({ orgId, root })
+  async createChainConfigTrustRootAddPayload({ orgId, roots })
 ```
 
 ### 3.10 更新信任组织根证书待签名payload生成
@@ -410,9 +410,9 @@
 
   类型：k-v Object对象
   - orgId: 组织Id(string)
-  - root: 根证书(string)
+  - roots: 根证书数组(string)
 ```javascript
-  async createChainConfigTrustRootUpdatePayload({ orgId, root })
+  async createChainConfigTrustRootUpdatePayload({ orgId, roots })
 ```
 
 ### 3.11 删除信任组织根证书待签名payload生成
@@ -563,6 +563,36 @@
   - keys: 字段key数组(Array[string])
 ```javascript
   async createChainConfigConsensusExtDeletePayload(keys)
+```
+
+### 3.24 添加信任成员证书待签名payload生成
+**类名**
+  - chainConfig
+
+**参数说明**
+
+  类型：k-v Object对象
+  - trustMemberOrgId: 组织Id
+  - trustMemberNodeId: 节点Id
+  - trustMemberRole: 成员角色
+  - trustMemberInfo: 成员信息内容
+```javascript
+  async createChainConfigTrustMemberAddPayload({
+    trustMemberOrgId,
+    trustMemberNodeId,
+    trustMemberRole,
+    trustMemberInfo,
+  })
+```
+
+### 3.25 删除信任成员证书待签名payload生成
+**类名**
+  - chainConfig
+
+**参数说明**
+  - trustMemberInfo: 成员信息内容
+```javascript
+  async createChainConfigTrustMemberDeletePayload(trustMemberInfo)
 ```
 
 ## 4 证书管理接口
