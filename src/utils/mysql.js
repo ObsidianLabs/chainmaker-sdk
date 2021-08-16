@@ -14,6 +14,9 @@ class MysqlTool {
       this.mysqlTableNamePrefix = mysqlTableNamePrefix;
       this.rowsPerBlockInfoTable = rowsPerBlockInfoTable;
       this.BlockWithRWSet = BlockWithRWSet;
+      this.connection.on('error', (err) => {
+        logger.error('connect mysql error', err.toString);
+      });
     }
   }
 

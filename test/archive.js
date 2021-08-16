@@ -29,7 +29,7 @@ describe('archive', async () => {
 
   it('getArchivedBlockByTxId', async () => {
     const block = await sdk.archive.getArchivedBlockByHeight(0, false);
-    const res = await sdk.archive.getArchivedBlockByTxId(block.Block.txsList[0].header.txId, false);
+    const res = await sdk.archive.getArchivedBlockByTxId(block.Block.txsList[0].payload.txId, false);
     assert.strictEqual(block.Block.header.blockHeight, res.Block.header.blockHeight);
   });
 
@@ -41,7 +41,7 @@ describe('archive', async () => {
 
   it('getArchivedBlockByTxId', async () => {
     const block = await sdk.archive.getArchivedBlockByHeight(0, false);
-    const res = await sdk.archive.getArchivedTxByTxId(block.Block.txsList[0].header.txId, false);
+    const res = await sdk.archive.getArchivedTxByTxId(block.Block.txsList[0].payload.txId, false);
     assert.strictEqual(block.Block.header.blockHeight, res.BlockHeight);
   });
 
