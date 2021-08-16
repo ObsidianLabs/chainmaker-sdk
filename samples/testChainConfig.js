@@ -303,6 +303,7 @@ const test = async (type) => {
         break;
     }
     console.log(type, ':', JSON.stringify(res, null, 4));
+    sdk.stop();
   } catch (err) {
     console.log(type, ':', err);
   }

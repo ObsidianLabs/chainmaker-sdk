@@ -199,7 +199,7 @@ describe('chain config', async () => {
       user2,
       user3,
     ]);
-    await sleep(5);
+    await sleep(30);
     let chainConfig = await sdk.chainConfig.getChainConfig();
     assert.strictEqual(true, JSON.stringify(chainConfig.result.consensus.nodesList).indexOf('QmQVkTSF6aWzRSddT3rro6Ve33jhKpsHFaQoVxHKMWzhuN') > -1);
 
