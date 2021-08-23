@@ -1204,7 +1204,10 @@ proto.syscontract.ContractManageFunction = {
   UPGRADE_CONTRACT: 1,
   FREEZE_CONTRACT: 2,
   UNFREEZE_CONTRACT: 3,
-  REVOKE_CONTRACT: 4
+  REVOKE_CONTRACT: 4,
+  GRANT_CONTRACT_ACCESS: 5,
+  REVOKE_CONTRACT_ACCESS: 6,
+  VERIFY_CONTRACT_ACCESS: 7
 };
 
 /**
@@ -1213,7 +1216,8 @@ proto.syscontract.ContractManageFunction = {
 proto.syscontract.ContractQueryFunction = {
   GET_CONTRACT_INFO: 0,
   GET_CONTRACT_BYTECODE: 1,
-  GET_CONTRACT_LIST: 2
+  GET_CONTRACT_LIST: 2,
+  GET_DISABLED_CONTRACT_LIST: 3
 };
 
 goog.object.extend(exports, proto.syscontract);

@@ -406,7 +406,7 @@ class ChainConfig {
   async createChainConfigConsensusNodeIdUpdatePayload(orgId, nodeId, newNodeId) {
     const parameters = {};
     parameters[cv.keys.KeyChainConfigContractOrgId] = orgId;
-    parameters[cv.keys.KeyChainConfigContractNodeIds] = nodeId;
+    parameters[cv.keys.KeyChainConfigContractNodeId] = nodeId;
     parameters[cv.keys.KeyChainConfigContractNewNodeId] = newNodeId;
 
     return utils.buildPayload({

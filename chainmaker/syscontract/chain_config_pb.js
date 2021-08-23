@@ -41,7 +41,10 @@ proto.syscontract.ChainConfigFunction = {
   PERMISSION_DELETE: 18,
   NODE_ID_ADD: 19,
   NODE_ID_UPDATE: 20,
-  NODE_ID_DELETE: 21
+  NODE_ID_DELETE: 21,
+  TRUST_MEMBER_ADD: 22,
+  TRUST_MEMBER_UPDATE: 23,
+  TRUST_MEMBER_DELETE: 24
 };
 
 goog.object.extend(exports, proto.syscontract);

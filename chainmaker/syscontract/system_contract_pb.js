@@ -30,7 +30,8 @@ proto.syscontract.SystemContract = {
   DPOS_ERC20: 7,
   DPOS_STAKE: 8,
   SUBSCRIBE_MANAGE: 9,
-  ARCHIVE_MANAGE: 10
+  ARCHIVE_MANAGE: 10,
+  CROSS_TRANSACTION: 11
 };
 
 goog.object.extend(exports, proto.syscontract);

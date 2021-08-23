@@ -824,7 +824,8 @@ proto.syscontract.PrivateDeployPayload.toObject = function(includeInstance, msg)
     contractName: jspb.Message.getFieldWithDefault(msg, 5, ""),
     contractVersion: jspb.Message.getFieldWithDefault(msg, 6, ""),
     codeHash: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    orgIdList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f
+    orgIdList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
+    timeStamp: jspb.Message.getFieldWithDefault(msg, 9, "")
   };
 
   if (includeInstance) {
@@ -892,6 +893,10 @@ proto.syscontract.PrivateDeployPayload.deserializeBinaryFromReader = function(ms
     case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.addOrgId(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTimeStamp(value);
       break;
     default:
       reader.skipField();
@@ -975,6 +980,13 @@ proto.syscontract.PrivateDeployPayload.serializeBinaryToWriter = function(messag
   if (f.length > 0) {
     writer.writeRepeatedString(
       8,
+      f
+    );
+  }
+  f = message.getTimeStamp();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
       f
     );
   }
@@ -1141,6 +1153,24 @@ proto.syscontract.PrivateDeployPayload.prototype.addOrgId = function(value, opt_
  */
 proto.syscontract.PrivateDeployPayload.prototype.clearOrgIdList = function() {
   return this.setOrgIdList([]);
+};
+
+
+/**
+ * optional string time_stamp = 9;
+ * @return {string}
+ */
+proto.syscontract.PrivateDeployPayload.prototype.getTimeStamp = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.syscontract.PrivateDeployPayload} returns this
+ */
+proto.syscontract.PrivateDeployPayload.prototype.setTimeStamp = function(value) {
+  return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -1399,7 +1429,8 @@ proto.syscontract.PrivateComputePayload.toObject = function(includeInstance, msg
     sigAlgo: jspb.Message.getFieldWithDefault(msg, 3, ""),
     contractName: jspb.Message.getFieldWithDefault(msg, 4, ""),
     codeHash: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    orgIdList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f
+    orgIdList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f,
+    timeStamp: jspb.Message.getFieldWithDefault(msg, 7, "")
   };
 
   if (includeInstance) {
@@ -1459,6 +1490,10 @@ proto.syscontract.PrivateComputePayload.deserializeBinaryFromReader = function(m
     case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.addOrgId(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTimeStamp(value);
       break;
     default:
       reader.skipField();
@@ -1528,6 +1563,13 @@ proto.syscontract.PrivateComputePayload.serializeBinaryToWriter = function(messa
   if (f.length > 0) {
     writer.writeRepeatedString(
       6,
+      f
+    );
+  }
+  f = message.getTimeStamp();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
       f
     );
   }
@@ -1658,6 +1700,24 @@ proto.syscontract.PrivateComputePayload.prototype.addOrgId = function(value, opt
  */
 proto.syscontract.PrivateComputePayload.prototype.clearOrgIdList = function() {
   return this.setOrgIdList([]);
+};
+
+
+/**
+ * optional string time_stamp = 7;
+ * @return {string}
+ */
+proto.syscontract.PrivateComputePayload.prototype.getTimeStamp = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.syscontract.PrivateComputePayload} returns this
+ */
+proto.syscontract.PrivateComputePayload.prototype.setTimeStamp = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
