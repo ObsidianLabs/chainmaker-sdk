@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-sdk",
+  "name": "chainmaker-sdk",
   "version": "2.0.0",
   "descripion": "",
   "main": "payload_contract.js",
@@ -8,12 +8,10 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.13",
-    "@grpc/grpc-js": "1.3.3",
+    "@grpc/grpc-js": "1.6.7",
     "crypto": "^1.0.1",
     "google-protobuf": "^3.6.1",
-    "grpc-mock": "^0.7.0",
-    "grpc-tools": "^1.11.2",
-    "loadsh": "^0.0.4",
+    "lodash": "^4.17.21",
     "mysql": "^2.18.1",
     "protobufjs": "^6.11.2",
     "uuid": "^8.3.2",
@@ -21,9 +19,5 @@
     "yamljs": "^0.3.0"
   },
   "author": "gregcheng",
-  "license": "ISC",
-  "devDependencies": {
-    "@tencent/eslint-config-tencent": "^0.15.1",
-    "eslint": "^7.29.0"
-  }
+  "license": "ISC"
 }
